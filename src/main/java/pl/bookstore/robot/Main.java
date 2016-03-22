@@ -2,10 +2,10 @@ package pl.bookstore.robot;
 
 import org.apache.log4j.Logger;
 
-public class App 
+public class Main 
 {
  
-	final static Logger logger = Logger.getLogger(App.class);
+	final static Logger logger = Logger.getLogger(Main.class);
     public static void main( String[] args )
     {
     	logger.error("asdasd");
