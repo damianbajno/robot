@@ -15,5 +15,5 @@ Robot ma działać przez tydzień o tej samej porze każdego dnia.
 Bonusowe punkty, jeśli robot mówi / rozumie HTTP2.
 Dopuszczalne technologie: Bash, Java, Git, Maven, HTTPClient, (Apache / Jetty), Jaunt, TestNG, Mockito, AssertJ. Nie znacie jakichś – to poszukajcie co robią i spróbujcie zrozumieć, bo nie raz jako programiści staniecie przed takim zadaniem. Można mnie próbować przekonywać do innych technologii, 
 chyba, że się jest (za?) młodym lub mówi o PHPie czy innych językach programowania niż te dopuszczone powyżej.
-Projekt ma mieć dokumentację, testy, Javadoci i plik README!
+Pr489ojekt ma mieć dokumentację, testy, Javadoci i plik README!
   
