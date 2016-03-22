@@ -6,6 +6,7 @@ import com.jaunt.NotFound;
 import com.jaunt.ResponseException;
 
 import getbooks.Ekiosk24;
+import getbooks.Gandalf;
 import getbooks.Matras;
 import getbooks.Pwn;
  
@@ -24,6 +25,9 @@ public class Main {
 		
 		Ekiosk24 ekiosk24 = new Ekiosk24();
 		System.out.println(ekiosk24);
+		
+		Gandalf gandalf = new Gandalf();
+		System.out.println(gandalf);
 
 
 	}
