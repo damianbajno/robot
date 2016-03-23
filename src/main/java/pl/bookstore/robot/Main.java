@@ -20,12 +20,9 @@ public class Main {
 
 			throws NotFound, ResponseException, IOException, ClassNotFoundException, SQLException {
 
-		if (args.length == 1 && args[0] == "--gui")
-			;
-		{
+		if (args.length == 1 && args[0] == "--gui") {
 			logger.info("Start GUI");
 		}
-
 		MySqlFunction mysql = new MySqlFunction();
 		mysql.dropTableToNewSave();
 		mysql.saveListBookStore("http://ekiosk24.nextore.pl/", "ekiosk", true);
@@ -42,7 +39,6 @@ public class Main {
 			System.out.println(bookStore.isIsActive());
 		}
 		mysql.close();
-
 		for (BookStore bookStore : book) {
 			if (bookStore.isIsActive())
 				new BookSearche(bookStore.getUrl(), bookStore.getSiteName());

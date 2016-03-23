@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 public abstract class Connect {
 	protected Connection connection;
-	public static final String nameDataBaze = "Opcje";
+	public static final String nameDataBaze = "OpcjeDataBase";
 	protected Statement statement;
 
 	public Connect() throws ClassNotFoundException, SQLException {
