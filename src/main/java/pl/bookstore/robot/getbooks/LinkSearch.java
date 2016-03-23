@@ -1,4 +1,4 @@
-package getbooks;
+package pl.bookstore.robot.getbooks;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import com.jaunt.NotFound;
 import com.jaunt.ResponseException;
 import com.jaunt.UserAgent;
 
-import searchpattern.KPPattern;
+import pl.bookstore.robot.searchpattern.KPPattern;
 
 public class LinkSearch {
 

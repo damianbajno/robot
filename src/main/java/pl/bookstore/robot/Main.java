@@ -8,16 +8,24 @@ import org.apache.log4j.Logger;
 import com.jaunt.NotFound;
 import com.jaunt.ResponseException;
 
-import bookstorecontener.BookStore;
-import getbooks.BookSearche;
-import mysql.MySqlFunction;
+import pl.bookstore.robot.bookstorecontener.BookStore;
+import pl.bookstore.robot.getbooks.BookSearche;
+import pl.bookstore.robot.mysql.MySqlFunction;
 
 public class Main {
 
 	final static Logger logger = Logger.getLogger(Main.class);
 
 	public static void main(String[] args)
+
 			throws NotFound, ResponseException, IOException, ClassNotFoundException, SQLException {
+
+		if (args.length == 1 && args[0] == "--gui")
+			;
+		{
+			logger.info("Start GUI");
+		}
+
 		MySqlFunction mysql = new MySqlFunction();
 		mysql.dropTableToNewSave();
 		mysql.saveListBookStore("http://ekiosk24.nextore.pl/", "ekiosk", true);

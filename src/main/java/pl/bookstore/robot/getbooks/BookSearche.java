@@ -1,4 +1,4 @@
-package getbooks;
+package pl.bookstore.robot.getbooks;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -9,7 +9,7 @@ import com.jaunt.Elements;
 import com.jaunt.NotFound;
 import com.jaunt.ResponseException;
 
-import logowanie.Logowanie;
+import pl.bookstore.robot.logowanie.Logowanie;
 
 public class BookSearche extends LinkSearch {
 

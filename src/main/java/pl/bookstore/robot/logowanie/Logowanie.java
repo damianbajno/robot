@@ -1,4 +1,4 @@
-package logowanie;
+package pl.bookstore.robot.logowanie;
 
 import org.apache.log4j.Logger;
 

@@ -1,4 +1,4 @@
-package searchpattern;
+package pl.bookstore.robot.searchpattern;
 
 public class KPPattern {
 

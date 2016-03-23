@@ -1,10 +1,10 @@
-package mysql;
+package pl.bookstore.robot.mysql;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 
-import bookstorecontener.BookStore;
+import pl.bookstore.robot.bookstorecontener.BookStore;
 
 public class MySqlFunction extends Connect implements OperationMySql {
 	private ResultSet rs;

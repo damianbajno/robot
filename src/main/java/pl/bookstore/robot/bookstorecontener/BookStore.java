@@ -1,4 +1,4 @@
-package bookstorecontener;
+package pl.bookstore.robot.bookstorecontener;
 
 public class BookStore {
 

@@ -1,4 +1,4 @@
-package mysql;
+package pl.bookstore.robot.mysql;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
