@@ -12,7 +12,7 @@ public abstract class Connect {
 
 	public Connect() throws ClassNotFoundException, SQLException {
 		Class.forName("org.sqlite.JDBC");
-		connection = DriverManager.getConnection("jdbc:sqlite:" + "src/main/resources/" + nameDataBaze);
+		connection = DriverManager.getConnection("jdbc:sqlite:" + nameDataBaze);
 		statement = connection.createStatement();
 		creteTable();
 	}

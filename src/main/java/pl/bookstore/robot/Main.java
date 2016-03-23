@@ -36,11 +36,12 @@ public class Main {
 		for (BookStore bookStore : book) {
 			System.out.println(bookStore.getSiteName());
 			System.out.println(bookStore.getUrl());
-			System.out.println(bookStore.isIsActive());
+			System.out.println(bookStore.isActive());
 		}
+		mysql.saveListBookStore(book);
 		mysql.close();
 		for (BookStore bookStore : book) {
-			if (bookStore.isIsActive())
+			if (bookStore.isActive())
 				new BookSearche(bookStore.getUrl(), bookStore.getSiteName());
 		}
 

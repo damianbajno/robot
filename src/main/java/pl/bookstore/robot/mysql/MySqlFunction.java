@@ -25,6 +25,19 @@ public class MySqlFunction extends Connect implements OperationMySql {
 	}
 
 	@Override
+	public int saveListBookStore(LinkedList<BookStore> bookStory) throws SQLException {
+		dropTableToNewSave();
+		for (BookStore bookStore : bookStory) {
+			int isActiveInt = 0;
+			if (bookStore.isActive())
+				isActiveInt = 1;
+			statement.executeUpdate("insert into booksstores values('" + bookStore.getUrl() + "','"
+					+ bookStore.getSiteName() + "'," + isActiveInt + ")");
+		}
+		return 1;
+	}
+
+	@Override
 	public LinkedList<BookStore> getListBookStore() throws SQLException {
 		LinkedList<BookStore> bookStore = new LinkedList<>();
 		rs = statement.executeQuery("select * from booksstores");

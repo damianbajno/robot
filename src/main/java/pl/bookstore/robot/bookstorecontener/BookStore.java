@@ -28,7 +28,7 @@ public class BookStore {
 		this.siteName = siteName;
 	}
 
-	public boolean isIsActive() {
+	public boolean isActive() {
 		return isactive;
 	}
 
