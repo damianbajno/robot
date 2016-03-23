@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.LinkedList;
 
+import javax.swing.plaf.synth.SynthSeparatorUI;
+
 import org.apache.log4j.Logger;
 import com.jaunt.NotFound;
 import com.jaunt.ResponseException;
@@ -19,31 +21,33 @@ public class Main {
 	public static void main(String[] args)
 
 			throws NotFound, ResponseException, IOException, ClassNotFoundException, SQLException {
-
-		if (args.length == 1 && args[0] == "--gui") {
-			logger.info("Start GUI");
+		if(args.length>=1)
+		{
+		for (int i = 0; i < args.length; i++) {
+			System.out.println(args[i]);
+			if ( args[i].equals("gui")) {
+				logger.info("Start GUI");
+				System.out.println("GUI START");
+			}else
+			{
+				logger.error("Nieznane polecenie");
+			}
 		}
-		MySqlFunction mysql = new MySqlFunction();
-		mysql.dropTableToNewSave();
-		mysql.saveListBookStore("http://ekiosk24.nextore.pl/", "ekiosk", true);
-		mysql.saveListBookStore("http://www.gandalf.com.pl/", "gandalf", false);
-		mysql.saveListBookStore("http://ksiegarnia.pwn.pl/", "pwn", true);
-		mysql.saveListBookStore("http://www.matras.pl/", "matras", false);
-		mysql.saveListBookStore("http://helion.pl", "helion", false);
-
-		LinkedList<BookStore> book;
-		book = mysql.getListBookStore();
-		for (BookStore bookStore : book) {
-			System.out.println(bookStore.getSiteName());
-			System.out.println(bookStore.getUrl());
-			System.out.println(bookStore.isActive());
+		}else
+		{			
+			System.out.println("CLI START");
+			logger.info("Start CLI");
+			MySqlFunction mysql = new MySqlFunction();
+			
+			LinkedList<BookStore> book = mysql.getListBookStore();	
+			
+			mysql.saveListBookStore(book);
+			mysql.close();
+			for (BookStore bookStore : book) {
+				if (bookStore.isActive())
+					new BookSearche(bookStore.getUrl(), bookStore.getSiteName());
+			}
+			
 		}
-		mysql.saveListBookStore(book);
-		mysql.close();
-		for (BookStore bookStore : book) {
-			if (bookStore.isActive())
-				new BookSearche(bookStore.getUrl(), bookStore.getSiteName());
-		}
-
 	}
 }
