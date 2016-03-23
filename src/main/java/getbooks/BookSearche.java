@@ -8,6 +8,7 @@ import com.jaunt.Element;
 import com.jaunt.Elements;
 import com.jaunt.NotFound;
 import com.jaunt.ResponseException;
+
 import logowanie.Logowanie;
 
 public class BookSearche extends LinkSearch {
@@ -43,7 +44,7 @@ public class BookSearche extends LinkSearch {
 		}
 		userAgent.close();
 	}
-	
+
 	private void create() {
 
 		for (Element title : titles) {
@@ -58,9 +59,7 @@ public class BookSearche extends LinkSearch {
 
 	@Override
 	public String toString() {
-		return "BookSearche ["+nameBookStory+"]";
+		return "BookSearche [" + nameBookStory + "]";
 	}
-	
-	
 
 }
