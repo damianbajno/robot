@@ -1,0 +1,30 @@
+package pl.bookstore.robot.DAO;
+
+import org.apache.log4j.Logger;
+import pl.bookstore.robot.pojo.Book;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by damian on 30.03.16.
+ */
+public class ResultSetConverter {
+    private static Logger logger= org.apache.log4j.Logger.getLogger(ResultSetConverter.class);
+
+    public static List<Book> convertToBook(ResultSet resultSet) {
+        List<Book> books = new ArrayList<Book>();
+        try {
+            while (resultSet.next()) {
+                Book book = new Book(resultSet.getString(1), resultSet.getString(2));
+                books.add(book);
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+        }
+        return books;
+    }
+
+}
