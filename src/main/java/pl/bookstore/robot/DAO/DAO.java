@@ -24,8 +24,20 @@ public class DAO {
 
     }
 
+    private static void createConnection() {
+        try {
+            Class.forName("org.sqlite.JDBC");
+            connection = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_NAME);
+        } catch (ClassNotFoundException e) {
+            logger.error(e);
+            e.printStackTrace();
+        } catch (SQLException e) {
+            logger.error(e);
+            e.printStackTrace();
+        }
+    }
 
-    public Statement createStatment() {
+     Statement createStatment() {
         Statement statement=null;
         try {
             statement=connection.createStatement();
@@ -35,19 +47,9 @@ public class DAO {
         return statement;
     }
 
-
-    public Statement createStatment(Statement statement) throws SQLException {
-        return statement;
-    }
-
-
-    private static void createConnection() {
+     void closeConnections(){
         try {
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_NAME);
-        } catch (ClassNotFoundException e) {
-            logger.error(e);
-            e.printStackTrace();
+            connection.close();
         } catch (SQLException e) {
             logger.error(e);
             e.printStackTrace();

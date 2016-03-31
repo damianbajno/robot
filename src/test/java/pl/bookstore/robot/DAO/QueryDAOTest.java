@@ -15,13 +15,12 @@ public class QueryDAOTest {
     @org.testng.annotations.Test
     public void ifPutUpdateQueryQueryWillExecute(){
         //given
-        BookDAO bookDAO=new BookDAO();
+        QueryDAO queryDAO=new QueryDAO();
         Statement statement= mock(Statement.class);
         String query = "Insert into book";
 
         //when
-        bookDAO.updateQuery(statement, query);
-
+        queryDAO.updateQuery(statement, query);
 
         //then
         try {
@@ -34,12 +33,12 @@ public class QueryDAOTest {
     @org.testng.annotations.Test
     public void ifPutSelectQueryQueryWillExecute(){
         //given
-        BookDAO bookDAO=new BookDAO();
+        QueryDAO queryDAO=new QueryDAO();
         Statement statement= mock(Statement.class);
         String query = "Select * from book";
 
         //when
-        bookDAO.updateQuery(statement, query);
+        queryDAO.updateQuery(statement, query);
 
         //then
         try {
