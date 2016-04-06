@@ -2,6 +2,7 @@ package pl.bookstore.robot.DAO;
 
 import org.apache.log4j.Logger;
 import pl.bookstore.robot.pojo.Book;
+import pl.bookstore.robot.pojo.BookStore;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,4 +28,16 @@ public class ResultSetConverter {
         return books;
     }
 
+    public static List<BookStore> convertToBookStore(ResultSet resultSet) {
+        List<BookStore> bookStores = new ArrayList<BookStore>();
+        try {
+            while (resultSet.next()) {
+                BookStore bookStore = new BookStore(resultSet.getString(1));
+                bookStores.add(bookStore);
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+        }
+        return bookStores;
+    }
 }
