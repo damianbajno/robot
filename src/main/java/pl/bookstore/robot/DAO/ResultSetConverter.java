@@ -29,10 +29,13 @@ public class ResultSetConverter {
     }
 
     public static List<BookStore> convertToBookStore(ResultSet resultSet) {
+        logger.info("Converting from resoultset to BookStore");
         List<BookStore> bookStores = new ArrayList<BookStore>();
         try {
             while (resultSet.next()) {
-                BookStore bookStore = new BookStore(resultSet.getString(1));
+                String url = resultSet.getString("url");
+                System.out.println("urlda = "+url);
+                BookStore bookStore = new BookStore(url);
                 bookStores.add(bookStore);
             }
         } catch (SQLException e) {

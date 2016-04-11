@@ -6,6 +6,7 @@ package pl.bookstore.robot.pojo;
 public class Book {
     private String title;
     private String category;
+    private String bookStoreName;
 
     public Book(String title) {
         this.title = title;
@@ -14,6 +15,12 @@ public class Book {
     public Book(String title, String category) {
         this.title = title;
         this.category = category;
+    }
+
+    public Book(String title, String category, BookStore bookStore) {
+        this.title = title;
+        this.category = category;
+        this.bookStoreName = bookStore.getName();
     }
 
     public String getTitle() {
@@ -49,5 +56,14 @@ public class Book {
         int result = title != null ? title.hashCode() : 0;
         result = 31 * result + (category != null ? category.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "title='" + title + '\'' +
+                ", category='" + category + '\'' +
+                ", bookStoreName='" + bookStoreName + '\'' +
+                '}';
     }
 }

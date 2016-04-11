@@ -31,8 +31,8 @@ public class QueryDAO extends DAO {
 
     ResultSet selectQuery(Statement statement, String query) {
         ResultSet resultSet = null;
-        try (Statement statment = statement) {
-            resultSet = statment.executeQuery(query);
+        try (Statement statementM = statement) {
+            resultSet = statementM.executeQuery(query);
         } catch (SQLException e) {
             logger.error(e);
             e.printStackTrace();

@@ -11,7 +11,7 @@ import java.sql.Statement;
  * Created by damian on 30.03.16.
  */
 public class DAO {
-    private static final String DATABASE_NAME = "OpcjeDataBase";
+    private static final String DATABASE_NAME = "OpcjaDataBase";
 
     private static Logger logger = Logger.getLogger(DAO.class);
     private static Connection connection;

@@ -3,7 +3,6 @@ package pl.bookstore.robot.utils;
 import org.junit.Test;
 import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
-import pl.bookstore.robot.utils.PojoUtils;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

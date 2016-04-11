@@ -8,10 +8,9 @@ import pl.bookstore.robot.utils.UrlUtils;
 public class BookStore {
     private String name;
     private String url;
-    private String searchTypeForTitle;
-    private String searchValueForTitle;
-    private String searchTypeForCategory;
-    private String searchValueForCategory;
+    private String searchForElement;
+    private String searchForTitle;
+    private String searchForCategory;
 
     public BookStore(String url) {
         this.url = url;
@@ -24,5 +23,13 @@ public class BookStore {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String toString() {
+        return "BookStore{" +
+                "name='" + name + '\'' +
+                ", url='" + url + '\'' +
+                '}';
     }
 }
