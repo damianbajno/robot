@@ -17,7 +17,7 @@ public class BookSearch {
     private HashSet<String> linksSet;
 
 
-    public BookSearch(BookStore bookStore, HashSet<String> links) throws ResponseException, NotFound, IOException {
+    public BookSearch(BookStore bookStore, HashSet<String> links) {
         this.bookStore = bookStore;
         this.linksSet = links;
     }
@@ -37,22 +37,7 @@ public class BookSearch {
         }
     }
 
-    private void searchBooks() throws IOException, ResponseException {
 
-
-//			titles = userAgent.doc.findEvery("<p class=h2>").findEvery("<a>");
-//			create();
-//			titles = userAgent.doc.findEvery("<div class=product-name>").findEvery("<h2>").findEvery("<a>");
-//			create();
-//			titles = userAgent.doc.findEvery("<div class=emp-product-tile>").findEvery("<a>").findEach("<h3>");
-//			create();
-//			titles = userAgent.doc.findEach("<ul class=productslist>").findEvery("<li>").findEvery("<h3>")
-//					.findEach("<a>");
-//			create();
-//			titles = userAgent.doc.findEvery("<article>").findEvery("<ul class=list has-ad-right>").findEvery("<div>")
-//					.findEvery("<li>").findEvery("<a>");
-//			create();
-    }
 
     public void borixSearchBooks(String link) throws ResponseException, NotFound {
         UserAgent userAgent = new UserAgent();
@@ -64,12 +49,17 @@ public class BookSearch {
         while (bookIterator.hasNext()) {
             Element bookElement = bookIterator.next();
             Element titlesElements = bookElement.findFirst("<a class=word-break>");
+
             Element categoryElements = bookElement.findFirst("<ul class=item-details>").findFirst("li");
+
+
             Book book = new Book(titlesElements.getText(), categoryElements.getText(), bookStore);
             BookDAO bookDAO = new BookDAO();
             bookDAO.persist(book);
         }
     }
+
+
 
 //    public void borixSearchBooks(String link) throws ResponseException, NotFound {
 //        UserAgent userAgent = new UserAgent();
@@ -96,6 +86,23 @@ public class BookSearch {
     @Override
     public String toString() {
         return "BookSearch [" + bookStore.toString() + "]";
+    }
+
+    private void searchBooks() throws IOException, ResponseException {
+
+
+//			titles = userAgent.doc.findEvery("<p class=h2>").findEvery("<a>");
+//			create();
+//			titles = userAgent.doc.findEvery("<div class=product-name>").findEvery("<h2>").findEvery("<a>");
+//			create();
+//			titles = userAgent.doc.findEvery("<div class=emp-product-tile>").findEvery("<a>").findEach("<h3>");
+//			create();
+//			titles = userAgent.doc.findEach("<ul class=productslist>").findEvery("<li>").findEvery("<h3>")
+//					.findEach("<a>");
+//			create();
+//			titles = userAgent.doc.findEvery("<article>").findEvery("<ul class=list has-ad-right>").findEvery("<div>")
+//					.findEvery("<li>").findEvery("<a>");
+//			create();
     }
 
 }

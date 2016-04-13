@@ -14,7 +14,7 @@ public class BookSearchEngine {
 
         BookStoreDAO bookStoreDAO=new BookStoreDAO();
 //        bookStoreDAO.persist(new BookStore("dasds"));
-        final List<BookStore> bookStores = bookStoreDAO.getBookStores();
+        List<BookStore> bookStores = bookStoreDAO.getBookStores();
 
         System.out.println(bookStores.size());
         System.out.println(bookStores.get(0).toString());

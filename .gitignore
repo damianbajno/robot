@@ -3,6 +3,9 @@
 
 ### Eclipse ###
 
+*.csv
+*.iml
+
 .metadata
 bin/
 tmp/

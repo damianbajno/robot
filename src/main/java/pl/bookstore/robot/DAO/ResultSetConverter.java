@@ -33,8 +33,7 @@ public class ResultSetConverter {
         List<BookStore> bookStores = new ArrayList<BookStore>();
         try {
             while (resultSet.next()) {
-                String url = resultSet.getString("url");
-                System.out.println("urlda = "+url);
+                String url = resultSet.getString(1);
                 BookStore bookStore = new BookStore(url);
                 bookStores.add(bookStore);
             }
