@@ -28,9 +28,7 @@ public class UrlUtils {
         int urlEndIndex;
 
         if ((urlBeginningIndex = (url.indexOf('/') + 2))==1) urlBeginningIndex=0;
-        System.out.println(urlBeginningIndex);
         if ((urlEndIndex = url.indexOf('/', urlBeginningIndex))<4) urlEndIndex=url.length();
-        System.out.println(urlEndIndex);
         return url.substring(urlBeginningIndex, urlEndIndex);
     }
 }

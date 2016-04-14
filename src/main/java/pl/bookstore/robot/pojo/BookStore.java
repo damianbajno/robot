@@ -1,7 +1,5 @@
 package pl.bookstore.robot.pojo;
 
-import pl.bookstore.robot.utils.UrlUtils;
-
 /**
  * Created by damian on 30.03.16.
  */
@@ -12,9 +10,16 @@ public class BookStore {
     private String searchForTitle;
     private String searchForCategory;
 
+    public BookStore(String name, String url, String searchForElement, String searchForTitle, String searchForCategory) {
+        this.name = name;
+        this.url = url;
+        this.searchForElement = searchForElement;
+        this.searchForTitle = searchForTitle;
+        this.searchForCategory = searchForCategory;
+    }
+
     public BookStore(String url) {
         this.url = url;
-        this.name= UrlUtils.getUrlToMainPage(url);
     }
 
     public String getUrl() {
@@ -31,6 +36,39 @@ public class BookStore {
                 "name='" + name + '\'' +
                 ", url='" + url + '\'' +
                 '}';
+    }
+
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getSearchForElement() {
+        return searchForElement;
+    }
+
+    public void setSearchForElement(String searchForElement) {
+        this.searchForElement = searchForElement;
+    }
+
+    public String getSearchForTitle() {
+        return searchForTitle;
+    }
+
+    public void setSearchForTitle(String searchForTitle) {
+        this.searchForTitle = searchForTitle;
+    }
+
+    public String getSearchForCategory() {
+        return searchForCategory;
+    }
+
+    public void setSearchForCategory(String searchForCategory) {
+        this.searchForCategory = searchForCategory;
     }
 
     @Override
@@ -59,4 +97,6 @@ public class BookStore {
         result = 31 * result + (searchForCategory != null ? searchForCategory.hashCode() : 0);
         return result;
     }
+
+
 }

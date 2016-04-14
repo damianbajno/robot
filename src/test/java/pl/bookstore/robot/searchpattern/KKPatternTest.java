@@ -2,7 +2,7 @@ package pl.bookstore.robot.searchpattern;
 
 import org.testng.annotations.Test;
 import static org.assertj.core.api.Assertions.*;
-public class TestsKKPattern {
+public class KKPatternTest {
 
 	@Test
 	public void jezeliSlowaSaTakieSame()

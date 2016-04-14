@@ -1,4 +1,4 @@
-package pl.bookstore.robot.bookssearch;
+package pl.bookstore.robot.booksearch;
 
 import java.util.Arrays;
 import java.util.List;

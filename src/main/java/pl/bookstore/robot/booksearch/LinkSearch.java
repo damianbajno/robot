@@ -1,4 +1,4 @@
-package pl.bookstore.robot.bookssearch;
+package pl.bookstore.robot.booksearch;
 
 import com.jaunt.*;
 import org.apache.log4j.Logger;
@@ -6,7 +6,6 @@ import pl.bookstore.robot.pojo.BookStore;
 import pl.bookstore.robot.utils.UrlUtils;
 
 import java.util.HashSet;
-import java.util.Iterator;
 
 public class LinkSearch {
     private Logger logger = Logger.getLogger(LinkSearch.class);
@@ -41,7 +40,8 @@ public class LinkSearch {
                 if (matchesConditions(hyperLink)) {
                     logger.info("Site = " + hyperLink);
                     linksSet.add(hyperLink);
-                    searchHyperlinksOnSite(hyperLink);
+
+                    if (linksSet.size()<10) searchHyperlinksOnSite(hyperLink);
                 }
             }
         }
@@ -62,8 +62,8 @@ public class LinkSearch {
         return document;
     }
 
-    public Iterator<String> getIteratorWithHyperLinks(){
-        return linksSet.iterator();
+    public HashSet<String> getHyperLinks(){
+        return linksSet;
 
     }
 }

@@ -1,4 +1,4 @@
-package pl.bookstore.robot.bookssearch;
+package pl.bookstore.robot.booksearch;
 
 import org.assertj.core.api.Assertions;
 import org.testng.annotations.Test;

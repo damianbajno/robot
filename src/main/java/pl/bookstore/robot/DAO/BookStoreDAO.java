@@ -25,8 +25,8 @@ public class BookStoreDAO extends QueryDAO {
     }
 
     public void persist(BookStore bookStore) {
-        String insertBookQuery = "INSERT INTO " + tableName + " VALUES (\"" + bookStore.getName() + "\", \"" + bookStore.getUrl() + "\");";
-        System.out.println(insertBookQuery);
+        String insertBookQuery = "INSERT INTO " + tableName + " VALUES (\"" + bookStore.getName() + "\", \"" + bookStore.getUrl() + "\", \"" + bookStore.getSearchForElement() + "\", \"" + bookStore.getSearchForTitle() + "\", \"" + bookStore.getSearchForCategory() + "\");";
+        logger.info("Inserted query = "+insertBookQuery);
         updateQuery(insertBookQuery);
         logger.info(bookStore.toString() + " was added to table " + tableName);
     }
@@ -34,7 +34,7 @@ public class BookStoreDAO extends QueryDAO {
 
     public List<BookStore> getBookStores() {
         String query = "Select * from " + tableName;
-        logger.info("BookStores query = "+query);
+        logger.info("Executed query = "+query);
         ResultSet resultSet = selectQuery(query);
         List<BookStore> books = ResultSetConverter.convertToBookStore(resultSet);
         logger.info("BookStores selected from database");
