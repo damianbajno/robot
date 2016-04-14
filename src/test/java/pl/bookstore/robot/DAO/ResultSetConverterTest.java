@@ -64,7 +64,7 @@ public class ResultSetConverterTest {
     public void ifPutResoultSetWithBookStoreItReturnBookStore() {
         //given
         ResultSet resultSet = mock(ResultSet.class);
-        String url = "URL";
+        String url = "Name";
 
         setMock();
         try {

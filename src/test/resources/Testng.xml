@@ -5,6 +5,7 @@
     <test name="order">
         <classes>
             <class name="pl.bookstore.robot.booksearch.LinkSearchTest" />
+            <class name="pl.bookstore.robot.booksearch.BookSearchTest" />
 
             <class name="pl.bookstore.robot.DAO.QueryDAOTest" />
             <class name="pl.bookstore.robot.DAO.ResultSetConverterTest" />
@@ -15,4 +16,5 @@
             <class name="pl.bookstore.robot.utils.UrlUtilsTest"/>
         </classes>
     </test>
+
 </suite>

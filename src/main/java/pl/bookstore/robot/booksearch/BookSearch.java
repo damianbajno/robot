@@ -5,68 +5,74 @@ import org.apache.log4j.Logger;
 import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
 public class BookSearch {
-    private Logger logger = org.apache.log4j.Logger.getLogger(BookSearch.class);
+    private static Logger logger = Logger.getLogger(BookSearch.class);
 
     private BookStore bookStore;
     private List<Book> booksList;
 
     public BookSearch(BookStore bookStore) {
         this.bookStore = bookStore;
+        booksList=new ArrayList<Book>();
     }
 
     public List<Book> searchBooks() throws ResponseException, NotFound {
-        LinkSearch linkSearch = new LinkSearch(bookStore);
-        linkSearch.searchHyperlinksOnSiteAndSubsites();
-        HashSet<String> hyperLinks = linkSearch.getHyperLinks();
-
+        HashSet<String> hyperLinks = searchLinksOnSite();
         Iterator<String> linksIterator = hyperLinks.iterator();
-
-        logger.info("Started Searching books");
 
         while (linksIterator.hasNext()) {
             searchBooksOnSite(linksIterator.next());
         }
-        return booksList;
+
+        return this.booksList;
     }
 
-    public void searchBooksOnSite(String link) throws ResponseException, NotFound {
+    HashSet<String> searchLinksOnSite() {
+        LinkSearch linkSearch = new LinkSearch(bookStore);
+        linkSearch.searchHyperlinksOnSiteAndSubsites();
+        return linkSearch.getHyperLinks();
+    }
 
+    public List<Book> searchBooksOnSite(String link) throws ResponseException, NotFound {
         UserAgent userAgent = new UserAgent();
-        Document visit = userAgent.visit(link);
+        Document document = userAgent.visit(link);
+        return searchBooks(document);
+    }
 
-        Elements bookElements = visit.findEvery(bookStore.getSearchForElement());
+    public List<Book> searchBooks(Document document) {
+        Elements bookElements = document.findEvery(this.bookStore.getSearchForElement());
 
         Iterator<Element> bookElementsIterator = bookElements.iterator();
         while (bookElementsIterator.hasNext()) {
 
             try {
                 Element bookElement = bookElementsIterator.next();
-                Element elementTitle = bookElement.findFirst("<a class=\"word-break\">");
+                Element elementTitle = bookElement.findFirst(this.bookStore.getSearchForTitle());
 
-                String searchForCategory = bookStore.getSearchForCategory();
+                String searchForCategory = this.bookStore.getSearchForCategory();
 
                 Book book;
                 if (searchForCategory != null) {
-                    Element categoryElements = bookElement.findFirst("<ul class=\"item-details\">").findFirst("li");
-                    book = new Book(elementTitle.getText(), categoryElements.getText(), bookStore);
+                    Element categoryElements = bookElement.findFirst(this.bookStore.getSearchForCategory()).findFirst("li");
+                    book = new Book(elementTitle.getText().trim(), categoryElements.getText().trim(), this.bookStore);
                 } else {
-                    book = new Book(elementTitle.getText(), "brak", bookStore);
+                    book = new Book(elementTitle.getText(), "brak", this.bookStore);
                 }
 
-                booksList.add(book);
+                this.booksList.add(book);
                 logger.info("Book added to database " + book.toString());
             } catch (NotFound notFound) {
-                logger.error("NotFound exception");
                 logger.error(notFound.getMessage());
 
             }
 
         }
+        return this.booksList;
     }
 
 

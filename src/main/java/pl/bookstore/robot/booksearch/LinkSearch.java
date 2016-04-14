@@ -20,17 +20,23 @@ public class LinkSearch {
         mainPageAdress = UrlUtils.getUrlToMainPage(bookStore.getUrl());
     }
 
-    public void searchHyperlinksOnSiteAndSubsites() {
+    public HashSet<String> searchHyperlinksOnSiteAndSubsites() {
         try {
             searchHyperlinksOnSite(bookStore.getUrl());
         } catch (NotFound notFound) {
             logger.error("Site dosen't found " + bookStore.getUrl());
         }
+        return linksSet;
     }
 
-    private void searchHyperlinksOnSite(String link) throws NotFound {
+    protected HashSet<String> searchHyperlinksOnSite(String link) throws NotFound {
         Document document = visitPageAndGetDocument(link);
 
+        searchHyperLinkOnPage(document);
+        return linksSet;
+    }
+
+    protected HashSet<String> searchHyperLinkOnPage(Document document) throws NotFound {
         if (document != null) {
             Elements aElementsOnSite = document.findEvery("<a href>");
 
@@ -45,6 +51,7 @@ public class LinkSearch {
                 }
             }
         }
+        return linksSet;
     }
 
     boolean matchesConditions(String hyperLink) {
