@@ -15,23 +15,26 @@ public class LinkSearch {
     private String mainPageAdress;
     private BookStore bookStore;
 
-    public LinkSearch(BookStore bookStore) {
+    public LinkSearch(BookStore bookStore) throws NotFound, ResponseException {
         this.bookStore = bookStore;
         linksSet = new HashSet<>();
         mainPageAdress = UrlUtils.getUrlToMainPage(bookStore.getUrl());
     }
 
-    public void searchHyperlinksOnSiteAndSubsites() {
+    public boolean searchHyperlinksOnSiteAndSubsites() throws NotFound, ResponseException {
+        boolean flag = true;
         try {
             searchHyperlinksOnSite(bookStore.getUrl());
         } catch (NotFound notFound) {
             logger.error("Site dosen't found " + bookStore.getUrl());
+            return false;
         }
+        return flag;
     }
 
     private void searchHyperlinksOnSite(String link) throws NotFound {
         Document document = visitPageAndGetDocument(link);
-
+        boolean isTrue = false;
         if (document != null) {
             Elements aElementsOnSite = document.findEvery("<a href>");
 
@@ -45,6 +48,7 @@ public class LinkSearch {
                 }
             }
         }
+
     }
 
     boolean matchesConditions(String hyperLink) {

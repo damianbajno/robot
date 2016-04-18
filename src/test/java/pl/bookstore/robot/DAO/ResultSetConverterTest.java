@@ -11,7 +11,7 @@ import static org.mockito.Mockito.mock;
  */
 public class ResultSetConverterTest {
 
-    @Test
+   /* @Test
     public void ifPutResoultSetWithBooksItReturnBooks(){
         //given
         ResultSet resultSet= mock(ResultSet.class);
@@ -25,4 +25,5 @@ public class ResultSetConverterTest {
         //then
 
     }
+    */
 }
