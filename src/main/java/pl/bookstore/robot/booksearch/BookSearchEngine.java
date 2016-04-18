@@ -2,24 +2,29 @@ package pl.bookstore.robot.booksearch;
 
 import com.jaunt.NotFound;
 import com.jaunt.ResponseException;
-import pl.bookstore.robot.DAO.BookStoreDAO;
+import org.apache.log4j.Logger;
 import pl.bookstore.robot.pojo.BookStore;
-
-import java.util.List;
 
 /**
  * Created by damian on 31.03.16.
  */
 public class BookSearchEngine {
+    static Logger logger = Logger.getLogger(BookSearchEngine.class);
 
     public static void main(String[] args) {
+        logger.info("==== Book engine started ====");
 
-        BookStoreDAO bookStoreDAO=new BookStoreDAO();
-        List<BookStore> bookStores = bookStoreDAO.getBookStores();
+//        BookStoreDAO bookStoreDAO = new BookStoreDAO();
+//        List<BookStore> bookStores = bookStoreDAO.getBookStores();
 
-        BookSearch bookSearch=new BookSearch(bookStores.get(0));
+//        logger.info("BookStores List = "+bookStores.toString());
+
+        BookStore bookStoreGoodreads = new BookStore("goodreads", "https://www.goodreads.com/genres/business", "<div class=description descriptionContainer>", "<a class=bookTitle>", "brak");
+
+
+        BookSearch bookSearch = new BookSearch(bookStoreGoodreads);
         try {
-            bookSearch.searchBooksOnSite(bookStores.get(0).getUrl());
+            bookSearch.searchBooks();
         } catch (ResponseException e) {
             e.printStackTrace();
         } catch (NotFound notFound) {
