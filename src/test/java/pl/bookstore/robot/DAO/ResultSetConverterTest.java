@@ -37,7 +37,7 @@ public class ResultSetConverterTest {
     }
 
     @Test
-    public void ifPutResoultSetWithBookItReturnBook() {
+    public void ifPutResultSetWithBookItReturnBook() {
         //given
         ResultSet resultSet = mock(ResultSet.class);
         setMock();
@@ -61,7 +61,7 @@ public class ResultSetConverterTest {
     }
 
     @Test
-    public void ifPutResoultSetWithBookStoreItReturnBookStore() {
+    public void ifPutResultSetWithBookStoreItReturnBookStore() {
         //given
         ResultSet resultSet = mock(ResultSet.class);
         String url = "Name";

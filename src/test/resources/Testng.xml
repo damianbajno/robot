@@ -3,10 +3,11 @@
 <suite name="AllTests">
 
     <test name="order">
+        <packages>
+            <package name="pl.bookstore.robot.booksearch"/>
+            
+        </packages>
         <classes>
-            <class name="pl.bookstore.robot.booksearch.LinkSearchTest" />
-            <class name="pl.bookstore.robot.booksearch.BookSearchTest" />
-
             <class name="pl.bookstore.robot.DAO.QueryDAOTest" />
             <class name="pl.bookstore.robot.DAO.ResultSetConverterTest" />
 

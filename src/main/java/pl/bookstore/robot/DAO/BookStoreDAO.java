@@ -25,7 +25,7 @@ public class BookStoreDAO extends QueryDAO {
     }
 
     public void persist(BookStore bookStore) {
-        String insertBookQuery = "INSERT INTO " + tableName + " VALUES (\"" + bookStore.getName() + "\", \"" + bookStore.getUrl() + "\", \"" + bookStore.getSearchForElement() + "\", \"" + bookStore.getSearchForTitle() + "\", \"" + bookStore.getSearchForCategory() + "\");";
+        String insertBookQuery = "INSERT INTO " + tableName + " VALUES (\"" + bookStore.getName() + "\", \"" + bookStore.getUrl() + "\", \"" + bookStore.getSearchForBook() + "\", \"" + bookStore.getSearchForTitle() + "\", \"" + bookStore.getSearchForCategory() + "\");";
         logger.info("Inserted query = "+insertBookQuery);
         updateQuery(insertBookQuery);
         logger.info(bookStore.toString() + " was added to table " + tableName);

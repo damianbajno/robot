@@ -35,9 +35,11 @@ public class BookStore {
         return "BookStore{" +
                 "name='" + name + '\'' +
                 ", url='" + url + '\'' +
+                ", searchForElement='" + searchForElement + '\'' +
+                ", searchForTitle='" + searchForTitle + '\'' +
+                ", searchForCategory='" + searchForCategory + '\'' +
                 '}';
     }
-
 
     public void setName(String name) {
         this.name = name;
@@ -47,7 +49,7 @@ public class BookStore {
         this.url = url;
     }
 
-    public String getSearchForElement() {
+    public String getSearchForBook() {
         return searchForElement;
     }
 

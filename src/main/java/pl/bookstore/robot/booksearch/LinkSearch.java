@@ -21,22 +21,24 @@ public class LinkSearch {
     }
 
     public HashSet<String> searchHyperlinksOnSiteAndSubsites() {
+        searchHyperLinksOnSite(bookStore.getUrl());
+        logger.error("Site dosen't found " + bookStore.getUrl());
+        return linksSet;
+    }
+
+    HashSet<String> searchHyperLinksOnSite(String link) {
         try {
-            searchHyperlinksOnSite(bookStore.getUrl());
+            logger.info("Searching Links on page " + link);
+            Document document = visitPageAndGetDocument(link);
+            searchHyperLinksOnPage(document);
         } catch (NotFound notFound) {
-            logger.error("Site dosen't found " + bookStore.getUrl());
+            notFound.printStackTrace();
+            logger.error(notFound.getMessage());
         }
         return linksSet;
     }
 
-    protected HashSet<String> searchHyperlinksOnSite(String link) throws NotFound {
-        Document document = visitPageAndGetDocument(link);
-
-        searchHyperLinkOnPage(document);
-        return linksSet;
-    }
-
-    protected HashSet<String> searchHyperLinkOnPage(Document document) throws NotFound {
+    HashSet<String> searchHyperLinksOnPage(Document document) throws NotFound {
         if (document != null) {
             Elements aElementsOnSite = document.findEvery("<a href>");
 
@@ -44,10 +46,10 @@ public class LinkSearch {
                 String hyperLink = aElementOnSite.getAt("href").toString();
 
                 if (matchesConditions(hyperLink)) {
-                    logger.info("Site = " + hyperLink);
+                    logger.info("Site added to LinksSet = " + hyperLink);
                     linksSet.add(hyperLink);
 
-                    if (linksSet.size()<10) searchHyperlinksOnSite(hyperLink);
+                    if (linksSet.size() < 10) searchHyperLinksOnSite(hyperLink);
                 }
             }
         }
@@ -61,16 +63,27 @@ public class LinkSearch {
     private Document visitPageAndGetDocument(String link) {
         Document document = null;
         try {
-            UserAgent userAgent = new UserAgent();
-            document = userAgent.visit(link);
+            document = new UserAgent().visit(link);
         } catch (ResponseException e) {
             e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return document;
     }
 
-    public HashSet<String> getHyperLinks(){
-        return linksSet;
+    final int CONNECTED_SUCCESSFUL = 200;
 
+    public boolean checkUrl() throws ResponseException {
+        int status = 0;
+        String url=null;
+        try {
+            url = bookStore.getUrl();
+            HttpResponse httpResponse = new UserAgent().sendHEAD(url);
+            status = httpResponse.getStatus();
+        } catch (ResponseException e) {
+            e.printStackTrace();
+            logger.error(url+" status " +status);
+        }
+        return status == CONNECTED_SUCCESSFUL;
     }
 }

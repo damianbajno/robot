@@ -20,8 +20,7 @@ public class QueryDAO extends DAO {
         try  {
             statement.executeUpdate(query);
         } catch (SQLException e) {
-            logger.error(e);
-            e.printStackTrace();
+            logger.error(e.getMessage()+query);
         }
     }
 

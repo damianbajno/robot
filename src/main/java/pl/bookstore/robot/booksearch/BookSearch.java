@@ -2,23 +2,23 @@ package pl.bookstore.robot.booksearch;
 
 import com.jaunt.*;
 import org.apache.log4j.Logger;
+import pl.bookstore.robot.DAO.BookDAO;
 import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class BookSearch {
     private static Logger logger = Logger.getLogger(BookSearch.class);
 
     private BookStore bookStore;
     private List<Book> booksList;
+    private BookDAO bookDAO;
 
     public BookSearch(BookStore bookStore) {
         this.bookStore = bookStore;
         booksList=new ArrayList<Book>();
+        bookDAO=new BookDAO();
     }
 
     public List<Book> searchBooks() throws ResponseException, NotFound {
@@ -34,52 +34,56 @@ public class BookSearch {
 
     HashSet<String> searchLinksOnSite() {
         LinkSearch linkSearch = new LinkSearch(bookStore);
-        linkSearch.searchHyperlinksOnSiteAndSubsites();
-        return linkSearch.getHyperLinks();
+        return linkSearch.searchHyperlinksOnSiteAndSubsites();
     }
 
-    public List<Book> searchBooksOnSite(String link) throws ResponseException, NotFound {
-        UserAgent userAgent = new UserAgent();
-        Document document = userAgent.visit(link);
-        return searchBooks(document);
+    public List<Book> searchBooksOnSite(String link) {
+        try {
+            UserAgent userAgent = new UserAgent();
+            logger.info("Searching book on site = "+link);
+            Document document = userAgent.visit(link);
+            return searchBooks(document);
+        } catch (ResponseException e) {
+            logger.error(e.getStackTrace().toString());
+        }
+        return Collections.emptyList();
     }
 
-    public List<Book> searchBooks(Document document) {
-        Elements bookElements = document.findEvery(this.bookStore.getSearchForElement());
+        public List<Book> searchBooks (Document document){
+            Elements bookElements = document.findEvery(this.bookStore.getSearchForBook());
 
-        Iterator<Element> bookElementsIterator = bookElements.iterator();
-        while (bookElementsIterator.hasNext()) {
+            Iterator<Element> bookElementsIterator = bookElements.iterator();
+            while (bookElementsIterator.hasNext()) {
 
-            try {
-                Element bookElement = bookElementsIterator.next();
-                Element elementTitle = bookElement.findFirst(this.bookStore.getSearchForTitle());
+                try {
+                    Element bookElement = bookElementsIterator.next();
+                    Element elementTitle = bookElement.findFirst(this.bookStore.getSearchForTitle());
 
-                String searchForCategory = this.bookStore.getSearchForCategory();
+                    String searchForCategory = this.bookStore.getSearchForCategory();
 
-                Book book;
-                if (searchForCategory != null) {
-                    Element categoryElements = bookElement.findFirst(this.bookStore.getSearchForCategory()).findFirst("li");
-                    book = new Book(elementTitle.getText().trim(), categoryElements.getText().trim(), this.bookStore);
-                } else {
-                    book = new Book(elementTitle.getText(), "brak", this.bookStore);
+                    Book book;
+                    if (searchForCategory != "brak") {
+                        Element categoryElements = bookElement.findFirst(this.bookStore.getSearchForCategory()).findFirst("<li>");
+                        book = new Book(elementTitle.getText().trim(), categoryElements.getText().trim(), this.bookStore);
+                    } else {
+                        book = new Book(elementTitle.getText().trim(), "brak", this.bookStore);
+                    }
+
+                    this.booksList.add(book);
+                    bookDAO.persist(book);
+                    logger.info("Book added to database " + book.toString());
+                } catch (NotFound notFound) {
+                    logger.error(notFound.getMessage());
+
                 }
 
-                this.booksList.add(book);
-                logger.info("Book added to database " + book.toString());
-            } catch (NotFound notFound) {
-                logger.error(notFound.getMessage());
-
             }
-
+            return this.booksList;
         }
-        return this.booksList;
-    }
 
 
-    @Override
-    public String toString() {
-        return "BookSearch [" + bookStore.toString() + "]";
-    }
-
-
+        @Override
+        public String toString () {
+            return "BookSearch [" + bookStore.toString() + "]";
+        }
 }
