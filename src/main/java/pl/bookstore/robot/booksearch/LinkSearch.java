@@ -1,4 +1,4 @@
-package pl.bookstore.robot.bookssearch;
+package pl.bookstore.robot.booksearch;
 
 import com.jaunt.*;
 import org.apache.log4j.Logger;
@@ -15,26 +15,29 @@ public class LinkSearch {
     private String mainPageAdress;
     private BookStore bookStore;
 
-    public LinkSearch(BookStore bookStore) throws NotFound, ResponseException {
+    public LinkSearch(BookStore bookStore) {
         this.bookStore = bookStore;
         linksSet = new HashSet<>();
         mainPageAdress = UrlUtils.getUrlToMainPage(bookStore.getUrl());
     }
 
-    public boolean searchHyperlinksOnSiteAndSubsites() throws NotFound, ResponseException {
-        boolean flag = true;
+    public HashSet<String> searchHyperlinksOnSiteAndSubsites() {
         try {
             searchHyperlinksOnSite(bookStore.getUrl());
         } catch (NotFound notFound) {
             logger.error("Site dosen't found " + bookStore.getUrl());
-            return false;
         }
-        return flag;
+        return linksSet;
     }
 
-    private void searchHyperlinksOnSite(String link) throws NotFound {
+    protected HashSet<String> searchHyperlinksOnSite(String link) throws NotFound {
         Document document = visitPageAndGetDocument(link);
-        boolean isTrue = false;
+
+        searchHyperLinkOnPage(document);
+        return linksSet;
+    }
+
+    protected HashSet<String> searchHyperLinkOnPage(Document document) throws NotFound {
         if (document != null) {
             Elements aElementsOnSite = document.findEvery("<a href>");
 
@@ -44,11 +47,12 @@ public class LinkSearch {
                 if (matchesConditions(hyperLink)) {
                     logger.info("Site = " + hyperLink);
                     linksSet.add(hyperLink);
-                    searchHyperlinksOnSite(hyperLink);
+
+                    if (linksSet.size()<10) searchHyperlinksOnSite(hyperLink);
                 }
             }
         }
-
+        return linksSet;
     }
 
     boolean matchesConditions(String hyperLink) {
@@ -66,8 +70,8 @@ public class LinkSearch {
         return document;
     }
 
-    public Iterator<String> getIteratorWithHyperLinks(){
-        return linksSet.iterator();
+    public HashSet<String> getHyperLinks(){
+        return linksSet;
 
     }
 }

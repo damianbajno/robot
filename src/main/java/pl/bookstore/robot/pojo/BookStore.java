@@ -25,6 +25,15 @@ public class BookStore {
     private String searchForTitle;
     private String searchForCategory;
 
+    public BookStore(String name, String url, String searchForElement, String searchForTitle, String searchForCategory) {
+        this.name = name;
+        this.url = url;
+        this.searchForElement = searchForElement;
+        this.searchForTitle = searchForTitle;
+        this.searchForCategory = searchForCategory;
+    }
+
+    public BookStore(String url) {
     public BookStore(){}
 
     public BookStore(String name, String url, String searchForElement, String searchForTitle, String searchForCategory) {

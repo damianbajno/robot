@@ -13,7 +13,7 @@ import java.util.List;
  * Created by damian on 30.03.16.
  */
 public class ResultSetConverter {
-    private static Logger logger= org.apache.log4j.Logger.getLogger(ResultSetConverter.class);
+    private static Logger logger = org.apache.log4j.Logger.getLogger(ResultSetConverter.class);
 
     public static List<Book> convertToBook(ResultSet resultSet) {
         List<Book> books = new ArrayList<Book>();
@@ -33,9 +33,7 @@ public class ResultSetConverter {
         List<BookStore> bookStores = new ArrayList<BookStore>();
         try {
             while (resultSet.next()) {
-                String url = resultSet.getString("url");
-                System.out.println("urlda = "+url);
-                BookStore bookStore = new BookStore(url);
+                BookStore bookStore = new BookStore(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5));
                 bookStores.add(bookStore);
             }
         } catch (SQLException e) {

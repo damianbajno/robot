@@ -1,7 +1,5 @@
 package pl.bookstore.robot.DAO;
 
-import com.jaunt.NotFound;
-import com.jaunt.ResponseException;
 import org.apache.log4j.Logger;
 import pl.bookstore.robot.pojo.BookStore;
 import pl.bookstore.robot.utils.PojoUtils;
@@ -26,9 +24,9 @@ public class BookStoreDAO extends QueryDAO {
         logger.info("BookStore Table was created with query: " + createTableQuery);
     }
 
-    public void persist(BookStore bookStore)  {
-        String insertBookQuery = "INSERT INTO " + tableName + " VALUES (\"" + bookStore.getName() + "\", \"" + bookStore.getUrl() + "\");";
-        System.out.println(insertBookQuery);
+    public void persist(BookStore bookStore) {
+        String insertBookQuery = "INSERT INTO " + tableName + " VALUES (\"" + bookStore.getName() + "\", \"" + bookStore.getUrl() + "\", \"" + bookStore.getSearchForElement() + "\", \"" + bookStore.getSearchForTitle() + "\", \"" + bookStore.getSearchForCategory() + "\");";
+        logger.info("Inserted query = "+insertBookQuery);
         updateQuery(insertBookQuery);
         logger.info(bookStore.toString() + " was added to table " + tableName);
     }

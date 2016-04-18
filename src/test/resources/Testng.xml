@@ -1,0 +1,20 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="AllTests">
+
+    <test name="order">
+        <classes>
+            <class name="pl.bookstore.robot.booksearch.LinkSearchTest" />
+            <class name="pl.bookstore.robot.booksearch.BookSearchTest" />
+
+            <class name="pl.bookstore.robot.DAO.QueryDAOTest" />
+            <class name="pl.bookstore.robot.DAO.ResultSetConverterTest" />
+
+            <class name="pl.bookstore.robot.searchpattern.KKPatternTest" />
+
+            <class name="pl.bookstore.robot.utils.PojoUtilsTest"/>
+            <class name="pl.bookstore.robot.utils.UrlUtilsTest"/>
+        </classes>
+    </test>
+
+</suite>
