@@ -1,13 +1,19 @@
 package pl.bookstore.robot.DAO;
 
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.testng.annotations.BeforeMethod;
+import pl.bookstore.robot.pojo.Book;
+import pl.bookstore.robot.pojo.BookStore;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by damian on 08.04.16.

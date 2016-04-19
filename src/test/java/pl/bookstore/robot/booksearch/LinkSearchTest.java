@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Created by damian on 06.04.16.
  */
-public class LinkSearchTest {
+public class    LinkSearchTest {
 
     @Test
     public void ifRightLinkMachesCondition(){
@@ -48,7 +48,7 @@ public class LinkSearchTest {
 
     public String getHtmlPage() {
         String bookElement = new String("<a class=\"word-break\" href=\"/_ebook-h-n-s-new-life/\">New Life </a>" +
-                "<a href=\"/search;keywords:romance,searchoption:books.html\">Romance</a>");
+                "<a href=\"http://www.bookrix.com/search;keywords:romance,searchoption:books.html\">Romance</a>");
         return bookElement;
     }
 

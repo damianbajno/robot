@@ -17,9 +17,9 @@ import java.util.List;
  */
 
 public class BookPersister {
-    Logger logger = Logger.getLogger(BookPersister.class);
-    SessionFactory sessionFactory;
-    Session session;
+     Logger logger = Logger.getLogger(BookPersister.class);
+     SessionFactory sessionFactory;
+     Session session;
 
     public BookPersister(){
 
@@ -30,6 +30,8 @@ public class BookPersister {
         Session  session = sessionFactory.openSession();
         session.beginTransaction();
         session.save(new Book());
+        session.getTransaction().commit();
+        sessionFactory.close();
 
     }
     public  boolean openSession(){
@@ -41,7 +43,7 @@ public class BookPersister {
 
         return true;
     }
-    public boolean closeSession(){
+    public  boolean closeSession(){
         session.getTransaction().commit();
         if (session.getTransaction().getStatus() != TransactionStatus.COMMITTED) {
             logger.error("Session status different than COMITTED");
@@ -53,7 +55,7 @@ public class BookPersister {
         return true;
     }
 
-    public boolean saveBookStore(List<BookStore> bookStoreList){
+    public  boolean saveBookStore(List<BookStore> bookStoreList){
         bookStoreList.forEach(booksStore -> session.save(booksStore) );
         logger.info("Book stores saved in database");
 
@@ -71,7 +73,7 @@ public class BookPersister {
         return bookFromDB;
     }
 
-    public boolean saveBooks(List<Book> bookList) {
+    public  boolean saveBooks(List<Book> bookList) {
         bookList.forEach(books -> session.save(books));
         logger.info("Book saved in database");
 
