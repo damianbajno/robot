@@ -1,9 +1,13 @@
 package pl.bookstore.robot.pojo;
 
-/**
- * Created by damian on 30.03.16.
- */
+import javax.persistence.*;
+
+@Entity
+@Table(name = "Book")
 public class Book {
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private int id;
     private String title;
     private String category;
     private String bookStoreName;
@@ -22,6 +26,12 @@ public class Book {
         this.category = category;
         this.bookStoreName = bookStore.getName();
     }
+
+    public Book() {
+    }
+    public int getId() {return id;}
+
+    public void setId(int id) {this.id = id;}
 
     public String getTitle() {
         return title;

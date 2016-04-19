@@ -63,6 +63,7 @@ public class BookSearch {
 
                     Book book;
                     if (searchForCategory != "brak") {
+
                         Element categoryElements = bookElement.findFirst(this.bookStore.getSearchForCategory()).findFirst("<li>");
                         book = new Book(elementTitle.getText().trim(), categoryElements.getText().trim(), this.bookStore);
                     } else {

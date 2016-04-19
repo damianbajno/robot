@@ -34,7 +34,7 @@ public class BookStoreDAO extends QueryDAO {
 
     public List<BookStore> getBookStores() {
         String query = "Select * from " + tableName;
-        logger.info("Executed query = "+query);
+        logger.info("BookStores query = "+query);
         ResultSet resultSet = selectQuery(query);
         List<BookStore> books = ResultSetConverter.convertToBookStore(resultSet);
         logger.info("BookStores selected from database");

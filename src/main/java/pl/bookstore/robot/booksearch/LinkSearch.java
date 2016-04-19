@@ -6,6 +6,7 @@ import pl.bookstore.robot.pojo.BookStore;
 import pl.bookstore.robot.utils.UrlUtils;
 
 import java.util.HashSet;
+import java.util.Iterator;
 
 public class LinkSearch {
     private Logger logger = Logger.getLogger(LinkSearch.class);

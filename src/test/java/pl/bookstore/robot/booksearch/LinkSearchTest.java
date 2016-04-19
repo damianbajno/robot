@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Created by damian on 06.04.16.
  */
-public class LinkSearchTest {
+public class    LinkSearchTest {
 
     @Test
     public void ifRightLinkMatchesCondition(){

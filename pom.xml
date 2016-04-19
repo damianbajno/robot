@@ -10,7 +10,8 @@
 	<version>1.0-SNAPSHOT</version>
 	<name>robot</name>
 	<url>http://maven.apache.org</url>
-
+<prerequisites>
+		</prerequisites>
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
@@ -20,11 +21,16 @@
 	<dependencies>
 
 		<dependency>
-			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.0-api</artifactId>
-			<version>1.0.1.Final</version>
+			<groupId>com.juant.code</groupId>
+			<artifactId>jaunt</artifactId>
+			<version>1.1.5</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>5.1.0.Final</version>
+		</dependency>
 		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
@@ -42,6 +48,12 @@
 			<artifactId>mockito-all</artifactId>
 			<version>1.10.19</version>
 		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>6.0.2</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>org.xerial</groupId>
@@ -54,11 +66,7 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
 		</dependency>
-		<dependency>
-			<groupId>com.jaunt.code</groupId>
-			<artifactId>juant</artifactId>
-			<version>1.1.5</version>
-		</dependency>
+
 	</dependencies>
 	<build>
 		<plugins>

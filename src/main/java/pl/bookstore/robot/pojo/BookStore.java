@@ -1,14 +1,33 @@
 package pl.bookstore.robot.pojo;
 
+import com.jaunt.NotFound;
+import com.jaunt.ResponseException;
+
+
+import pl.bookstore.robot.utils.UrlUtils;
+
+import javax.persistence.*;
+
 /**
  * Created by damian on 30.03.16.
  */
+
+@Entity
+@Table(name = "BookStore")
 public class BookStore {
+
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private int id;
     private String name;
     private String url;
     private String searchForElement;
     private String searchForTitle;
     private String searchForCategory;
+
+
+    public BookStore(String url){this.url=url;}
+    public BookStore(){}
 
     public BookStore(String name, String url, String searchForElement, String searchForTitle, String searchForCategory) {
         this.name = name;
@@ -18,8 +37,8 @@ public class BookStore {
         this.searchForCategory = searchForCategory;
     }
 
-    public BookStore(String url) {
-        this.url = url;
+    public int getId() {
+        return id;
     }
 
     public String getUrl() {
@@ -45,8 +64,8 @@ public class BookStore {
         this.name = name;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getSearchForBook() {
@@ -57,14 +76,6 @@ public class BookStore {
         this.searchForElement = searchForElement;
     }
 
-    public String getSearchForTitle() {
-        return searchForTitle;
-    }
-
-    public void setSearchForTitle(String searchForTitle) {
-        this.searchForTitle = searchForTitle;
-    }
-
     public String getSearchForCategory() {
         return searchForCategory;
     }
@@ -73,32 +84,16 @@ public class BookStore {
         this.searchForCategory = searchForCategory;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        BookStore bookStore = (BookStore) o;
-
-        if (name != null ? !name.equals(bookStore.name) : bookStore.name != null) return false;
-        if (url != null ? !url.equals(bookStore.url) : bookStore.url != null) return false;
-        if (searchForElement != null ? !searchForElement.equals(bookStore.searchForElement) : bookStore.searchForElement != null)
-            return false;
-        if (searchForTitle != null ? !searchForTitle.equals(bookStore.searchForTitle) : bookStore.searchForTitle != null)
-            return false;
-        return searchForCategory != null ? searchForCategory.equals(bookStore.searchForCategory) : bookStore.searchForCategory == null;
-
+    public String getSearchForTitle() {
+        return searchForTitle;
     }
 
-    @Override
-    public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (url != null ? url.hashCode() : 0);
-        result = 31 * result + (searchForElement != null ? searchForElement.hashCode() : 0);
-        result = 31 * result + (searchForTitle != null ? searchForTitle.hashCode() : 0);
-        result = 31 * result + (searchForCategory != null ? searchForCategory.hashCode() : 0);
-        return result;
+    public void setSearchForTitle(String searchForTitle) {
+        this.searchForTitle = searchForTitle;
     }
 
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
 }
