@@ -26,6 +26,7 @@ public class GuiApp extends Application {
 
 		activeLibrariesList.add(new String("Ekiosk24"));
 		activeLibrariesList.add(new String("Pwn"));
+		//Damian
 	}
 
 	public ObservableList<String> getAllLibrariesList() {
