@@ -36,20 +36,39 @@ public class BookStore {
         this.searchForTitle = searchForTitle;
         this.searchForCategory = searchForCategory;
     }
-    //public BookStore(String name){this.name = name;}
-    /**
-     * @info
-     * Getters and setters created for hibernate
-     */
+
     public int getId() {
         return id;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        return "BookStore{" +
+                "name='" + name + '\'' +
+                ", url='" + url + '\'' +
+                ", searchForElement='" + searchForElement + '\'' +
+                ", searchForTitle='" + searchForTitle + '\'' +
+                ", searchForCategory='" + searchForCategory + '\'' +
+                '}';
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public String getSearchForElement() {
+    public String getSearchForBook() {
         return searchForElement;
     }
 
@@ -77,23 +96,4 @@ public class BookStore {
         this.url = url;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String toString() {
-        return "BookStore{" +
-                "name='" + name + '\'' +
-                ", url='" + url + '\'' +
-                '}';
-    }
 }
