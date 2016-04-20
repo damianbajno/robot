@@ -2,20 +2,19 @@ package pl.bookstore.robot.view;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.util.Callback;
+import pl.bookstore.robot.pojo.BookStore;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LibrariesControl implements Initializable {
 	@FXML
-	private ListView<String> allLibraries;
+	private ListView<BookStore> allLibraries;
 	@FXML
-	private ListView<String> activeLibraries;
+	private ListView<BookStore> activeLibraries;
 	@FXML
 	private TextArea booksPromotion;
 	@FXML
@@ -27,6 +26,7 @@ public class LibrariesControl implements Initializable {
 	private GuiApp mainApp = new GuiApp();
 
 	public LibrariesControl() {
+
 	}
 
 	public void setMain(GuiApp mainApp) {
@@ -40,7 +40,22 @@ public class LibrariesControl implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		// ObservableList<String> librariesList = mainApp.getLibrariesList();
 		allLibraries.setItems(mainApp.getAllLibrariesList());
+		final Callback<ListView<BookStore>, ListCell<BookStore>> listCellBookStore = new Callback<ListView<BookStore>, ListCell<BookStore>>() {
+			@Override
+			public ListCell<BookStore> call(ListView<BookStore> param) {
+				return new ListCell<BookStore>() {
+					@Override
+					protected void updateItem(BookStore item, boolean empty) {
+						super.updateItem(item, empty);
+						if (item != null) setText(item.getName());
+					}
+				};
+			}
+		};
+
+		allLibraries.setCellFactory(listCellBookStore);
 		activeLibraries.setItems(mainApp.getActiveLibrariesList());
+		activeLibraries.setCellFactory(listCellBookStore);
 	}
 
 	@FXML
@@ -55,7 +70,6 @@ public class LibrariesControl implements Initializable {
 			alert.setTitle("No Selection");
 			alert.setHeaderText("No Library Selected");
 			alert.setContentText("Please select a library.");
-
 			alert.showAndWait();
 		}
 	}

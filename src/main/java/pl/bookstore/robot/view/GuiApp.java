@@ -7,34 +7,33 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import pl.bookstore.robot.DAO.BookStoreDAO;
+import pl.bookstore.robot.pojo.BookStore;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 
 public class GuiApp extends Application {
 
 	private Stage primaryStage;
 	private AnchorPane rootLayout;
 
-	private ObservableList<String> allLibrariesList = FXCollections.observableArrayList();
-	private ObservableList<String> activeLibrariesList = FXCollections.observableArrayList();
+	private ObservableList<BookStore> allLibrariesList = FXCollections.observableArrayList();
+	private ObservableList<BookStore> activeLibrariesList = FXCollections.observableArrayList();
 
 	public GuiApp() {
-		allLibrariesList.add(new String("Ekiosk24"));
-		allLibrariesList.add(new String("Gandalf"));
-		allLibrariesList.add(new String("Matras"));
-		allLibrariesList.add(new String("Pwn"));
+		BookStoreDAO bookStoreDAO=new BookStoreDAO();
+		List<BookStore> bookStores = bookStoreDAO.getBookStores();
 
-		activeLibrariesList.add(new String("Ekiosk24"));
-		activeLibrariesList.add(new String("Pwn"));
-		//Damian
+		allLibrariesList.addAll(bookStores);
 	}
 
-	public ObservableList<String> getAllLibrariesList() {
+	public ObservableList<BookStore> getAllLibrariesList() {
 		return allLibrariesList;
 	}
 
-	public ObservableList<String> getActiveLibrariesList() {
+	public ObservableList<BookStore> getActiveLibrariesList() {
 		return activeLibrariesList;
 	}
 
