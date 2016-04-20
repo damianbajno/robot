@@ -1,9 +1,8 @@
-package pl.bookstore.robot.Hibernate;
+package pl.bookstore.robot.hibernate;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
-import org.mockito.internal.matchers.Null;
 import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
 import java.util.List;

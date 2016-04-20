@@ -22,17 +22,6 @@
     </properties>
 
     <dependencies>
-        <!--<dependency>-->
-            <!--<groupId>com.oracle</groupId>-->
-            <!--<artifactId>javafx</artifactId>-->
-            <!--<systemPath>${java.home}/lib/jfxrt.jar</systemPath>-->
-            <!--<scope>system</scope>-->
-        <!--</dependency>-->
-        <dependency>
-            <groupId>com.zenjava</groupId>
-            <artifactId>javafx-maven-plugin</artifactId>
-            <version>8.4.0</version>
-        </dependency>
         <dependency>
             <groupId>com.jaunt.code</groupId>
             <artifactId>juant</artifactId>
@@ -74,21 +63,11 @@
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
         </dependency>
-
-
     </dependencies>
 
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>com.zenjava</groupId>
-                <artifactId>javafx-maven-plugin</artifactId>
-                <version>8.4.0</version>
-                <configuration>
-                    <mainClass>pl.bookstore.robot.GuiApp</mainClass>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>

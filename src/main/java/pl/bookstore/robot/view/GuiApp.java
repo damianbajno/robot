@@ -1,6 +1,4 @@
-package pl.bookstore.robot;
-
-import java.io.IOException;
+package pl.bookstore.robot.view;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -9,6 +7,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.net.URL;
 
 public class GuiApp extends Application {
 
@@ -42,14 +43,17 @@ public class GuiApp extends Application {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("Bookstore");
 
-		showBookstore();
+		showBookStore();
 	}
 
-	public void showBookstore() {
+	public void showBookStore() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(GuiApp.class.getResource("view/Libraries.fxml"));
-			rootLayout = (AnchorPane) loader.load();
+			URL url = getClass().getResource("/Libraries.fxml");
+			loader.setLocation(url);
+
+
+			rootLayout = loader.load();
 
 			Scene scene = new Scene(rootLayout);
 			primaryStage.setScene(scene);

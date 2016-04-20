@@ -1,7 +1,4 @@
-package pl.bookstore.robot.Hibernate;
-import static org.assertj.core.api.Assertions.*;
-import org.hibernate.SessionFactory;
-import org.mockito.Mock;
+package pl.bookstore.robot.hibernate;
 import org.mockito.Mockito;
 import org.testng.Assert;
 import org.testng.annotations.Test;

@@ -1,4 +1,4 @@
-package pl.bookstore.robot.Hibernate;
+package pl.bookstore.robot.hibernate;
 
 
 import org.hibernate.SessionFactory;

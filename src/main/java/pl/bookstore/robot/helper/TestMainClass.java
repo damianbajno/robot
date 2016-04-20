@@ -1,4 +1,4 @@
-package pl.bookstore.robot.test;
+package pl.bookstore.robot.helper;
 
 import pl.bookstore.robot.DAO.BookStoreDAO;
 import pl.bookstore.robot.pojo.BookStore;
