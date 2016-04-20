@@ -1,6 +1,6 @@
 package pl.bookstore.robot.utils;
 
-import org.junit.Test;
+import org.testng.annotations.Test;
 import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
 
@@ -19,7 +19,7 @@ public class PojoUtilsTest {
         String fieldsWithTypes = PojoUtils.getFieldsWithTypes(Book.class);
 
         //then
-        assertThat(fieldsWithTypes).isEqualTo("title String, category String");
+        assertThat(fieldsWithTypes).isEqualTo("id int not null unique, title String, category String, bookStoreName String");
     }
 
     @Test
@@ -30,6 +30,6 @@ public class PojoUtilsTest {
         String fieldsWithTypes = PojoUtils.getFieldsWithTypes(BookStore.class);
 
         //then
-        assertThat(fieldsWithTypes).isEqualTo("url String");
+        assertThat(fieldsWithTypes).isEqualTo("id int not null unique, name String, url String, searchForElement String, searchForTitle String, searchForCategory String");
     }
 }

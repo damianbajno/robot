@@ -1,10 +1,10 @@
 package pl.bookstore.robot.DAO;
 
 import org.assertj.core.api.Assertions;
-import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
 
