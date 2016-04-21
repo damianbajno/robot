@@ -1,10 +1,5 @@
 package pl.bookstore.robot.pojo;
 
-import com.jaunt.NotFound;
-import com.jaunt.ResponseException;
-
-
-import pl.bookstore.robot.utils.UrlUtils;
 
 import javax.persistence.*;
 
@@ -21,7 +16,7 @@ public class BookStore {
     private int id;
     private String name;
     private String url;
-    private String searchForElement;
+    private String searchForBook;
     private String searchForTitle;
     private String searchForCategory;
 
@@ -29,10 +24,10 @@ public class BookStore {
     public BookStore(String name){this.name=name;}
     public BookStore(){}
 
-    public BookStore(String name, String url, String searchForElement, String searchForTitle, String searchForCategory) {
+    public BookStore(String name, String url, String searchForBook, String searchForTitle, String searchForCategory) {
         this.name = name;
         this.url = url;
-        this.searchForElement = searchForElement;
+        this.searchForBook = searchForBook;
         this.searchForTitle = searchForTitle;
         this.searchForCategory = searchForCategory;
     }
@@ -54,7 +49,7 @@ public class BookStore {
         return "BookStore{" +
                 "name='" + name + '\'' +
                 ", url='" + url + '\'' +
-                ", searchForElement='" + searchForElement + '\'' +
+                ", searchForElement='" + searchForBook + '\'' +
                 ", searchForTitle='" + searchForTitle + '\'' +
                 ", searchForCategory='" + searchForCategory + '\'' +
                 '}';
@@ -69,11 +64,11 @@ public class BookStore {
     }
 
     public String getSearchForBook() {
-        return searchForElement;
+        return searchForBook;
     }
 
-    public void setSearchForElement(String searchForElement) {
-        this.searchForElement = searchForElement;
+    public void setSearchForBook(String searchForBook) {
+        this.searchForBook = searchForBook;
     }
 
     public String getSearchForCategory() {
@@ -106,7 +101,7 @@ public class BookStore {
         if (id != bookStore.id) return false;
         if (name != null ? !name.equals(bookStore.name) : bookStore.name != null) return false;
         if (url != null ? !url.equals(bookStore.url) : bookStore.url != null) return false;
-        if (searchForElement != null ? !searchForElement.equals(bookStore.searchForElement) : bookStore.searchForElement != null)
+        if (searchForBook != null ? !searchForBook.equals(bookStore.searchForBook) : bookStore.searchForBook != null)
             return false;
         if (searchForTitle != null ? !searchForTitle.equals(bookStore.searchForTitle) : bookStore.searchForTitle != null)
             return false;
@@ -119,7 +114,7 @@ public class BookStore {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (url != null ? url.hashCode() : 0);
-        result = 31 * result + (searchForElement != null ? searchForElement.hashCode() : 0);
+        result = 31 * result + (searchForBook != null ? searchForBook.hashCode() : 0);
         result = 31 * result + (searchForTitle != null ? searchForTitle.hashCode() : 0);
         result = 31 * result + (searchForCategory != null ? searchForCategory.hashCode() : 0);
         return result;

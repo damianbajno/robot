@@ -1,6 +1,11 @@
 
 # Created by https://www.gitignore.io/api/eclipse,maven
 
+#User DB 
+*~
+robot.iml
+*.log.1
+
 ### Eclipse ###
 
 *.csv
@@ -154,3 +159,5 @@ buildNumber.properties
 
 #InteliJ 
 .idea
+
+

@@ -1,81 +1,85 @@
 package pl.bookstore.robot.view;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.util.Callback;
+import pl.bookstore.robot.DAO.BookStoreDAO;
 import pl.bookstore.robot.pojo.BookStore;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class LibrariesControl implements Initializable {
-	@FXML
-	private ListView<BookStore> allLibraries;
-	@FXML
-	private ListView<BookStore> activeLibraries;
-	@FXML
-	private TextArea booksPromotion;
-	@FXML
-	private TextField libraryName;
-	@FXML
-	private TextField libraryURL;
+    @FXML
+    private ListView<BookStore> librariesListView;
+    @FXML
+    private TextArea books;
+    @FXML
+    private TextField libraryName;
+    @FXML
+    private TextField libraryURL;
+    @FXML
+    private TextField searchForBook;
+    @FXML
+    private TextField searchForTitle;
+    @FXML
+    private TextField searchForCategory;
 
-	// Reference to the main application.
-	private GuiApp mainApp = new GuiApp();
+    private ObservableList<BookStore> bookStoreList = FXCollections.observableArrayList();
 
-	public LibrariesControl() {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
 
-	}
+//        retrieveBookStoresFromDatabases();
 
-	public void setMain(GuiApp mainApp) {
-		this.mainApp = mainApp;
+        BookStoreDAO bookStoreDAO = new BookStoreDAO();
+        List<BookStore> bookStores = bookStoreDAO.getBookStores();
+        bookStoreList.addAll(bookStores);
 
-		// Add observable list data to the table
 
-	}
+        librariesListView.setCellFactory(new Callback<ListView<BookStore>, ListCell<BookStore>>() {
+            @Override
+            public ListCell<BookStore> call(ListView<BookStore> param) {
+                return new ListCell<BookStore>(){
+                    @Override
+                    protected void updateItem(BookStore item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item!=null) setText(item.getName()); else setText("");
+                    }
+                };
+            }
+        });
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		// ObservableList<String> librariesList = mainApp.getLibrariesList();
-		allLibraries.setItems(mainApp.getAllLibrariesList());
-		final Callback<ListView<BookStore>, ListCell<BookStore>> listCellBookStore = new Callback<ListView<BookStore>, ListCell<BookStore>>() {
-			@Override
-			public ListCell<BookStore> call(ListView<BookStore> param) {
-				return new ListCell<BookStore>() {
-					@Override
-					protected void updateItem(BookStore item, boolean empty) {
-						super.updateItem(item, empty);
-						if (item != null) setText(item.getName());
-					}
-				};
-			}
-		};
+        librariesListView.setItems(bookStoreList);
 
-		allLibraries.setCellFactory(listCellBookStore);
-		activeLibraries.setItems(mainApp.getActiveLibrariesList());
-		activeLibraries.setCellFactory(listCellBookStore);
-	}
+    }
 
-	@FXML
-	private void handleRemoveLibrary() {
-		int selectedIndex = allLibraries.getSelectionModel().getSelectedIndex();
-		if (selectedIndex >= 0) {
-			allLibraries.getItems().remove(selectedIndex);
-		} else {
-			// Nothing selected.
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.initOwner(mainApp.getPrimaryStage());
-			alert.setTitle("No Selection");
-			alert.setHeaderText("No Library Selected");
-			alert.setContentText("Please select a library.");
-			alert.showAndWait();
-		}
-	}
+    private void retrieveBookStoresFromDatabases() {
 
-	@FXML
-	private void handleAddLibrary() {
-		// String selectedString = libraryName.getSelection().;
-	}
+    }
+
+    @FXML
+    private void handleRemoveLibrary() {
+        int selectedIndex = librariesListView.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0) {
+            librariesListView.getItems().remove(selectedIndex);
+        } else {
+            popUpWindowAlertOnSelectionLibrary();
+        }
+    }
+
+    private void popUpWindowAlertOnSelectionLibrary() {
+        Alert alert = new Alert(AlertType.WARNING);
+        alert.initOwner(null);
+        alert.setTitle("No Selection");
+        alert.setHeaderText("No Library Selected");
+        alert.setContentText("Please select a library.");
+        alert.showAndWait();
+    }
+
 }
