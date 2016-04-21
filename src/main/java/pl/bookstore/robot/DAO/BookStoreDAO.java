@@ -40,4 +40,9 @@ public class BookStoreDAO extends QueryDAO {
         logger.info("BookStores selected from database");
         return books;
     }
+
+    public void remove(BookStore bookStore) {
+        updateParametrizedQuery(bookStore.getName());
+        logger.info("Removed from table = "+bookStore.toString());
+    }
 }

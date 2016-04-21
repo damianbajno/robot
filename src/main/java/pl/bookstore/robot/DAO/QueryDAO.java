@@ -2,6 +2,7 @@ package pl.bookstore.robot.DAO;
 
 import org.apache.log4j.Logger;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -12,6 +13,20 @@ import java.sql.Statement;
 public class QueryDAO extends DAO {
     private Logger logger = Logger.getLogger(BookDAO.class);
 
+
+    void updateParametrizedQuery(String bookStoreName) {
+        updateParametrizedQuery(createPreparedStatmentToRemoveBookStoreByName(), bookStoreName);
+    }
+
+    void updateParametrizedQuery(PreparedStatement preparedStatement, String bookStoreName) {
+        try  {
+            preparedStatement.setString(1,bookStoreName);
+            preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            logger.error(e.getMessage()+"  "+bookStoreName);
+        }
+    }
+    
     void updateQuery(String query) {
         updateQuery(createStatment(), query);
     }

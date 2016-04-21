@@ -2,10 +2,7 @@ package pl.bookstore.robot.DAO;
 
 import org.apache.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 /**
  * Created by damian on 30.03.16.
@@ -47,7 +44,17 @@ public class DAO {
         return statement;
     }
 
-     void closeConnections(){
+    PreparedStatement createPreparedStatmentToRemoveBookStoreByName() {
+        PreparedStatement preparedStatement=null;
+        try {
+            preparedStatement=connection.prepareStatement("delete from bookstore where name=?");
+        } catch (SQLException e){
+            logger.error(e.getMessage());
+        }
+        return preparedStatement;
+    }
+
+    void closeConnections(){
         try {
             connection.close();
         } catch (SQLException e) {
