@@ -12,6 +12,8 @@ import javafx.util.Callback;
 import org.apache.log4j.Logger;
 import pl.bookstore.robot.DAO.BookDAO;
 import pl.bookstore.robot.DAO.BookStoreDAO;
+import pl.bookstore.robot.booksearch.Profile;
+import pl.bookstore.robot.booksearch.ProfileBuilder;
 import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
 
@@ -22,8 +24,9 @@ import java.util.ResourceBundle;
 
 public class LibrariesControl implements Initializable {
     Logger logger = Logger.getLogger(LibrariesControl.class);
+
     @FXML
-    private ChoiceBox<String> profileChoiceBox;
+    private ChoiceBox<Profile> profileChoiceBox;
     @FXML
     private ListView<BookStore> librariesListView;
     @FXML
@@ -40,12 +43,11 @@ public class LibrariesControl implements Initializable {
     private TextField searchForCategory;
 
     private ObservableList<BookStore> bookStoreListObservable = FXCollections.observableArrayList();
-    private ObservableList<String> profileListObservable = FXCollections.observableArrayList();
+    private ObservableList<Profile> profileListObservable = FXCollections.observableArrayList();
     private BookStoreDAO bookStoreDAO;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         bookStoreDAO = new BookStoreDAO();
         List<BookStore> bookStores = bookStoreDAO.getBookStores();
         bookStoreListObservable.addAll(bookStores);
@@ -82,8 +84,9 @@ public class LibrariesControl implements Initializable {
             }
         });
 
-
-        profileChoiceBox.setItems();
+        ProfileBuilder profileBuilder=new ProfileBuilder();
+        profileListObservable.add(profileBuilder.getProfile1());
+        profileChoiceBox.setItems(profileListObservable);
     }
 
     @FXML

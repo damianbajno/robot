@@ -4,14 +4,17 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.net.URL;
 
 public class GuiApp extends Application {
+	Logger logger=Logger.getLogger(GuiApp.class);
 
 	@Override
 	public void start(Stage primaryStage) {
+		logger.info(GuiApp.class.toString()+"started");
 		primaryStage.setTitle("Bookstore");
 
 		try {
