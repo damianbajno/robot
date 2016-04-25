@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 /**
  * Created by damian on 30.03.16.
  */
+
 public class PojoUtils {
 
     public static String getFieldsWithTypes(Class _class){

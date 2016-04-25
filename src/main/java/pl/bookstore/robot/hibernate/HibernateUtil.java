@@ -10,12 +10,7 @@ public class HibernateUtil {
 
     private static SessionFactory buildSessionFactory() {
         try {
-            // For XML mapping
-            // return new Configuration().configure().buildSessionFactory();
 
-            // For Annotation - wczesniej bylo to AnnotationConfiguration, ale
-            // od Hibernate 3.6 jest deprecated i funkcjonalnosci przeniesione
-            // do Configuration
             return new Configuration().configure().buildSessionFactory();
 
         } catch (Throwable ex) {

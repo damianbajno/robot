@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class LibrariesControl implements Initializable {
-    Logger logger = Logger.getLogger(LibrariesControl.class);
+    private Logger logger = Logger.getLogger(LibrariesControl.class);
 
     @FXML
     private ChoiceBox<Profile> profileChoiceBox;
@@ -148,6 +148,4 @@ public class LibrariesControl implements Initializable {
         bookStore.setSearchForCategory(searchForCategory.getText());
         return bookStore;
     }
-
-
 }
