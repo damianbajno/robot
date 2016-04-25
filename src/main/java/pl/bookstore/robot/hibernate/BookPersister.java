@@ -81,7 +81,6 @@ public class BookPersister {
     public BookStore getBookStore(String name){
         Query getBookStoreQuery = session.createQuery("FROM "+BookStore.class.getSimpleName()+" BS where BS.name='"+name+"'");
         List<BookStore> bookStores = getBookStoreQuery.list();
-        //BookStore bookStoreResult =(BookStore) getBookStoreQuery;
         return bookStores.get(0);
     }
 

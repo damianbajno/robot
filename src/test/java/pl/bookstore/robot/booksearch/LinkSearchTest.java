@@ -42,7 +42,7 @@ public class    LinkSearchTest {
         LinkSearch linkSearch=new LinkSearch(bookStoreBoorix);
 
         //when
-        boolean connected = linkSearch.checkIfUrlIsValid();
+        boolean connected = linkSearch.checkIfUrlToBookStoreIsValid();
 
         //then
         assertThat(connected).isTrue();

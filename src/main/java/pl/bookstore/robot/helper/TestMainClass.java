@@ -12,7 +12,6 @@ import java.util.List;
 public class TestMainClass {
 
     public static void main(String[] args) {
-        printDatabasesBookStores();
     }
 
     public static void sendBookStoreToDatabases() {

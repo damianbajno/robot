@@ -36,10 +36,10 @@ public class BookPersisterTest {
         BookStore bookStore = new BookStore("nexto.pl", "http://www.nexto.pl/", "<a href>", "eTitle", "Crime");
         bookStoresList.add(bookStore);
         bookPersister1.openSession();
-        bookPersister1.saveBookStore(bookStoresList);
+        bookPersister1.saveBookStores(bookStoresList);
         bookPersister.closeSession();
         bookPersister.openSession();
-        BookStore bookStore1 = bookPersister1.getBookStore(1);
+        BookStore bookStore1 = bookPersister1.getBookStore("1");
         Assert.assertEquals(bookStoresList.get(0), bookStore1);
     }
 
@@ -51,7 +51,7 @@ public class BookPersisterTest {
         bookList.add(new Book("KSIONSZKA" ,"To jest dramat k*rwa"));
         persistBook.openSession();
         persistBook.saveBooks(bookList);
-        Assert.assertEquals(book.toString(), persistBook.getBook(1));
+        Assert.assertEquals(book.toString(), persistBook.getBook("1"));
 
     }
 }
