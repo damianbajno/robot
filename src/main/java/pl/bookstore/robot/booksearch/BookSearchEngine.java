@@ -6,10 +6,15 @@ import org.apache.log4j.Logger;
 import pl.bookstore.robot.pojo.BookStore;
 
 /**
+ * Class which search books stores for books
+ *
  * Created by damian on 31.03.16.
+ * @author Damian Bajno (pseudo thread, Di)
  */
 public class BookSearchEngine {
     static Logger logger = Logger.getLogger(BookSearchEngine.class);
+
+
 
     public static void main(String[] args) {
         logger.info("==== Book engine started ====");
@@ -23,12 +28,6 @@ public class BookSearchEngine {
 
 
         BookSearch bookSearch = new BookSearch(bookStoreGoodreads);
-        try {
-            bookSearch.searchBooks();
-        } catch (ResponseException e) {
-            e.printStackTrace();
-        } catch (NotFound notFound) {
-            notFound.printStackTrace();
-        }
+        bookSearch.searchBooks();
     }
 }

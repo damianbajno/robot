@@ -59,7 +59,7 @@ public class BookSearch {
 
     HashSet<String> searchLinksOnSite() {
         LinkSearch linkSearch = new LinkSearch(bookStore);
-        return linkSearch.searchHyperlinksOnSiteAndSubsites();
+        return linkSearch.searchHyperlinksOnSiteAndSubSites();
     }
 
     /**

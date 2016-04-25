@@ -5,31 +5,50 @@ import org.apache.log4j.Logger;
 import pl.bookstore.robot.pojo.BookStore;
 import pl.bookstore.robot.utils.UrlUtils;
 
+import java.net.URL;
 import java.util.HashSet;
-import java.util.Iterator;
+
+/**
+ * Class was designed to search links in page
+ * and sub pages specified in BookStore
+ *
+ * @author Damian Bajno (pseudo thread, Di)
+ */
 
 public class LinkSearch {
     private Logger logger = Logger.getLogger(LinkSearch.class);
 
     private HashSet<String> linksSet;
-    private String mainPageAdress;
+    private String mainPageAddress;
     private BookStore bookStore;
 
+    /**
+     * @param bookStore specify where to search books, and on what tags to search
+     */
     public LinkSearch(BookStore bookStore) {
         this.bookStore = bookStore;
         linksSet = new HashSet<>();
-        mainPageAdress = UrlUtils.getUrlToMainPage(bookStore.getUrl());
+        mainPageAddress = UrlUtils.getUrlToMainPage(bookStore.getUrl());
     }
 
-    public HashSet<String> searchHyperlinksOnSiteAndSubsites() {
+    /**
+     * @return set of links to page and sub pages found in BookStore
+     */
+
+    public HashSet<String> searchHyperlinksOnSiteAndSubSites() {
         searchHyperLinksOnSite(bookStore.getUrl());
-        logger.error("Site dosen't found " + bookStore.getUrl());
+        logger.error("Site dose not found " + bookStore.getUrl());
         return linksSet;
     }
 
+    /**
+     * @param link search links in specified link
+     * @return set of links found in link
+     */
+
     HashSet<String> searchHyperLinksOnSite(String link) {
         try {
-            logger.info("Searching Links on page " + link);
+            logger.info("Searching links on page " + link);
             Document document = visitPageAndGetDocument(link);
             searchHyperLinksOnPage(document);
         } catch (NotFound notFound) {
@@ -38,6 +57,11 @@ public class LinkSearch {
         }
         return linksSet;
     }
+
+    /**
+     * @param document search links in specified link
+     * @return set of links found in link
+     */
 
     HashSet<String> searchHyperLinksOnPage(Document document) throws NotFound {
         if (document != null) {
@@ -58,7 +82,7 @@ public class LinkSearch {
     }
 
     boolean matchesConditions(String hyperLink) {
-        return hyperLink.contains(mainPageAdress) && !linksSet.contains(hyperLink) && !hyperLink.matches(".*\\.pdf");
+        return hyperLink.contains(mainPageAddress) && !linksSet.contains(hyperLink) && !hyperLink.matches(".*\\.pdf");
     }
 
     private Document visitPageAndGetDocument(String link) {
@@ -74,11 +98,19 @@ public class LinkSearch {
 
     final int CONNECTED_SUCCESSFUL = 200;
 
-    public boolean checkUrl() throws ResponseException {
+    /**
+     * Method check if link to page is valid
+     *
+     * @return if url is valid
+     */
+
+    public boolean checkIfUrlToBookStoreIsValid(){
+        return checkIfUrlIsValid(bookStore.getUrl());
+    }
+
+    private boolean checkIfUrlIsValid(String url) {
         int status = 0;
-        String url=null;
         try {
-            url = bookStore.getUrl();
             HttpResponse httpResponse = new UserAgent().sendHEAD(url);
             status = httpResponse.getStatus();
         } catch (ResponseException e) {
