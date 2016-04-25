@@ -8,6 +8,16 @@ import pl.bookstore.robot.pojo.BookStore;
 
 import java.util.*;
 
+/**
+ *
+ * Class is designed to search books in books store,
+ * you have three methods to search books: on link,
+ * document, on every page in bookstore.
+ *
+ * @author Damian Bajno (pseudo thread, Di)
+ * @see LinkSearch
+ */
+
 public class BookSearch {
     private static Logger logger = Logger.getLogger(BookSearch.class);
 
@@ -15,13 +25,23 @@ public class BookSearch {
     private List<Book> booksList;
     private BookDAO bookDAO;
 
+    /**
+     * @param bookStore specify where to search books, and on what tags to search
+     */
     public BookSearch(BookStore bookStore) {
         this.bookStore = bookStore;
-        booksList=new ArrayList<Book>();
-        bookDAO=new BookDAO();
+        this.booksList=new ArrayList<Book>();
+        this.bookDAO=new BookDAO();
     }
 
-    public List<Book> searchBooks() throws ResponseException, NotFound {
+    /**
+     *  Search books in BookStore by searching
+     *  the sub pages in specified link
+     *
+     * @return list of books found in BookStore
+     */
+
+    public List<Book> searchBooks() {
         HashSet<String> hyperLinks = searchLinksOnSite();
         Iterator<String> linksIterator = hyperLinks.iterator();
 
@@ -32,10 +52,21 @@ public class BookSearch {
         return this.booksList;
     }
 
+    /**
+     *
+     * @return HashSet with sub pages on specify link
+     */
+
     HashSet<String> searchLinksOnSite() {
         LinkSearch linkSearch = new LinkSearch(bookStore);
         return linkSearch.searchHyperlinksOnSiteAndSubsites();
     }
+
+    /**
+     *
+     * @param link where books are search
+     * @return list of books found in link
+     */
 
     public List<Book> searchBooksOnSite(String link) {
         try {
@@ -49,7 +80,13 @@ public class BookSearch {
         return Collections.emptyList();
     }
 
-        public List<Book> searchBooks (Document document){
+    /**
+     *
+     * @param document where books are search
+     * @return list of books found in document
+     */
+
+    public List<Book> searchBooks (Document document){
             Elements bookElements = document.findEvery(this.bookStore.getSearchForBook());
 
             Iterator<Element> bookElementsIterator = bookElements.iterator();

@@ -23,11 +23,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.jaunt.code</groupId>
-            <artifactId>juant</artifactId>
-            <version>1.1.5</version>
-        </dependency>
-        <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>5.1.0.Final</version>
@@ -63,8 +58,12 @@
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
         </dependency>
+        <dependency>
+            <groupId>com.jaunt.code</groupId>
+            <artifactId>jaunt</artifactId>
+            <version>1.6</version>
+        </dependency>
     </dependencies>
-
 
     <build>
         <plugins>
