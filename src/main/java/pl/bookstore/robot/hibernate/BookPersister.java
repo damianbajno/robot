@@ -3,7 +3,6 @@ import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.resource.transaction.spi.TransactionStatus;
 import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
 
@@ -50,10 +49,10 @@ public class BookPersister {
     }
     public boolean commitSession(){
         session.getTransaction().commit();
-        if (session.getTransaction().getStatus() != TransactionStatus.COMMITTED) {
-            logger.error("Session status different than COMMITTED");
-            return false;
-        }
+//        if (session.getTransaction().getStatus() != TransactionStatus.COMMITTED) {
+//            logger.error("Session status different than COMMITTED");
+//            return false;
+//        }
       return true;
     }
 
@@ -82,6 +81,12 @@ public class BookPersister {
         Query getBookStoreQuery = session.createQuery("FROM "+BookStore.class.getSimpleName()+" BS where BS.name='"+name+"'");
         List<BookStore> bookStores = getBookStoreQuery.list();
         return bookStores.get(0);
+    }
+
+    public List<BookStore> getBookStores(){
+        Query getBookStoreQuery = session.createQuery("FROM "+BookStore.class.getSimpleName()+" BS");
+        List<BookStore> bookStores = getBookStoreQuery.list();
+        return bookStores;
     }
 
     public Book getBook(String title){

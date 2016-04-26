@@ -1,6 +1,7 @@
 package pl.bookstore.robot.helper;
 
 import pl.bookstore.robot.DAO.BookStoreDAO;
+import pl.bookstore.robot.hibernate.BookPersister;
 import pl.bookstore.robot.pojo.BookStore;
 
 import java.util.Iterator;
@@ -12,11 +13,11 @@ import java.util.List;
 public class TestMainClass {
 
     public static void main(String[] args) {
+        TestMainClass.sendBookStoreToDatabasesHibernate();
     }
 
     public static void sendBookStoreToDatabases() {
         BookStore bookStoreBoorix = new BookStore("boorix", "http://www.bookrix.com/books.html", "<div class=item-content>", "<a class=word-break>", "<ul class=item-details>" + "<li>");
-        BookStore BookStorebookStoreGoodreads = new BookStore("goodreads", "https://www.goodreads.com/genres/business", "<div class=description descriptionContainer>", "<a class=bookTitle>", "brak");
         BookStore bookStoreGoodreads = new BookStore("goodreads", "https://www.goodreads.com/genres/business", "<div class=description descriptionContainer>", "<a class=bookTitle>", "brak");
         BookStore bookStoreGutenberg = new BookStore("gutenberg", "https://www.gutenberg.org/ebooks/searchBooks/?query=free+book&go=Go", "<div class=header>", "<h1 itemprop=name>", "brak");
 
@@ -34,8 +35,31 @@ public class TestMainClass {
         while (iterator.hasNext()) {
             System.out.println(iterator.next());
         }
-
-
     }
+
+    public static void sendBookStoreToDatabasesHibernate() {
+        BookStore bookStoreBoorix = new BookStore("boorix", "http://www.bookrix.com/books.html", "<div class=item-content>", "<a class=word-break>", "<ul class=item-details>" + "<li>");
+        BookStore bookStoreGoodreads = new BookStore("goodreads", "https://www.goodreads.com/genres/business", "<div class=description descriptionContainer>", "<a class=bookTitle>", "brak");
+        BookStore bookStoreGutenberg = new BookStore("gutenberg", "https://www.gutenberg.org/ebooks/searchBooks/?query=free+book&go=Go", "<div class=header>", "<h1 itemprop=name>", "brak");
+
+        BookPersister bookPersister=new BookPersister();
+        bookPersister.openSession();
+        bookPersister.saveBookStore(bookStoreBoorix);
+        bookPersister.saveBookStore(bookStoreGoodreads);
+        bookPersister.saveBookStore(bookStoreGutenberg);
+        bookPersister.commitSession();
+        bookPersister.closeSession();
+    }
+
+    public static void printDatabasesBookStoresHibernate() {
+        BookPersister bookPersister=new BookPersister();
+        List<BookStore> bookStores = bookPersister.getBookStores();
+
+        Iterator<BookStore> iterator = bookStores.iterator();
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
+        }
+    }
+
 
 }

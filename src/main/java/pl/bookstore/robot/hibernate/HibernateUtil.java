@@ -2,21 +2,26 @@ package pl.bookstore.robot.hibernate;
 
 
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
 
 public class HibernateUtil {
 
-    private static final SessionFactory sessionFactory = buildSessionFactory();
+    private static SessionFactory sessionFactory = buildSessionFactory();
 
     private static SessionFactory buildSessionFactory() {
-        try {
+        if (sessionFactory == null) {
+            // loads configuration and mappings
+            Configuration configuration = new Configuration().configure();
+            ServiceRegistry serviceRegistry
+                    = new StandardServiceRegistryBuilder()
+                    .applySettings(configuration.getProperties()).build();
 
-            return new Configuration().configure().buildSessionFactory();
-
-        } catch (Throwable ex) {
-
-            throw new ExceptionInInitializerError(ex);
+            // builds a session factory from the service registry
+            sessionFactory = configuration.buildSessionFactory(serviceRegistry);
         }
+        return sessionFactory;
     }
 
     public static SessionFactory getSessionFactory() {
