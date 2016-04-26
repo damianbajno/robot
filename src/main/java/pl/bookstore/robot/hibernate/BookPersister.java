@@ -97,8 +97,17 @@ public class BookPersister {
         return true;
     }
 
-    public void delete(BookStore bookStore) {
+    public void deleteBookStore(BookStore bookStore) {
         session.delete(bookStore);
+    }
+
+    public void deleteBook(Book book) {
+        session.delete(book);
+    }
+
+    public List<Book> getBooks() {
+        Query getBookQuery = session.createQuery("from "+Book.class.getSimpleName());
+        return getBookQuery.list();
     }
 }
 

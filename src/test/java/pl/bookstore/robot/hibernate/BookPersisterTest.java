@@ -6,7 +6,6 @@ import org.testng.annotations.Test;
 import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
@@ -19,18 +18,18 @@ public class BookPersisterTest {
 
 
     @Test
-    public void testIfSessionIsOpenedCorreclty(){
+    public void testIfSessionIsOpenedCorrectly(){
         when(bookPersister.openSession()).thenReturn(true);
         Assert.assertEquals(bookPersister.openSession(), true);
     }
 
     @Test
-    public void testIfSessionIsClosedCorreclty(){
+    public void testIfSessionIsClosedCorrectly(){
         when(bookPersister.closeSessionFactory()).thenReturn(true);
         Assert.assertEquals(bookPersister.closeSessionFactory(), true);
     }
 
-    @Test (groups = "NewTest")
+    @Test(groups = "IntegrationTest")
     public void testIfBookStoreIsSavedInDB(){
         //given
         BookPersister bookPersister = new BookPersister();
@@ -48,21 +47,34 @@ public class BookPersisterTest {
         //then
         Assertions.assertThat(bookStoresRetrievedFromDB).contains(bookStoreExpected);
         bookPersister.commitSession();
-        //cleaning in database
+
+        //cleaning database
         bookPersister.openSession();
-        bookPersister.delete(bookStoreExpected);
+        bookPersister.deleteBookStore(bookStoreExpected);
+        bookPersister.commitSession();
         bookPersister.closeSessionFactory();
     }
 
-    @Test (groups = "NewTest")
+    @Test (groups = "IntegrationTest")
     public void testIfBookIsSavedInDatabase(){
+        //given
         BookPersister persistBook = new BookPersister();
-        Book book = new Book("KSIONSZKA" ,"To jest dramat k*rwa");
-        List<Book> bookList = new ArrayList<>();
-        bookList.add(new Book("KSIONSZKA" ,"To jest dramat k*rwa"));
+        Book bookExpected = new Book("KSIONSZKA" ,"To jest dramat k*rwa");
+
+        //when
         persistBook.openSession();
-        persistBook.saveBooks(bookList);
-        Assert.assertEquals(book.toString(), persistBook.getBook("1"));
+        persistBook.saveBook(bookExpected);
+        persistBook.commitSession();
+
+        //then
+        persistBook.openSession();
+        Assertions.assertThat(persistBook.getBooks()).contains(bookExpected);
+        persistBook.commitSession();
+
+        //clear database
+        persistBook.openSession();
+        persistBook.deleteBook(bookExpected);
+        persistBook.commitSession();
 
     }
 }

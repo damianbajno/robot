@@ -49,10 +49,12 @@ public class LinkSearch {
         try {
             logger.info("Searching links on page " + link);
             Document document = visitPageAndGetDocument(link);
-            searchHyperLinksOnPage(document);
-        } catch (NotFound notFound) {
-            notFound.printStackTrace();
-            logger.error(notFound.getMessage());
+
+            if (document!=null) searchHyperLinksOnPage(document);
+
+        } catch (NotFound  e) {
+            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return linksSet;
     }
@@ -87,17 +89,16 @@ public class LinkSearch {
 
     final int CONNECTED_SUCCESSFUL = 200;
 
-    private Document visitPageAndGetDocument(String link) {
+    Document visitPageAndGetDocument(String link) {
         Document document = null;
         try {
             UserAgent userAgent = new UserAgent();
             document = userAgent.visit(link);
 
             int status = userAgent.response.getStatus();
-            if (status !=CONNECTED_SUCCESSFUL)
-                throw new PageNotLoadException("Problem with loading page status code "+ status);
+            if (status !=CONNECTED_SUCCESSFUL) document=null;
 
-        } catch (ResponseException | PageNotLoadException e) {
+        } catch (ResponseException e) {
             e.printStackTrace();
             logger.error(e.getMessage());
         }
