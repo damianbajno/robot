@@ -3,6 +3,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.resource.transaction.spi.TransactionStatus;
 import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
 
@@ -19,27 +20,14 @@ import java.util.List;
 
 public class BookPersister {
      Logger logger = Logger.getLogger(BookPersister.class);
-     SessionFactory sessionFactory;
+     SessionFactory sessionFactory = pl.bookstore.robot.hibernate.HibernateUtil.getSessionFactory();;
      Session session;
 
     public BookPersister(){
 
     }
 
-    public static void main(String[] args) {
-
-        BookPersister bookPersister = new BookPersister();
-        bookPersister.openSession();
-        List<BookStore> bookList = new ArrayList<>();
-        bookList.add(new BookStore());
-        bookPersister.saveBookStores(bookList);
-        bookPersister.commitSession();
-        bookPersister.closeSession();
-
-    }
-
     public  boolean openSession(){
-        sessionFactory = pl.bookstore.robot.hibernate.HibernateUtil.getSessionFactory();
         logger.info("sessionFactory created");
         session = sessionFactory.openSession();
         session.beginTransaction();
@@ -49,14 +37,15 @@ public class BookPersister {
     }
     public boolean commitSession(){
         session.getTransaction().commit();
-//        if (session.getTransaction().getStatus() != TransactionStatus.COMMITTED) {
-//            logger.error("Session status different than COMMITTED");
-//            return false;
-//        }
+        if (session.getTransaction().getStatus() != TransactionStatus.COMMITTED) {
+            logger.error("Session status different than COMMITTED");
+            return false;
+        }
+        session.close();
       return true;
     }
 
-    public boolean closeSession(){
+    public boolean closeSessionFactory(){
         sessionFactory.close();
         logger.warn("Session closed");
 
@@ -84,9 +73,8 @@ public class BookPersister {
     }
 
     public List<BookStore> getBookStores(){
-        Query getBookStoreQuery = session.createQuery("FROM "+BookStore.class.getSimpleName()+" BS");
-        List<BookStore> bookStores = getBookStoreQuery.list();
-        return bookStores;
+        Query getBookStoreQuery = session.createQuery("from "+BookStore.class.getSimpleName());
+        return  getBookStoreQuery.list();
     }
 
     public Book getBook(String title){
@@ -102,6 +90,15 @@ public class BookPersister {
         return true;
     }
 
+    public boolean saveBook(Book book) {
+        session.save(book);
+        logger.info("Book saved in database");
 
+        return true;
+    }
+
+    public void delete(BookStore bookStore) {
+        session.delete(bookStore);
+    }
 }
 

@@ -5,7 +5,6 @@ import org.apache.log4j.Logger;
 import pl.bookstore.robot.pojo.BookStore;
 import pl.bookstore.robot.utils.UrlUtils;
 
-import java.net.URL;
 import java.util.HashSet;
 
 /**
@@ -35,8 +34,8 @@ public class LinkSearch {
      * @return set of links to page and sub pages found in BookStore
      */
 
-    public HashSet<String> searchHyperlinksOnSiteAndSubSites() {
-        searchHyperLinksOnSite(bookStore.getUrl());
+    public HashSet<String> searchHyperlinksOnPageAndSubPages() {
+        searchHyperLinksOnPage(bookStore.getUrl());
         logger.error("Site dose not found " + bookStore.getUrl());
         return linksSet;
     }
@@ -46,7 +45,7 @@ public class LinkSearch {
      * @return set of links found in link
      */
 
-    HashSet<String> searchHyperLinksOnSite(String link) {
+    HashSet<String> searchHyperLinksOnPage(String link) {
         try {
             logger.info("Searching links on page " + link);
             Document document = visitPageAndGetDocument(link);
@@ -64,6 +63,7 @@ public class LinkSearch {
      */
 
     HashSet<String> searchHyperLinksOnPage(Document document) throws NotFound {
+
         if (document != null) {
             Elements aElementsOnSite = document.findEvery("<a href>");
 
@@ -74,7 +74,7 @@ public class LinkSearch {
                     logger.info("Site added to LinksSet = " + hyperLink);
                     linksSet.add(hyperLink);
 
-                    if (linksSet.size() < 10) searchHyperLinksOnSite(hyperLink);
+                    if (linksSet.size() < 10) searchHyperLinksOnPage(hyperLink);
                 }
             }
         }
@@ -85,18 +85,24 @@ public class LinkSearch {
         return hyperLink.contains(mainPageAddress) && !linksSet.contains(hyperLink) && !hyperLink.matches(".*\\.pdf");
     }
 
+    final int CONNECTED_SUCCESSFUL = 200;
+
     private Document visitPageAndGetDocument(String link) {
         Document document = null;
         try {
-            document = new UserAgent().visit(link);
-        } catch (ResponseException e) {
+            UserAgent userAgent = new UserAgent();
+            document = userAgent.visit(link);
+
+            int status = userAgent.response.getStatus();
+            if (status !=CONNECTED_SUCCESSFUL)
+                throw new PageNotLoadException("Problem with loading page status code "+ status);
+
+        } catch (ResponseException | PageNotLoadException e) {
             e.printStackTrace();
             logger.error(e.getMessage());
         }
         return document;
     }
-
-    final int CONNECTED_SUCCESSFUL = 200;
 
     /**
      * Method check if link to page is valid
@@ -111,8 +117,9 @@ public class LinkSearch {
     private boolean checkIfUrlIsValid(String url) {
         int status = 0;
         try {
-            HttpResponse httpResponse = new UserAgent().sendHEAD(url);
-            status = httpResponse.getStatus();
+            UserAgent userAgent = new UserAgent();
+            userAgent.visit(url);
+            status = userAgent.response.getStatus();
         } catch (ResponseException e) {
             e.printStackTrace();
             logger.error(url+" status " +status);

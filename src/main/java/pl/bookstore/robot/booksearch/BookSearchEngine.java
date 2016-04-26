@@ -3,7 +3,11 @@ package pl.bookstore.robot.booksearch;
 import com.jaunt.NotFound;
 import com.jaunt.ResponseException;
 import org.apache.log4j.Logger;
+import pl.bookstore.robot.hibernate.BookPersister;
+import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
+
+import java.util.List;
 
 /**
  * Class which search books stores for books
@@ -14,20 +18,23 @@ import pl.bookstore.robot.pojo.BookStore;
 public class BookSearchEngine {
     static Logger logger = Logger.getLogger(BookSearchEngine.class);
 
-
-
     public static void main(String[] args) {
         logger.info("==== Book engine started ====");
 
-//        BookStoreDAO bookStoreDAO = new BookStoreDAO();
-//        List<BookStore> bookStores = bookStoreDAO.getBookStores();
+        BookPersister bookPersister=new BookPersister();
+        bookPersister.openSession();
+        List<BookStore> bookStores = bookPersister.getBookStores();
+        bookPersister.commitSession();
 
-//        logger.info("BookStores List = "+bookStores.toString());
+        for (BookStore bookStore: bookStores) {
+            bookPersister.openSession();
 
-        BookStore bookStoreGoodreads = new BookStore("goodreads", "https://www.goodreads.com/genres/business", "<div class=description descriptionContainer>", "<a class=bookTitle>", "brak");
+            BookSearch bookSearch=new BookSearch(bookStore);
+            List<Book> books = bookSearch.searchBooks();
 
+            bookPersister.saveBooks(books);
+            bookPersister.commitSession();
+        }
 
-        BookSearch bookSearch = new BookSearch(bookStoreGoodreads);
-        bookSearch.searchBooks();
     }
 }

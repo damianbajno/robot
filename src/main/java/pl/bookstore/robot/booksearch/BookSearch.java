@@ -2,7 +2,7 @@ package pl.bookstore.robot.booksearch;
 
 import com.jaunt.*;
 import org.apache.log4j.Logger;
-import pl.bookstore.robot.DAO.BookDAO;
+import pl.bookstore.robot.hibernate.BookPersister;
 import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
 
@@ -23,7 +23,7 @@ public class BookSearch {
 
     private BookStore bookStore;
     private List<Book> booksList;
-    private BookDAO bookDAO;
+    private BookPersister bookPersister;
 
     /**
      * @param bookStore specify where to search books, and on what tags to search
@@ -31,7 +31,7 @@ public class BookSearch {
     public BookSearch(BookStore bookStore) {
         this.bookStore = bookStore;
         this.booksList=new ArrayList<Book>();
-        this.bookDAO=new BookDAO();
+        this.bookPersister =new BookPersister();
     }
 
     /**
@@ -59,7 +59,7 @@ public class BookSearch {
 
     HashSet<String> searchLinksOnSite() {
         LinkSearch linkSearch = new LinkSearch(bookStore);
-        return linkSearch.searchHyperlinksOnSiteAndSubSites();
+        return linkSearch.searchHyperlinksOnPageAndSubPages();
     }
 
     /**
@@ -108,7 +108,6 @@ public class BookSearch {
                     }
 
                     this.booksList.add(book);
-                    bookDAO.persist(book);
                     logger.info("Book added to database " + book.toString());
                 } catch (NotFound notFound) {
                     logger.error(notFound.getMessage());

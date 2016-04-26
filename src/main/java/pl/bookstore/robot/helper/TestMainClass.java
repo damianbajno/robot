@@ -13,7 +13,7 @@ import java.util.List;
 public class TestMainClass {
 
     public static void main(String[] args) {
-        TestMainClass.sendBookStoreToDatabasesHibernate();
+        TestMainClass.printDatabasesBookStoresHibernate();
     }
 
     public static void sendBookStoreToDatabases() {
@@ -48,12 +48,14 @@ public class TestMainClass {
         bookPersister.saveBookStore(bookStoreGoodreads);
         bookPersister.saveBookStore(bookStoreGutenberg);
         bookPersister.commitSession();
-        bookPersister.closeSession();
+        bookPersister.closeSessionFactory();
     }
 
     public static void printDatabasesBookStoresHibernate() {
         BookPersister bookPersister=new BookPersister();
+        bookPersister.openSession();
         List<BookStore> bookStores = bookPersister.getBookStores();
+        bookPersister.closeSessionFactory();
 
         Iterator<BookStore> iterator = bookStores.iterator();
         while (iterator.hasNext()) {

@@ -30,6 +30,6 @@ public class PojoUtilsTest {
         String fieldsWithTypes = PojoUtils.getFieldsWithTypes(BookStore.class);
 
         //then
-        assertThat(fieldsWithTypes).isEqualTo("id int not null unique, name String, url String, searchForElement String, searchForTitle String, searchForCategory String");
+        assertThat(fieldsWithTypes).isEqualTo("id int not null unique, name String, url String, searchForBook String, searchForTitle String, searchForCategory String");
     }
 }

@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Created by damian on 06.04.16.
  */
-public class    LinkSearchTest {
+public class LinkSearchTest {
 
     @Test
     public void ifIPutDocumentWithLinksItFindLinks() throws ResponseException, NotFound{
@@ -32,10 +32,7 @@ public class    LinkSearchTest {
 
     }
 
-
-
-
-    @Test(groups = "NewTest")
+    @Test
     public void checkIfConnectionToPageIsSuccessful() throws ResponseException{
         //given
         BookStore bookStoreBoorix = new BookStore("boorix", "http://www.bookrix.com/books.html", "<div class=\"item-content\">", "<a class=word-break>", "<ul class=item-details>" + "<li>");
@@ -47,6 +44,8 @@ public class    LinkSearchTest {
         //then
         assertThat(connected).isTrue();
     }
+
+
 
 
     public String getHtmlPage() {

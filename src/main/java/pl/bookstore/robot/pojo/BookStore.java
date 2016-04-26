@@ -8,7 +8,6 @@ import javax.persistence.*;
  */
 
 @Entity
-@Table(name = "BookStore")
 public class BookStore {
 
     @Id

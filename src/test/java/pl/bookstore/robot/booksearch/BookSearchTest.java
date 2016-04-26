@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class BookSearchTest {
 
     @Test
-    public void ifIPutHtmlPageWithBookItRetriveBookBoorix() throws NotFound, ResponseException{
+    public void ifIPutHtmlPageWithBookItRetrieveBookBoorix() throws NotFound, ResponseException{
         //given
         BookStore bookStoreBoorix = new BookStore("boorix", "http://www.bookrix.com/books.html", "<div class=\"item-content\">", "<a class=word-break>", "<ul class=item-details>" + "<li>");
         Document document= new UserAgent().openContent(this.getHtmlPageBookBoorix());
@@ -114,4 +114,6 @@ public class BookSearchTest {
                 "  </div>");
         return bookElement;
     }
+
+
 }

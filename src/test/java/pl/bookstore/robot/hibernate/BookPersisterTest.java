@@ -1,4 +1,5 @@
 package pl.bookstore.robot.hibernate;
+import org.assertj.core.api.Assertions;
 import org.mockito.Mockito;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -25,25 +26,35 @@ public class BookPersisterTest {
 
     @Test
     public void testIfSessionIsClosedCorreclty(){
-        when(bookPersister.closeSession()).thenReturn(true);
-        Assert.assertEquals(bookPersister.closeSession(), true);
+        when(bookPersister.closeSessionFactory()).thenReturn(true);
+        Assert.assertEquals(bookPersister.closeSessionFactory(), true);
     }
 
-    @Test
-    public void testIfBookStoreIsSavedInDBSuccesfully(){
-        BookPersister bookPersister1 = new BookPersister();
-        List<BookStore> bookStoresList = new ArrayList<>();
-        BookStore bookStore = new BookStore("nexto.pl", "http://www.nexto.pl/", "<a href>", "eTitle", "Crime");
-        bookStoresList.add(bookStore);
-        bookPersister1.openSession();
-        bookPersister1.saveBookStores(bookStoresList);
-        bookPersister.closeSession();
+    @Test (groups = "NewTest")
+    public void testIfBookStoreIsSavedInDB(){
+        //given
+        BookPersister bookPersister = new BookPersister();
+        BookStore bookStoreExpected = new BookStore("nexto.pl", "http://www.nexto.pl/", "<a href>", "eTitle", "Crime");
+
+        //when
+
         bookPersister.openSession();
-        BookStore bookStore1 = bookPersister1.getBookStore("1");
-        Assert.assertEquals(bookStoresList.get(0), bookStore1);
+        bookPersister.saveBookStore(bookStoreExpected);
+        bookPersister.commitSession();
+
+        bookPersister.openSession();
+        List<BookStore> bookStoresRetrievedFromDB = bookPersister.getBookStores();
+
+        //then
+        Assertions.assertThat(bookStoresRetrievedFromDB).contains(bookStoreExpected);
+        bookPersister.commitSession();
+        //cleaning in database
+        bookPersister.openSession();
+        bookPersister.delete(bookStoreExpected);
+        bookPersister.closeSessionFactory();
     }
 
-    @Test
+    @Test (groups = "NewTest")
     public void testIfBookIsSavedInDatabase(){
         BookPersister persistBook = new BookPersister();
         Book book = new Book("KSIONSZKA" ,"To jest dramat k*rwa");

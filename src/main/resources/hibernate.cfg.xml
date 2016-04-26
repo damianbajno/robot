@@ -14,8 +14,8 @@
 
         <property name="hibernate.hbm2ddl.auto">update</property>
 
-        <mapping class="pl.bookstore.robot.pojo.BookStore"></mapping>
-        <mapping class="pl.bookstore.robot.pojo.Book"></mapping>
+        <!--<mapping class="pl.bookstore.robot.pojo.BookStore"></mapping>-->
+        <!--<mapping class="pl.bookstore.robot.pojo.Book"></mapping>-->
     </session-factory>
 </hibernate-configuration>
 
