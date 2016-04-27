@@ -108,7 +108,6 @@ public class BookSearch {
                     }
 
                     this.booksList.add(book);
-                    logger.info("Book added to database " + book.toString());
                 } catch (NotFound notFound) {
                     logger.error(notFound.getMessage());
 

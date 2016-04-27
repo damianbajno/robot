@@ -6,11 +6,13 @@ import javax.persistence.*;
 @Table(name = "Book")
 public class Book {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String title;
     private String category;
-    private String bookStoreName;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "BookStore")
+    private BookStore bookStore;
 
     public Book(String title) {
         this.title = title;
@@ -24,7 +26,7 @@ public class Book {
     public Book(String title, String category, BookStore bookStore) {
         this.title = title;
         this.category = category;
-        this.bookStoreName = bookStore.getName();
+        this.bookStore = bookStore;
     }
 
     public Book() {
@@ -47,6 +49,15 @@ public class Book {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+
+    public BookStore getBookStore() {
+        return bookStore;
+    }
+
+    public void setBookStore(BookStore bookStore) {
+        this.bookStore = bookStore;
     }
 
     @Override
@@ -73,7 +84,7 @@ public class Book {
         return "Book{" +
                 "title='" + title + '\'' +
                 ", category='" + category + '\'' +
-                ", bookStoreName='" + bookStoreName + '\'' +
+                ", bookStoreName='" + bookStore.getName() + '\'' +
                 '}';
     }
 }

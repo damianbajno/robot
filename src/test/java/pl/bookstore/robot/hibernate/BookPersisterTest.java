@@ -7,6 +7,7 @@ import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.mockito.Mockito.when;
 
@@ -14,17 +15,17 @@ import static org.mockito.Mockito.when;
  * Created by stycz0007 on 14.04.16.
  */
 public class BookPersisterTest {
-    BookPersister bookPersister = Mockito.mock(BookPersister.class);
-
 
     @Test
     public void testIfSessionIsOpenedCorrectly(){
+        BookPersister bookPersister = Mockito.mock(BookPersister.class);
         when(bookPersister.openSession()).thenReturn(true);
         Assert.assertEquals(bookPersister.openSession(), true);
     }
 
     @Test
     public void testIfSessionIsClosedCorrectly(){
+        BookPersister bookPersister = Mockito.mock(BookPersister.class);
         when(bookPersister.closeSessionFactory()).thenReturn(true);
         Assert.assertEquals(bookPersister.closeSessionFactory(), true);
     }
@@ -77,4 +78,33 @@ public class BookPersisterTest {
         persistBook.commitSession();
 
     }
+
+
+    @Test(groups = "NewTest")
+    public void testIfSavedBookHasConnectionWithBookStore() {
+        //given
+        BookPersister bookPersister = new BookPersister();
+        Book bookExpected = new Book("KSIONSZKA" ,"To jest dramat k*rwa");
+        BookStore bookStoreExpected = new BookStore("nexto.pl", "http://www.nexto.pl/", "<a href>", "eTitle", "Crime");
+        bookStoreExpected.addBook(bookExpected);
+
+        //when
+        bookPersister.openSession();
+        bookPersister.saveBookStore(bookStoreExpected);
+        bookPersister.saveBook(bookExpected);
+        bookPersister.commitSession();
+
+        //then
+        bookPersister.openSession();
+        List<Book> books = bookPersister.getBookFromBookStore(bookStoreExpected);
+        Assertions.assertThat(books).contains(bookExpected);
+        bookPersister.commitSession();
+
+        //clear database
+        bookPersister.openSession();
+        bookPersister.deleteBook(bookExpected);
+        bookPersister.commitSession();
+
+    }
+
 }

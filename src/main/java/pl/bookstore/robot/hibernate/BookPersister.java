@@ -1,8 +1,10 @@
 package pl.bookstore.robot.hibernate;
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
@@ -20,7 +22,7 @@ import java.util.List;
 
 public class BookPersister {
      Logger logger = Logger.getLogger(BookPersister.class);
-     SessionFactory sessionFactory = pl.bookstore.robot.hibernate.HibernateUtil.getSessionFactory();;
+     SessionFactory sessionFactory = pl.bookstore.robot.hibernate.HibernateUtil.getSessionFactory();
      Session session;
 
     public BookPersister(){
@@ -109,5 +111,13 @@ public class BookPersister {
         Query getBookQuery = session.createQuery("from "+Book.class.getSimpleName());
         return getBookQuery.list();
     }
+
+    public List<Book> getBookFromBookStore(BookStore bookStore) {
+        Criteria criteria = session.createCriteria(Book.class);
+        criteria.add(Restrictions.eq("bookStore", bookStore));
+        return criteria.list();
+    }
+
+
 }
 

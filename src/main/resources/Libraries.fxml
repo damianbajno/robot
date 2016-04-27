@@ -10,7 +10,7 @@
    <children>
       <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       </MenuBar>
-      <ListView fx:id="librariesListView" layoutX="14.0" layoutY="47.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="60.0" />
+      <ListView fx:id="bookStoresListView" layoutX="14.0" layoutY="47.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="60.0" />
       <Label layoutX="5.0" layoutY="29.0" text="List of libraries" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="40.0" />
       <Label layoutX="261.0" layoutY="36.0" text="Books promotions" AnchorPane.leftAnchor="261.0" AnchorPane.topAnchor="36.0" />
       <Button layoutX="642.0" layoutY="330.0" mnemonicParsing="false" onAction="#handleAddModifyButton" prefWidth="150.0" text="Add/Modify" AnchorPane.leftAnchor="642.0" AnchorPane.topAnchor="330.0" />

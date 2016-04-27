@@ -10,10 +10,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import org.apache.log4j.Logger;
-import pl.bookstore.robot.DAO.BookDAO;
-import pl.bookstore.robot.DAO.BookStoreDAO;
 import pl.bookstore.robot.booksearch.Profile;
 import pl.bookstore.robot.booksearch.ProfileBuilder;
+import pl.bookstore.robot.hibernate.BookPersister;
 import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
 
@@ -21,6 +20,7 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 
 public class LibrariesControl implements Initializable {
     private Logger logger = Logger.getLogger(LibrariesControl.class);
@@ -28,7 +28,7 @@ public class LibrariesControl implements Initializable {
     @FXML
     private ChoiceBox<Profile> profileChoiceBox;
     @FXML
-    private ListView<BookStore> librariesListView;
+    private ListView<BookStore> bookStoresListView;
     @FXML
     private TextArea booksTextArea;
     @FXML
@@ -44,15 +44,19 @@ public class LibrariesControl implements Initializable {
 
     private ObservableList<BookStore> bookStoreListObservable = FXCollections.observableArrayList();
     private ObservableList<Profile> profileListObservable = FXCollections.observableArrayList();
-    private BookStoreDAO bookStoreDAO;
+    private BookPersister bookPersister;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        bookStoreDAO = new BookStoreDAO();
-        List<BookStore> bookStores = bookStoreDAO.getBookStores();
+        bookPersister = new BookPersister();
+        bookPersister.openSession();
+        List<BookStore> bookStores = bookPersister.getBookStores();
+        bookPersister.commitSession();
+
         bookStoreListObservable.addAll(bookStores);
 
-        librariesListView.setCellFactory(new Callback<ListView<BookStore>, ListCell<BookStore>>() {
+
+        bookStoresListView.setCellFactory(new Callback<ListView<BookStore>, ListCell<BookStore>>() {
             @Override
             public ListCell<BookStore> call(ListView<BookStore> param) {
                 return new ListCell<BookStore>() {
@@ -66,18 +70,21 @@ public class LibrariesControl implements Initializable {
             }
         });
 
-        librariesListView.setItems(bookStoreListObservable);
-        librariesListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        bookStoresListView.setItems(bookStoreListObservable);
+        bookStoresListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 if (event.getClickCount() == 1) {
-                    BookStore bookStore = librariesListView.getSelectionModel().getSelectedItem();
+                    BookStore bookStore = bookStoresListView.getSelectionModel().getSelectedItem();
                     fillFieldsByBookStore(bookStore);
                 }
 
                 if (event.getClickCount() == 2) {
-                    BookDAO bookDAO=new BookDAO();
-                    List<Book> books = bookDAO.getBooks();
+                    bookPersister.openSession();
+                    ObservableList<BookStore> selectedBookStore = bookStoresListView.getSelectionModel().getSelectedItems();
+                    int FIRST_ITEM_ONLY_ITEM_IN_LIST = 0;
+                    List<Book> books = bookPersister.getBookFromBookStore(selectedBookStore.get(FIRST_ITEM_ONLY_ITEM_IN_LIST));
+                    bookPersister.commitSession();
                     booksTextArea.clear();
                     books.forEach(book -> booksTextArea.appendText(book+"\n"));
                 }
@@ -97,30 +104,34 @@ public class LibrariesControl implements Initializable {
     @FXML
     private void handleAddModifyButton() {
         BookStore bookStore = fillBookStoreWithFields();
-        if (containBookStoreListLibraryName(bookStoreListObservable, bookStore.getName())) {
+        if (!containBookStoreListLibraryName(bookStoreListObservable, bookStore)) {
             bookStoreListObservable.add(bookStore);
-            bookStoreDAO.persist(bookStore);
+            bookPersister.openSession();
+            bookPersister.saveBookStore(bookStore);
+            bookPersister.commitSession();
             logger.info("Added to database " + bookStore.toString());
         }
 
     }
 
+    public boolean containBookStoreListLibraryName(Collection<BookStore> bookStores, BookStore bookStore) {
+        Predicate<BookStore> bookStoreFilter = bookStoreS -> bookStoreS.getName().equals(bookStore.getName());
+        return bookStores.stream().filter(bookStoreFilter).findFirst().isPresent();
+    }
+
     @FXML
     private void handleRemoveButton() {
-        int selectedIndex = librariesListView.getSelectionModel().getSelectedIndex();
+        int selectedIndex = bookStoresListView.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
-            BookStore bookStore = librariesListView.getItems().get(selectedIndex);
-            bookStoreDAO.remove(bookStore); // TODO after implement hibernate
-            librariesListView.getItems().remove(selectedIndex);
+            BookStore bookStore = bookStoresListView.getItems().get(selectedIndex);
+            bookPersister.openSession();
+            bookPersister.deleteBookStore(bookStore);
+            bookPersister.commitSession();
+            bookStoresListView.getItems().remove(selectedIndex);
         } else {
             popUpWindowAlertOnSelectionLibrary();
         }
     }
-
-    public boolean containBookStoreListLibraryName(Collection<BookStore> bookStores, String name) {
-        return bookStores.stream().filter(bookStore -> bookStore.getName().equals(name)).findFirst().isPresent();
-    }
-
 
     private void popUpWindowAlertOnSelectionLibrary() {
         Alert alert = new Alert(AlertType.WARNING);

@@ -35,8 +35,8 @@ public class LinkSearchTest {
         assertThat(hyperLinks.contains(expectedUrl)).isTrue();
 
     }
-    
-    @Test(groups = "NewTest")
+
+    @Test
     public void checkIfConnectionToPageIsSuccessful() {
         //given
         BookPersister bookPersister = new BookPersister();

@@ -2,6 +2,8 @@ package pl.bookstore.robot.pojo;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by damian on 30.03.16.
@@ -18,7 +20,8 @@ public class BookStore {
     private String searchForBook;
     private String searchForTitle;
     private String searchForCategory;
-
+    @OneToMany
+    private List<Book> bookList=new ArrayList<>();
 
     public BookStore(String name){this.name=name;}
     public BookStore(){}
@@ -88,6 +91,16 @@ public class BookStore {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public void addBook(Book book){
+        bookList.add(book);
+        book.setBookStore(this);
+    }
+
+    public void removeBook(Book book){
+        bookList.remove(book);
+        book.setBookStore(null);
     }
 
     @Override

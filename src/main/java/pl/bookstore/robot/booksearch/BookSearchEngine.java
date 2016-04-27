@@ -26,15 +26,17 @@ public class BookSearchEngine {
         List<BookStore> bookStores = bookPersister.getBookStores();
         bookPersister.commitSession();
 
-        for (BookStore bookStore: bookStores) {
+//        for (BookStore bookStore: bookStores) {
             bookPersister.openSession();
 
-            BookSearch bookSearch=new BookSearch(bookStore);
+        BookStore bookStore = bookStores.get(0);
+        BookSearch bookSearch=new BookSearch(bookStore);
             List<Book> books = bookSearch.searchBooks();
+            books.forEach(book -> bookStore.addBook(book));
 
             bookPersister.saveBooks(books);
             bookPersister.commitSession();
-        }
+//        }
 
     }
 }
