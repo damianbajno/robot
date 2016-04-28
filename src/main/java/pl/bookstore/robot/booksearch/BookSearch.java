@@ -9,7 +9,6 @@ import pl.bookstore.robot.pojo.BookStore;
 import java.util.*;
 
 /**
- *
  * Class is designed to search books in books store,
  * you have three methods to search books: on link,
  * document, on every page in bookstore.
@@ -30,13 +29,13 @@ public class BookSearch {
      */
     public BookSearch(BookStore bookStore) {
         this.bookStore = bookStore;
-        this.booksList=new ArrayList<Book>();
-        this.bookPersister =new BookPersister();
+        this.booksList = new ArrayList<Book>();
+        this.bookPersister = new BookPersister();
     }
 
     /**
-     *  Search books in BookStore by searching
-     *  the sub pages in specified link
+     * Search books in BookStore by searching
+     * the sub pages in specified link
      *
      * @return list of books found in BookStore
      */
@@ -53,7 +52,6 @@ public class BookSearch {
     }
 
     /**
-     *
      * @return HashSet with sub pages on specify link
      */
 
@@ -63,7 +61,6 @@ public class BookSearch {
     }
 
     /**
-     *
      * @param link where books are search
      * @return list of books found in link
      */
@@ -71,7 +68,7 @@ public class BookSearch {
     public List<Book> searchBooksOnSite(String link) {
         try {
             UserAgent userAgent = new UserAgent();
-            logger.info("Searching book on site = "+link);
+            logger.info("Searching book on site = " + link);
             Document document = userAgent.visit(link);
             return searchBooks(document);
         } catch (ResponseException e) {
@@ -81,45 +78,75 @@ public class BookSearch {
     }
 
     /**
-     *
      * @param document where books are search
      * @return list of books found in document
      */
 
-    public List<Book> searchBooks (Document document){
-            Elements bookElements = document.findEvery(this.bookStore.getSearchForBook());
+    public List<Book> searchBooks(Document document) {
+        Elements bookElements = document.findEvery(this.bookStore.getSearchForBook());
 
-            Iterator<Element> bookElementsIterator = bookElements.iterator();
-            while (bookElementsIterator.hasNext()) {
+        Iterator<Element> bookElementsIterator = bookElements.iterator();
+        while (bookElementsIterator.hasNext()) {
 
-                try {
-                    Element bookElement = bookElementsIterator.next();
-                    Element elementTitle = bookElement.findFirst(this.bookStore.getSearchForTitle());
+            try {
+                Element bookElement = bookElementsIterator.next();
+                Element elementTitle = bookElement.findFirst(this.bookStore.getSearchForTitle());
 
-                    String searchForCategory = this.bookStore.getSearchForCategory();
+                String searchForCategory = this.bookStore.getSearchForCategory();
 
-                    Book book;
-                    if (searchForCategory != "brak") {
+                Book book;
+                if (searchForCategory != "brak") {
 
-                        Element categoryElements = bookElement.findFirst(this.bookStore.getSearchForCategory()).findFirst("<li>");
-                        book = new Book(elementTitle.getText().trim(), categoryElements.getText().trim(), this.bookStore);
-                    } else {
-                        book = new Book(elementTitle.getText().trim(), "brak", this.bookStore);
-                    }
-
-                    this.booksList.add(book);
-                } catch (NotFound notFound) {
-                    logger.error(notFound.getMessage());
-
+                    Element categoryElements = bookElement.findFirst(this.bookStore.getSearchForCategory()).findFirst("<li>");
+                    book = new Book(elementTitle.getText().trim(), categoryElements.getText().trim(), this.bookStore);
+                } else {
+                    book = new Book(elementTitle.getText().trim(), "brak", this.bookStore);
                 }
 
+                this.booksList.add(book);
+            } catch (NotFound notFound) {
+                logger.error(notFound.getMessage());
+
             }
-            return this.booksList;
+
+        }
+        return this.booksList;
+    }
+
+    public List<Book> searchBooksVer1(Document document) {
+        Elements titleElements = document.findEvery(this.bookStore.getSearchForTitle());
+        Elements categoryElements = document.findEvery(this.bookStore.getSearchForCategory());
+
+        for (int i = 0; i < titleElements.size(); i++) {
+            List<Element> titles = titleElements.toList();
+            List<Element> categories = categoryElements.toList();
+
+            try {
+                Book book = null;
+
+                switch (bookStore.getName()) {
+                    case "bookrix":
+                        Element first = categories.get(i).findFirst("<li>");
+                        book = new Book(titles.get(i).getText().trim(), first.getText().trim(), this.bookStore);
+                        break;
+
+                    default:
+                        book = new Book(titles.get(i).getText().trim(), "brak", this.bookStore);
+                }
+                this.booksList.add(book);
+            } catch (NotFound notFound) {
+                notFound.printStackTrace();
+            }
         }
 
+        return this.booksList;
+    }
 
-        @Override
-        public String toString () {
-            return "BookSearch [" + bookStore.toString() + "]";
-        }
+
+    @Override
+    public String toString() {
+        return "BookSearch [" + bookStore.toString() + "]";
+    }
+
+
 }

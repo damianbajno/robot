@@ -15,12 +15,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class BookSearchTest {
 
     @Test
-    public void ifIPutHtmlPageWithBookItRetrieveBookBoorix() throws NotFound, ResponseException{
+    public void ifIPutHtmlPageWithBookItRetrievesBookBookrix() throws NotFound, ResponseException{
         //given
-        BookStore bookStoreBoorix = new BookStore("boorix", "http://www.bookrix.com/books.html", "<div class=\"item-content\">", "<a class=word-break>", "<ul class=item-details>" + "<li>");
-        Document document= new UserAgent().openContent(this.getHtmlPageBookBoorix());
-        Book bookExpected=new Book("New Life", "Romance", bookStoreBoorix);
-        BookSearch bookSearch=new BookSearch(bookStoreBoorix);
+        BookStore bookStoreBookrix = new BookStore("bookrix", "http://www.bookrix.com/books.html", "<div class=\"item-content\">", "<a class=word-break>", "<ul class=item-details>" + "<li>");
+        Document document= new UserAgent().openContent(this.getHtmlPageBookBookrix());
+        Book bookExpected=new Book("New Life", "Romance", bookStoreBookrix);
+        BookSearch bookSearch=new BookSearch(bookStoreBookrix);
 
         //when
         List<Book> books = bookSearch.searchBooks(document);
@@ -47,14 +47,57 @@ public class BookSearchTest {
         assertThat(books.get(0)).isEqualTo(bookExpected);
     }
 
+    @Test
+    public void ifIPutHtmlPageWithBookItRetrieveBooksGutenberg() throws NotFound, ResponseException{
+        //given
+        BookStore bookStoreGutenberg = new BookStore("gutenberg", "https://www.gutenberg.org/ebooks/searchBooks/?query=free+book&go=Go",
+                "<div class=header>", "<h1 itemprop=name>", "brak");
+        Book bookExpected=new Book("Going Viral : The 9 Secrets of Irresistible Marketing", "brak", bookStoreGutenberg);
 
-//    public void myTest() throws ResponseException{
-//        Document document= new UserAgent().openContent(this.getHtmlPageGoodreads());
-//
-//    }
+        Document document= new UserAgent().openContent(this.getHtmlPageGutenberg());
+        BookSearch bookSearch=new BookSearch(bookStoreGutenberg);
 
+        //when
+        List<Book> books = bookSearch.searchBooks(document);
 
-    public String getHtmlPageBookBoorix() {
+        //then
+        assertThat(books.get(0)).isEqualTo(bookExpected);
+    }
+
+    @Test
+    public void ifIPutHtmlPageWithBookItRetrievesBookBookrixVer1() throws NotFound, ResponseException{
+        //given
+        BookStore bookStoreBookrix = new BookStore("bookrix", "http://www.bookrix.com/books.html", "<div class=\"item-content\">", "<a class=word-break>", "<ul class=item-details>");
+        Document document= new UserAgent().openContent(this.getHtmlPageBookBookrix());
+        Book bookExpected=new Book("New Life", "Romance", bookStoreBookrix);
+        BookSearch bookSearch=new BookSearch(bookStoreBookrix);
+
+        //when
+        List<Book> books = bookSearch.searchBooksVer1(document);
+
+        //then
+        assertThat(books.size()).isGreaterThan(0);
+        assertThat(books.get(0)).isEqualTo(bookExpected);
+    }
+
+    @Test(groups = "NewTest")
+    public void ifIPutHtmlPageWithBookItRetrieveBookGoodReadsVer1() throws NotFound, ResponseException{
+        //given
+        BookStore bookStoreGoodreads = new BookStore("goodreads", "https://www.goodreads.com/genres/business",
+                "<div class=\"description descriptionContainer\">", "<a class=\"bookTitle\">", "brak");
+        Book bookExpected=new Book("Going Viral : The 9 Secrets of Irresistible Marketing", "brak", bookStoreGoodreads);
+
+        Document document= new UserAgent().openContent(this.getHtmlPageGoodreads());
+        BookSearch bookSearch=new BookSearch(bookStoreGoodreads);
+
+        //when
+        List<Book> books = bookSearch.searchBooksVer1(document);
+
+        //then
+        assertThat(books.get(0)).isEqualTo(bookExpected);
+    }
+
+    public String getHtmlPageBookBookrix() {
         String bookElement = new String("<body><div class=\"item-content\">\n" +
                 "        <a class=\"item-author\" data-bxuid=\"hanax1\" href=\"/-hanax1/\">H.N. S</a>\n" +
                 "        <big class=\"item-title\"><a class=\"word-break\" href=\"/_ebook-h-n-s-new-life/\">New Life </a></big>\n" +
@@ -115,5 +158,7 @@ public class BookSearchTest {
         return bookElement;
     }
 
-
+    public String getHtmlPageGutenberg() {
+        return "";
+    }
 }

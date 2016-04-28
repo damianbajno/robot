@@ -10,8 +10,7 @@ public class Book {
     private int id;
     private String title;
     private String category;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "BookStore")
+    @ManyToOne(fetch = FetchType.EAGER)
     private BookStore bookStore;
 
     public Book(String title) {
@@ -31,6 +30,7 @@ public class Book {
 
     public Book() {
     }
+
     public int getId() {return id;}
 
     public void setId(int id) {this.id = id;}

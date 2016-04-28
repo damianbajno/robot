@@ -24,9 +24,9 @@ public class LinkSearchTest {
     public void ifIPutDocumentWithLinksItFindLinks() throws ResponseException, NotFound{
         //given
         String expectedUrl="http://www.bookrix.com/_ebook-h-n-s-new-life/";
-        BookStore bookStoreBoorix = new BookStore("boorix", "http://www.bookrix.com/books.html", "<div class=\"item-content\">", "<a class=word-break>", "<ul class=item-details>" + "<li>");
+        BookStore bookStoreBookrix = new BookStore("bookrix", "http://www.bookrix.com/books.html", "<div class=\"item-content\">", "<a class=word-break>", "<ul class=item-details>" + "<li>");
         Document document= new UserAgent().openContent(this.getHtmlPage());
-        LinkSearch linkSearch=new LinkSearch(bookStoreBoorix);
+        LinkSearch linkSearch=new LinkSearch(bookStoreBookrix);
 
         //when
         HashSet<String> hyperLinks = linkSearch.searchHyperLinksOnPage(document);

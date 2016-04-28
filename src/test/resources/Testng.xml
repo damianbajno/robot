@@ -2,7 +2,7 @@
 
 <suite name="AllTests">
 
-    <test name="order">
+    <test name="AllTests">
         <packages>
             <package name="pl.bookstore.robot.booksearch"/>
             

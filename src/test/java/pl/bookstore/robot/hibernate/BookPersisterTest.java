@@ -80,7 +80,7 @@ public class BookPersisterTest {
     }
 
 
-    @Test(groups = "NewTest")
+    @Test
     public void testIfSavedBookHasConnectionWithBookStore() {
         //given
         BookPersister bookPersister = new BookPersister();

@@ -20,7 +20,8 @@ public class BookStore {
     private String searchForBook;
     private String searchForTitle;
     private String searchForCategory;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "bookStore")
+    @Column(name = "BookStoreID")
     private List<Book> bookList=new ArrayList<>();
 
     public BookStore(String name){this.name=name;}
