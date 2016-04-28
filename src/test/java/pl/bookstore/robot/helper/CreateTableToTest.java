@@ -18,24 +18,19 @@ public class CreateTableToTest {
     }
 
     public static void sendBookStoreAndBooksToDatabasesHibernate() {
-        BookStore bookStoreBookrix = new BookStore("bookrix", "http://www.bookrix.com/books.html", "<div class=item-content>", "<a class=word-break>", "<ul class=item-details>" + "<li>");
-        BookStore bookStoreGoodreads = new BookStore("goodreads", "https://www.goodreads.com/genres/business", "<div class=description descriptionContainer>", "<a class=bookTitle>", "brak");
-        BookStore bookStoreGutenberg = new BookStore("gutenberg", "https://www.gutenberg.org/ebooks/searchBooks/?query=free+book&go=Go", "<div class=header>", "<h1 itemprop=name>", "brak");
-
-        Book bookBookrix=new Book("a1", "b1");
-        Book bookGoodreads =new Book("a2", "b2");
-        Book bookGutenberg =new Book("a3", "b3");
-
-        bookStoreBookrix.addBook(bookBookrix);
-        bookStoreGoodreads.addBook(bookGoodreads);
-        bookStoreGutenberg.addBook(bookGutenberg);
-
         BookPersister bookPersister=new BookPersister();
+        BookStore[] bookStores=BookStoreContainer.getBookStores();
+        Book[] books={new Book("a1", "b1"),new Book("a2", "b2"), new Book("a3", "b3")};
+
+        for (int i = 0; i < bookStores.length; i++) {
+            bookStores[i].addBook(books[i]);
+        }
+
         bookPersister.openSession();
 
-        bookPersister.saveBookStore(bookStoreBookrix);
-        bookPersister.saveBookStore(bookStoreGoodreads);
-        bookPersister.saveBookStore(bookStoreGutenberg);
+        for (int i = 0; i < bookStores.length; i++) {
+            bookPersister.saveBookStore(bookStores[i]);
+        }
 
         bookPersister.commitSession();
         bookPersister.closeSessionFactory();

@@ -2,6 +2,7 @@ package pl.bookstore.robot.booksearch;
 
 import com.jaunt.*;
 import org.testng.annotations.Test;
+import pl.bookstore.robot.helper.BookStoreContainer;
 import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
 
@@ -17,7 +18,7 @@ public class BookSearchTest {
     @Test
     public void ifIPutHtmlPageWithBookItRetrievesBookBookrix() throws NotFound, ResponseException{
         //given
-        BookStore bookStoreBookrix = new BookStore("bookrix", "http://www.bookrix.com/books.html", "<div class=\"item-content\">", "<a class=word-break>", "<ul class=item-details>" + "<li>");
+        BookStore bookStoreBookrix = BookStoreContainer.getBookStore(0);
         Document document= new UserAgent().openContent(this.getHtmlPageBookBookrix());
         Book bookExpected=new Book("New Life", "Romance", bookStoreBookrix);
         BookSearch bookSearch=new BookSearch(bookStoreBookrix);
@@ -33,8 +34,7 @@ public class BookSearchTest {
     @Test
     public void ifIPutHtmlPageWithBookItRetrieveBookGoodReads() throws NotFound, ResponseException{
         //given
-        BookStore bookStoreGoodreads = new BookStore("goodreads", "https://www.goodreads.com/genres/business",
-                "<div class=\"description descriptionContainer\">", "<a class=\"bookTitle\">", "brak");
+        BookStore bookStoreGoodreads = BookStoreContainer.getBookStore(1);
         Book bookExpected=new Book("Going Viral : The 9 Secrets of Irresistible Marketing", "brak", bookStoreGoodreads);
 
         Document document= new UserAgent().openContent(this.getHtmlPageGoodreads());
@@ -50,8 +50,7 @@ public class BookSearchTest {
     @Test
     public void ifIPutHtmlPageWithBookItRetrieveBooksGutenberg() throws NotFound, ResponseException{
         //given
-        BookStore bookStoreGutenberg = new BookStore("gutenberg", "https://www.gutenberg.org/ebooks/searchBooks/?query=free+book&go=Go",
-                "<div class=header>", "<h1 itemprop=name>", "brak");
+        BookStore bookStoreGutenberg = BookStoreContainer.getBookStore(2);
         Book bookExpected=new Book("Going Viral : The 9 Secrets of Irresistible Marketing", "brak", bookStoreGutenberg);
 
         Document document= new UserAgent().openContent(this.getHtmlPageGutenberg());
@@ -67,7 +66,7 @@ public class BookSearchTest {
     @Test
     public void ifIPutHtmlPageWithBookItRetrievesBookBookrixVer1() throws NotFound, ResponseException{
         //given
-        BookStore bookStoreBookrix = new BookStore("bookrix", "http://www.bookrix.com/books.html", "<div class=\"item-content\">", "<a class=word-break>", "<ul class=item-details>");
+        BookStore bookStoreBookrix = BookStoreContainer.getBookStore("Bookrix");
         Document document= new UserAgent().openContent(this.getHtmlPageBookBookrix());
         Book bookExpected=new Book("New Life", "Romance", bookStoreBookrix);
         BookSearch bookSearch=new BookSearch(bookStoreBookrix);
@@ -83,8 +82,7 @@ public class BookSearchTest {
     @Test(groups = "NewTest")
     public void ifIPutHtmlPageWithBookItRetrieveBookGoodReadsVer1() throws NotFound, ResponseException{
         //given
-        BookStore bookStoreGoodreads = new BookStore("goodreads", "https://www.goodreads.com/genres/business",
-                "<div class=\"description descriptionContainer\">", "<a class=\"bookTitle\">", "brak");
+        BookStore bookStoreGoodreads = BookStoreContainer.getBookStore(1);
         Book bookExpected=new Book("Going Viral : The 9 Secrets of Irresistible Marketing", "brak", bookStoreGoodreads);
 
         Document document= new UserAgent().openContent(this.getHtmlPageGoodreads());

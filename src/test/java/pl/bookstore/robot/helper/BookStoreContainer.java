@@ -9,7 +9,7 @@ import java.util.LinkedHashMap;
 /**
  * Created by damian on 4/28/16.
  */
-public class BookStoreConteiner {
+public class BookStoreContainer {
     private final static LinkedHashMap<String, BookStore> bookStoreHashMap = new LinkedHashMap();
 
     static {
@@ -22,16 +22,18 @@ public class BookStoreConteiner {
         bookStoreHashMap.put(bookStoreGutenberg.getName(), bookStoreGutenberg);
     }
 
-    public BookStore getBookStore(int number){
+    public static BookStore getBookStore(int number){
         Collection<BookStore> values = bookStoreHashMap.values();
         return (BookStore) values.toArray()[number];
     }
 
-    public BookStore getBookStore(String name){
-        Collection<BookStore> values = bookStoreHashMap.values();
-        return (BookStore) values.toArray()[number];
+    public static BookStore getBookStore(String bookStoreName){
+        return bookStoreHashMap.get(bookStoreName);
     }
 
 
+    public static BookStore[] getBookStores() {
+        return (BookStore[]) bookStoreHashMap.values().toArray();
+    }
 }
 
