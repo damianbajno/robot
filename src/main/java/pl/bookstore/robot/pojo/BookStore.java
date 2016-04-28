@@ -35,6 +35,14 @@ public class BookStore {
         this.searchForCategory = searchForCategory;
     }
 
+    public BookStore(String name, String url, String searchForTitle, String searchForCategory) {
+        this.name = name;
+        this.url = url;
+        this.searchForTitle = searchForTitle;
+        this.searchForCategory = searchForCategory;
+    }
+
+
     public int getId() {
         return id;
     }

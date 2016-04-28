@@ -142,6 +142,34 @@ public class BookSearch {
         return this.booksList;
     }
 
+    public List<Book> searchBooksVer2(Document document) {
+        Elements titleElements = document.findEvery(this.bookStore.getSearchForTitle());
+        Elements categoryElements = document.findEvery(this.bookStore.getSearchForCategory());
+
+        for (int i = 0; i < titleElements.size(); i++) {
+            List<Element> titles = titleElements.toList();
+            List<Element> categories = categoryElements.toList();
+
+            try {
+                Book book = null;
+
+                switch (bookStore.getName()) {
+                    case "bookrix":
+                        Element first = categories.get(i).findFirst("<li>");
+                        book = new Book(titles.get(i).getText().trim(), first.getText().trim(), this.bookStore);
+                        break;
+
+                    default:
+                        book = new Book(titles.get(i).getText().trim(), "brak", this.bookStore);
+                }
+                this.booksList.add(book);
+            } catch (NotFound notFound) {
+                notFound.printStackTrace();
+            }
+        }
+
+        return this.booksList;
+    }
 
     @Override
     public String toString() {

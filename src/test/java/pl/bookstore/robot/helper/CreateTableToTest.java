@@ -1,6 +1,5 @@
 package pl.bookstore.robot.helper;
 
-import pl.bookstore.robot.DAO.BookStoreDAO;
 import pl.bookstore.robot.hibernate.BookPersister;
 import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
@@ -41,27 +40,6 @@ public class CreateTableToTest {
         bookPersister.openSession();
         List<BookStore> bookStores = bookPersister.getBookStores();
         bookPersister.closeSessionFactory();
-
-        Iterator<BookStore> iterator = bookStores.iterator();
-        while (iterator.hasNext()) {
-            System.out.println(iterator.next());
-        }
-    }
-
-    public static void sendBookStoreToDatabases() {
-        BookStore bookStoreBookrix = new BookStore("bookrix", "http://www.bookrix.com/books.html", "<div class=item-content>", "<a class=word-break>", "<ul class=item-details>" + "<li>");
-        BookStore bookStoreGoodreads = new BookStore("goodreads", "https://www.goodreads.com/genres/business", "<div class=description descriptionContainer>", "<a class=bookTitle>", "brak");
-        BookStore bookStoreGutenberg = new BookStore("gutenberg", "https://www.gutenberg.org/ebooks/searchBooks/?query=free+book&go=Go", "<div class=header>", "<h1 itemprop=name>", "brak");
-
-        BookStoreDAO bookStoreDAO = new BookStoreDAO();
-        bookStoreDAO.persist(bookStoreBookrix);
-        bookStoreDAO.persist(bookStoreGoodreads);
-        bookStoreDAO.persist(bookStoreGutenberg);
-    }
-
-    public static void printDatabasesBookStores() {
-        BookStoreDAO bookStoreDAO = new BookStoreDAO();
-        List<BookStore> bookStores = bookStoreDAO.getBookStores();
 
         Iterator<BookStore> iterator = bookStores.iterator();
         while (iterator.hasNext()) {

@@ -79,7 +79,7 @@ public class BookSearchTest {
         assertThat(books.get(0)).isEqualTo(bookExpected);
     }
 
-    @Test(groups = "NewTest")
+    @Test
     public void ifIPutHtmlPageWithBookItRetrieveBookGoodReadsVer1() throws NotFound, ResponseException{
         //given
         BookStore bookStoreGoodreads = BookStoreContainer.getBookStore(1);
