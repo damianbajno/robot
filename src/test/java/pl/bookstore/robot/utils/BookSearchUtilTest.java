@@ -1,10 +1,10 @@
 package pl.bookstore.robot.utils;
 
 import org.assertj.core.api.Assertions;
-import org.assertj.core.internal.Arrays;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,80 +13,19 @@ import java.util.List;
  */
 public class BookSearchUtilTest {
 
-    @Test
-    public void convertFromStringToTablePathToElementWhenEveryFieldIsGiven() {
-        //given
-        String givenPath = "1<dsafsafsdaf>";
-        List<String> expectedPath = new ArrayList<>();
-        expectedPath.add("1");
-        expectedPath.add("<dsafsafsdaf>");
-
-        //when
-        List resultPath = BookSearchUtils.getPathToElementInTable(givenPath);
-
-        //then
-        Assertions.assertThat(resultPath).isEqualTo(expectedPath);
-    }
-
-    @Test
-    public void convertFromStringToTablePathToElementWhenNotEveryFieldIsGiven() {
-        //given
-        String givenPathToSearch = "<dsafsafsdaf>";
-        List<String> expectedPath = new ArrayList<>();
-        expectedPath.add("1");
-        expectedPath.add("<dsafsafsdaf>");
-
-
-        //when
-        List resultPath = BookSearchUtils.getPathToElementInTable(givenPathToSearch);
-
-        //then
-        Assertions.assertThat(resultPath).isEqualTo(expectedPath);
-    }
-
-    @Test
-    public void convertFromStringToTablePathToSearchElementWhenNotEveryFieldIsGivenTwoPathLong() {
-        //given
-        String givenPathToSearch = "<dsafsafsdaf><dsaffdsfa324af>";
-        List<String> expectedPath = new ArrayList<>();
-        expectedPath.add("1");
-        expectedPath.add("<dsafsafsdaf>");
-        expectedPath.add("1");
-        expectedPath.add("<dsaffdsfa324af>");
-
-        //when
-        List resultPath = BookSearchUtils.getPathToElementInTable(givenPathToSearch);
-
-        //then
-        Assertions.assertThat(resultPath).isEqualTo(expectedPath);
-    }
-
-    @Test
-    public void convertFromStringToTablePathToSearchElementWhenEveryFieldIsGivenTwoPathLong() {
-        //given
-        String givenPathToSearch = "2<dsafsafsdaf>1<dsaffdsfa324af>";
-        List<String> expectedPath = new ArrayList<>();
-        expectedPath.add("2");
-        expectedPath.add("<dsafsafsdaf>");
-        expectedPath.add("1");
-        expectedPath.add("<dsaffdsfa324af>");
-        expectedPath.
-        //when
-        List resultPath = BookSearchUtils.getPathToElementInTable(givenPathToSearch);
-
-        //then
-        Assertions.assertThat(resultPath).isEqualTo(expectedPath);
-    }
-
     @DataProvider(name = "Paths")
-    public Object[][] givenAndExpectedPaths(){
-
-        return "";
+    public Object[][] givenAndExpectedPaths() {
+        Object[][] paths =
+                {{"1<dsafsafsdaf>", new PathArrayList().addElements("1", "<dsafsafsdaf>")},
+                {"<dsafsafsdaf>", new PathArrayList().addElements("1", "<dsafsafsdaf>")},
+                {"<dsafsafsdaf><dsaffdsfa324af>", new PathArrayList().addElements("1", "<dsafsafsdaf>", "1", "<dsaffdsfa324af>")},
+                {"1<dsafsafsdaf>2<dsaffdsfa324af>", new PathArrayList().addElements("1", "<dsafsafsdaf>", "2", "<dsaffdsfa324af>")}};
+        return paths;
     }
 
 
     @Test(groups = "NewTest", dataProvider = "Paths")
-    public void convertFromStringToTablePathToSearchElement(String givenPath, String expectedPath) {
+    public void convertFromStringToTablePathToSearchElement(String givenPath, List expectedPath) {
 
         //when
         List resultPath = BookSearchUtils.getPathToElementInTable(givenPath);
@@ -94,5 +33,6 @@ public class BookSearchUtilTest {
         //then
         Assertions.assertThat(resultPath).isEqualTo(expectedPath);
     }
+
 
 }

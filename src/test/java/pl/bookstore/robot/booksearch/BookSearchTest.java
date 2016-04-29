@@ -1,6 +1,7 @@
 package pl.bookstore.robot.booksearch;
 
 import com.jaunt.*;
+import org.assertj.core.api.Assertions;
 import org.testng.annotations.Test;
 import pl.bookstore.robot.helper.BookStoreContainer;
 import pl.bookstore.robot.pojo.Book;
@@ -14,6 +15,21 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Created by damian on 14.04.16.
  */
 public class BookSearchTest {
+
+    @Test
+    public void ifIPutDocumentWithBookItRetrieveBookBookixVer3() throws NotFound, ResponseException{
+        //given
+        BookStore bookStoreBookrix = BookStoreContainer.getBookStore(0);
+        Document document= new UserAgent().openContent(this.getHtmlPageBookBookrix());
+        Book bookExpected=new Book("New Life", "Romance", bookStoreBookrix);
+        BookSearch bookSearch=new BookSearch(bookStoreBookrix);
+
+        //when
+        List<Book> books=bookSearch.searchBooksVer3(document);
+
+        //then
+        Assertions.assertThat(books).contains(bookExpected);
+    }
 
     @Test
     public void ifIPutHtmlPageWithBookItRetrievesBookBookrix() throws NotFound, ResponseException{

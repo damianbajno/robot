@@ -177,4 +177,7 @@ public class BookSearch {
     }
 
 
+    public List<Book> searchBooksVer3(Document document) {
+
+    }
 }
