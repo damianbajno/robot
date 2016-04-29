@@ -83,101 +83,45 @@ public class BookSearch {
      */
 
     public List<Book> searchBooks(Document document) {
-        Elements bookElements = document.findEvery(this.bookStore.getSearchForBook());
+        ArrayList<Book> books=new ArrayList<>();
 
-        Iterator<Element> bookElementsIterator = bookElements.iterator();
-        while (bookElementsIterator.hasNext()) {
+        List<String> pathToTitleElement = BookSearchUtils.getPathToElement(bookStore.getSearchForTitle());
+        List<String> pathToCategoryElement = BookSearchUtils.getPathToElement(bookStore.getSearchForCategory());
 
-            try {
-                Element bookElement = bookElementsIterator.next();
-                Element elementTitle = bookElement.findFirst(this.bookStore.getSearchForTitle());
+        Elements titleElements = document.findEvery(pathToTitleElement.get(1));
+        Elements categoryElements = document.findEvery(pathToTitleElement.get(1));
 
-                String searchForCategory = this.bookStore.getSearchForCategory();
-
-                Book book;
-                if (searchForCategory != "brak") {
-
-                    Element categoryElements = bookElement.findFirst(this.bookStore.getSearchForCategory()).findFirst("<li>");
-                    book = new Book(elementTitle.getText().trim(), categoryElements.getText().trim(), this.bookStore);
-                } else {
-                    book = new Book(elementTitle.getText().trim(), "brak", this.bookStore);
-                }
-
-                this.booksList.add(book);
-            } catch (NotFound notFound) {
-                logger.error(notFound.getMessage());
-
-            }
-
+        for (Element titleElement : titleElements) {
+            String title = searchElement(titleElements, pathToTitleElement);
+            String category = searchElement(categoryElements, pathToCategoryElement);
+            Book book=new Book(title, category);
+            books.add(book);
         }
-        return this.booksList;
+        return books;
     }
 
-    public List<Book> searchBooksVer1(Document document) {
-        Elements titleElements = document.findEvery(this.bookStore.getSearchForTitle());
-        Elements categoryElements = document.findEvery(this.bookStore.getSearchForCategory());
 
-        for (int i = 0; i < titleElements.size(); i++) {
-            List<Element> titles = titleElements.toList();
-            List<Element> categories = categoryElements.toList();
 
-            try {
-                Book book = null;
+    String searchElement(Element element, List<String> pathToTitleElement) {
+        Element searchElement=null;
 
-                switch (bookStore.getName()) {
-                    case "bookrix":
-                        Element first = categories.get(i).findFirst("<li>");
-                        book = new Book(titles.get(i).getText().trim(), first.getText().trim(), this.bookStore);
-                        break;
-
-                    default:
-                        book = new Book(titles.get(i).getText().trim(), "brak", this.bookStore);
-                }
-                this.booksList.add(book);
-            } catch (NotFound notFound) {
-                notFound.printStackTrace();
+        try {
+            for (int i = 2; i < pathToTitleElement.size(); i=i+2) {
+                Elements pathToElement = element.findEvery(pathToTitleElement.get(i + 1));
+                searchElement= pathToElement.getElement(Integer.valueOf(pathToTitleElement.get(i)));
+                element=searchElement;
             }
+        } catch (NotFound notFound) {
+            notFound.printStackTrace();
         }
 
-        return this.booksList;
+        return searchElement.getText();
+
     }
 
-    public List<Book> searchBooksVer2(Document document) {
-        Elements titleElements = document.findEvery(this.bookStore.getSearchForTitle());
-        Elements categoryElements = document.findEvery(this.bookStore.getSearchForCategory());
-
-        for (int i = 0; i < titleElements.size(); i++) {
-            List<Element> titles = titleElements.toList();
-            List<Element> categories = categoryElements.toList();
-
-            try {
-                Book book = null;
-
-                switch (bookStore.getName()) {
-                    case "bookrix":
-                        Element first = categories.get(i).findFirst("<li>");
-                        book = new Book(titles.get(i).getText().trim(), first.getText().trim(), this.bookStore);
-                        break;
-
-                    default:
-                        book = new Book(titles.get(i).getText().trim(), "brak", this.bookStore);
-                }
-                this.booksList.add(book);
-            } catch (NotFound notFound) {
-                notFound.printStackTrace();
-            }
-        }
-
-        return this.booksList;
-    }
 
     @Override
     public String toString() {
         return "BookSearch [" + bookStore.toString() + "]";
-    }
-
-
-    public List<Book> searchBooksVer3(Document document) {
-
     }
 }

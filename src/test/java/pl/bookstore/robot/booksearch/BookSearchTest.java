@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class BookSearchTest {
 
-    @Test
+    @Test(groups = "NewTest")
     public void ifIPutDocumentWithBookItRetrieveBookBookixVer3() throws NotFound, ResponseException{
         //given
         BookStore bookStoreBookrix = BookStoreContainer.getBookStore(0);
@@ -25,14 +25,14 @@ public class BookSearchTest {
         BookSearch bookSearch=new BookSearch(bookStoreBookrix);
 
         //when
-        List<Book> books=bookSearch.searchBooksVer3(document);
+        List<Book> books=bookSearch.searchBooks(document);
 
         //then
         Assertions.assertThat(books).contains(bookExpected);
     }
 
     @Test
-    public void ifIPutHtmlPageWithBookItRetrievesBookBookrix() throws NotFound, ResponseException{
+    public void ifGiveDocumentWithElementWeFindItVer3() throws NotFound, ResponseException{
         //given
         BookStore bookStoreBookrix = BookStoreContainer.getBookStore(0);
         Document document= new UserAgent().openContent(this.getHtmlPageBookBookrix());
@@ -40,75 +40,10 @@ public class BookSearchTest {
         BookSearch bookSearch=new BookSearch(bookStoreBookrix);
 
         //when
-        List<Book> books = bookSearch.searchBooks(document);
+//        List<Book> books=bookSearch.searchElement(document, new PathArrayList().addElements("1","<ul class=item-details>","1","<li>"));
 
         //then
-        assertThat(books.size()).isGreaterThan(0);
-        assertThat(books.get(0)).isEqualTo(bookExpected);
-    }
-
-    @Test
-    public void ifIPutHtmlPageWithBookItRetrieveBookGoodReads() throws NotFound, ResponseException{
-        //given
-        BookStore bookStoreGoodreads = BookStoreContainer.getBookStore(1);
-        Book bookExpected=new Book("Going Viral : The 9 Secrets of Irresistible Marketing", "brak", bookStoreGoodreads);
-
-        Document document= new UserAgent().openContent(this.getHtmlPageGoodreads());
-        BookSearch bookSearch=new BookSearch(bookStoreGoodreads);
-
-        //when
-        List<Book> books = bookSearch.searchBooks(document);
-
-        //then
-        assertThat(books.get(0)).isEqualTo(bookExpected);
-    }
-
-    @Test
-    public void ifIPutHtmlPageWithBookItRetrieveBooksGutenberg() throws NotFound, ResponseException{
-        //given
-        BookStore bookStoreGutenberg = BookStoreContainer.getBookStore(2);
-        Book bookExpected=new Book("Going Viral : The 9 Secrets of Irresistible Marketing", "brak", bookStoreGutenberg);
-
-        Document document= new UserAgent().openContent(this.getHtmlPageGutenberg());
-        BookSearch bookSearch=new BookSearch(bookStoreGutenberg);
-
-        //when
-        List<Book> books = bookSearch.searchBooks(document);
-
-        //then
-        assertThat(books.get(0)).isEqualTo(bookExpected);
-    }
-
-    @Test
-    public void ifIPutHtmlPageWithBookItRetrievesBookBookrixVer1() throws NotFound, ResponseException{
-        //given
-        BookStore bookStoreBookrix = BookStoreContainer.getBookStore("Bookrix");
-        Document document= new UserAgent().openContent(this.getHtmlPageBookBookrix());
-        Book bookExpected=new Book("New Life", "Romance", bookStoreBookrix);
-        BookSearch bookSearch=new BookSearch(bookStoreBookrix);
-
-        //when
-        List<Book> books = bookSearch.searchBooksVer1(document);
-
-        //then
-        assertThat(books.size()).isGreaterThan(0);
-        assertThat(books.get(0)).isEqualTo(bookExpected);
-    }
-
-    @Test
-    public void ifIPutHtmlPageWithBookItRetrieveBookGoodReadsVer1() throws NotFound, ResponseException{
-        //given
-        BookStore bookStoreGoodreads = BookStoreContainer.getBookStore(1);
-        Book bookExpected=new Book("Going Viral : The 9 Secrets of Irresistible Marketing", "brak", bookStoreGoodreads);
-
-        Document document= new UserAgent().openContent(this.getHtmlPageGoodreads());
-        BookSearch bookSearch=new BookSearch(bookStoreGoodreads);
-
-        //when
-        List<Book> books = bookSearch.searchBooksVer1(document);
-
-        //then
-        assertThat(books.get(0)).isEqualTo(bookExpected);
+//        Assertions.assertThat(books).contains(bookExpected);
     }
 
     public String getHtmlPageBookBookrix() {

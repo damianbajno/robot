@@ -1,4 +1,4 @@
-package pl.bookstore.robot.utils;
+package pl.bookstore.robot.booksearch;
 
 
 import org.apache.commons.lang3.math.NumberUtils;
@@ -12,7 +12,7 @@ import java.util.List;
  */
 class BookSearchUtils {
 
-    public static List<String> getPathToElementInTable(String givenPathToSearch) {
+    public static List<String> getPathToElement(String givenPathToSearch) {
         String[] tableWithPath = givenPathToSearch.split("[<>]");
 
         List<String> tableWithPathList = new ArrayList<String>();

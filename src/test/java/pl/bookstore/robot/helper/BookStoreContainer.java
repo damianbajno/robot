@@ -13,7 +13,7 @@ public class BookStoreContainer {
     private final static LinkedHashMap<String, BookStore> bookStoreHashMap = new LinkedHashMap();
 
     static {
-        BookStore bookStoreBookrix = new BookStore("bookrix", "http://www.bookrix.com/books.html", "<div class=item-content>", "<a class=word-break>", "<ul class=item-details>" + "<li>");
+        BookStore bookStoreBookrix = new BookStore("bookrix", "http://www.bookrix.com/books.html", "<div class=item-content>", "<a class=word-break>", "<ul class=item-details><li>");
         BookStore bookStoreGoodreads = new BookStore("goodreads", "https://www.goodreads.com/genres/business", "<div class=description descriptionContainer>", "<a class=bookTitle>", "brak");
         BookStore bookStoreGutenberg = new BookStore("gutenberg", "https://www.gutenberg.org/ebooks/searchBooks/?query=free+book&go=Go", "<div class=header>", "<h1 itemprop=name>", "brak");
 
