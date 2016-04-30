@@ -15,26 +15,30 @@ class BookSearchUtils {
     public static List<String> getPathToElement(String givenPathToSearch) {
         String[] tableWithPath = givenPathToSearch.split("[<>]");
 
-        List<String> tableWithPathList = new ArrayList<String>();
+        List<String> listWithPath = new ArrayList<String>();
 
-        for (int i = 0; i < tableWithPath.length; i++) {
-            tableWithPathList.add(tableWithPath[i]);
-        }
+        switchFromTableToArray(tableWithPath, listWithPath);
 
-        for (int i = 0; i < tableWithPathList.size(); i++) {
-            String element = tableWithPathList.get(i);
+        for (int i = 0; i < listWithPath.size(); i++) {
+            String element = listWithPath.get(i);
 
             if (!NumberUtils.isNumber(element) & (i % 2 == 0)) {
-                tableWithPathList.set(i, "1");
+                listWithPath.set(i, "1");
                 continue;
             }
 
             if (!NumberUtils.isNumber(element))
-                tableWithPathList.set(i, "<" + element + ">");
+                listWithPath.set(i, "<" + element + ">");
 
         }
 
-        return tableWithPathList;
+        return listWithPath;
+    }
+
+    private static void switchFromTableToArray(String[] tableWithPath, List<String> tableWithPathList) {
+        for (int i = 0; i < tableWithPath.length; i++) {
+            tableWithPathList.add(tableWithPath[i]);
+        }
     }
 
 }

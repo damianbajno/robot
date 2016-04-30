@@ -9,7 +9,6 @@ import pl.bookstore.robot.pojo.BookStore;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Created by damian on 14.04.16.
@@ -17,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class BookSearchTest {
 
     @Test(groups = "NewTest")
-    public void ifIPutDocumentWithBookItRetrieveBookBookixVer3() throws NotFound, ResponseException{
+    public void ifIPutDocumentWithBookItRetrieveBookBookix() throws NotFound, ResponseException{
         //given
         BookStore bookStoreBookrix = BookStoreContainer.getBookStore(0);
         Document document= new UserAgent().openContent(this.getHtmlPageBookBookrix());
@@ -29,21 +28,6 @@ public class BookSearchTest {
 
         //then
         Assertions.assertThat(books).contains(bookExpected);
-    }
-
-    @Test
-    public void ifGiveDocumentWithElementWeFindItVer3() throws NotFound, ResponseException{
-        //given
-        BookStore bookStoreBookrix = BookStoreContainer.getBookStore(0);
-        Document document= new UserAgent().openContent(this.getHtmlPageBookBookrix());
-        Book bookExpected=new Book("New Life", "Romance", bookStoreBookrix);
-        BookSearch bookSearch=new BookSearch(bookStoreBookrix);
-
-        //when
-//        List<Book> books=bookSearch.searchElement(document, new PathArrayList().addElements("1","<ul class=item-details>","1","<li>"));
-
-        //then
-//        Assertions.assertThat(books).contains(bookExpected);
     }
 
     public String getHtmlPageBookBookrix() {

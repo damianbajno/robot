@@ -2,7 +2,6 @@ package pl.bookstore.robot.booksearch;
 
 import com.jaunt.*;
 import org.apache.log4j.Logger;
-import pl.bookstore.robot.hibernate.BookPersister;
 import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
 
@@ -22,7 +21,6 @@ public class BookSearch {
 
     private BookStore bookStore;
     private List<Book> booksList;
-    private BookPersister bookPersister;
 
     /**
      * @param bookStore specify where to search books, and on what tags to search
@@ -30,7 +28,6 @@ public class BookSearch {
     public BookSearch(BookStore bookStore) {
         this.bookStore = bookStore;
         this.booksList = new ArrayList<Book>();
-        this.bookPersister = new BookPersister();
     }
 
     /**
@@ -89,34 +86,37 @@ public class BookSearch {
         List<String> pathToCategoryElement = BookSearchUtils.getPathToElement(bookStore.getSearchForCategory());
 
         Elements titleElements = document.findEvery(pathToTitleElement.get(1));
-        Elements categoryElements = document.findEvery(pathToTitleElement.get(1));
+        Elements categoryElements = document.findEvery(pathToCategoryElement.get(1));
 
-        for (Element titleElement : titleElements) {
-            String title = searchElement(titleElements, pathToTitleElement);
-            String category = searchElement(categoryElements, pathToCategoryElement);
-            Book book=new Book(title, category);
-            books.add(book);
+        for (int i = 0; i < titleElements.size(); i++) {
+            Book book=null;
+            String title;
+            String category="brak";
+            try {
+                title = searchElement(titleElements.getElement(i), pathToTitleElement);
+                category = searchElement(categoryElements.getElement(i), pathToCategoryElement);
+                book=new Book(title, category, bookStore);
+            } catch (NotFound e) {
+                e.printStackTrace();
+            } finally {
+                books.add(book);
+            }
+
         }
         return books;
     }
 
 
 
-    String searchElement(Element element, List<String> pathToTitleElement) {
-        Element searchElement=null;
-
+    private String searchElement(Element element, List<String> pathToElement) {
         try {
-            for (int i = 2; i < pathToTitleElement.size(); i=i+2) {
-                Elements pathToElement = element.findEvery(pathToTitleElement.get(i + 1));
-                searchElement= pathToElement.getElement(Integer.valueOf(pathToTitleElement.get(i)));
-                element=searchElement;
+            for (int i = 2; i < pathToElement.size(); i=i+2) {
+                Elements pathToElement1 = element.findEvery(pathToElement.get(i+1));
+                element= pathToElement1.getElement(Integer.valueOf(pathToElement.get(i))-1);
             }
-        } catch (NotFound notFound) {
-            notFound.printStackTrace();
+        } finally {
+            return element.getText().trim();
         }
-
-        return searchElement.getText();
-
     }
 
 
