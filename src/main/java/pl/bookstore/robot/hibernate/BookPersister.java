@@ -9,6 +9,7 @@ import org.hibernate.resource.transaction.spi.TransactionStatus;
 import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 

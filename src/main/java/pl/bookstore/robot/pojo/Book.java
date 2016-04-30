@@ -1,6 +1,7 @@
 package pl.bookstore.robot.pojo;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "Book")
@@ -10,8 +11,9 @@ public class Book {
     private int id;
     private String title;
     private String category;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private BookStore bookStore=new BookStore();
+    private Date data=new Date();
 
     public Book(String title) {
         this.title = title;

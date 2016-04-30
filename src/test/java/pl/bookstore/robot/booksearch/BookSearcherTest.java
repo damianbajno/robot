@@ -26,7 +26,6 @@ public class BookSearcherTest {
         return data;
     }
 
-
     @Test(dataProvider = "findBookOnDocument")
     public void ifIPutDocumentWithBookItRetrieveBook(int bookStoreNumber, String documentString, Book bookExpected) throws NotFound, ResponseException {
         //given
@@ -41,6 +40,31 @@ public class BookSearcherTest {
         Assertions.assertThat(books.size()).isEqualTo(1);
         Assertions.assertThat(books).contains(bookExpected);
     }
+
+    @DataProvider(name = "findBookOnPage")
+    public Object[][] dataProviderForSearchABookInPage() {
+        Object[][] data = {
+                {0, new Book("New Life", "Romance")},
+                {1, new Book("Going Viral : The 9 Secrets of Irresistible Marketing", "brak")},
+                {2, new Book("Inwestycje", "Inwestycje")}
+        };
+        return data;
+    }
+
+    @Test(groups = "IntegrationTest", dataProvider = "findBookOnPage")
+    public void ifISearchPageWithBooksItRetrieveBooks(int bookStoreNumber, Book expectedBook) throws NotFound, ResponseException {
+        //given
+        BookStore bookStore = BookStoreContainer.getBookStore(bookStoreNumber);
+        BookSearcher bookSearcher = new BookSearcher(bookStore);
+
+        //when
+        List<Book> books = bookSearcher.searchBooks(bookStore.getUrl());
+
+        //then
+        Assertions.assertThat(books.size()).isGreaterThan(0);
+        Assertions.assertThat(books).contains(expectedBook);
+    }
+
 
     public String getHtmlPageBookBookrix() {
         String bookElement = new String("<body><div class=\"item-content\">\n" +

@@ -5,7 +5,6 @@ import org.apache.log4j.Logger;
 import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -43,7 +42,7 @@ public class BookSearcher {
         Iterator<String> linksIterator = hyperLinks.iterator();
 
         while (linksIterator.hasNext()) {
-            searchBooksOnSite(linksIterator.next());
+            searchBooks(linksIterator.next());
         }
 
         return this.booksList;
@@ -63,7 +62,7 @@ public class BookSearcher {
      * @return list of books found in link
      */
 
-    public List<Book> searchBooksOnSite(String link) {
+    public List<Book> searchBooks(String link) {
         try {
             UserAgent userAgent = new UserAgent();
             logger.info("Searching book on site = " + link);
