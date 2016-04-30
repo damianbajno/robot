@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -69,7 +70,7 @@ public class BookSearcher {
             Document document = userAgent.visit(link);
             return searchBooks(document);
         } catch (ResponseException e) {
-            logger.error(e.getStackTrace().toString());
+            logger.error(Arrays.toString(e.getStackTrace()));
         }
         return Collections.emptyList();
     }
@@ -114,7 +115,7 @@ public class BookSearcher {
         try {
             for (int i = 2; i < pathToElement.size(); i=i+2) {
                 Elements pathToElement1 = element.findEach(pathToElement.get(i+1));
-                element= pathToElement1.getElement(Integer.valueOf(pathToElement.get(i))-1);
+                element= pathToElement1.getElement(Integer.parseInt(pathToElement.get(i))-1);
             }
         } finally {
             return element.getText().trim();

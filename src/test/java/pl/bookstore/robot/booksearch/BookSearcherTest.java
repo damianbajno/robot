@@ -19,15 +19,15 @@ public class BookSearcherTest {
     @DataProvider(name = "findBookOnDocument")
     public Object[][] dataProviderForSearchABookInDocument() {
         Object[][] data = {
-//                {0, this.getHtmlPageBookBookrix(), new Book("New Life", "Romance")},
-//                {1, this.getHtmlPageGoodreads(), new Book("Going Viral : The 9 Secrets of Irresistible Marketing", "brak")},
+                {0, this.getHtmlPageBookBookrix(), new Book("New Life", "Romance")},
+                {1, this.getHtmlPageGoodreads(), new Book("Going Viral : The 9 Secrets of Irresistible Marketing", "brak")},
                 {2, this.getHtmlPagePwn(), new Book("Inwestycje", "Inwestycje")}
         };
         return data;
     }
 
 
-    @Test(groups = "NewTest", dataProvider = "findBookOnDocument")
+    @Test(dataProvider = "findBookOnDocument")
     public void ifIPutDocumentWithBookItRetrieveBook(int bookStoreNumber, String documentString, Book bookExpected) throws NotFound, ResponseException {
         //given
         BookStore bookStore = BookStoreContainer.getBookStore(bookStoreNumber);
