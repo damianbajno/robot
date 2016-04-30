@@ -25,7 +25,14 @@ public class BookStore {
     private List<Book> bookList=new ArrayList<>();
 
     public BookStore(String name){this.name=name;}
-    public BookStore(){}
+
+    public BookStore(){
+        this.name = "brak";
+        this.url = "";
+        this.searchForBook = "";
+        this.searchForTitle = "";
+        this.searchForCategory = "";
+    }
 
     public BookStore(String name, String url, String searchForBook, String searchForTitle, String searchForCategory) {
         this.name = name;

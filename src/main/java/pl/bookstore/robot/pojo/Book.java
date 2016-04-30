@@ -11,7 +11,7 @@ public class Book {
     private String title;
     private String category;
     @ManyToOne(fetch = FetchType.EAGER)
-    private BookStore bookStore;
+    private BookStore bookStore=new BookStore();
 
     public Book(String title) {
         this.title = title;
@@ -20,6 +20,7 @@ public class Book {
     public Book(String title, String category) {
         this.title = title;
         this.category = category;
+        bookStore=new BookStore();
     }
 
     public Book(String title, String category, BookStore bookStore) {
@@ -31,9 +32,13 @@ public class Book {
     public Book() {
     }
 
-    public int getId() {return id;}
+    public int getId() {
+        return id;
+    }
 
-    public void setId(int id) {this.id = id;}
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -67,8 +72,8 @@ public class Book {
 
         Book book = (Book) o;
 
-        if (title != null ? !title.equals(book.title) : book.title != null) return false;
-        return category != null ? category.equals(book.category) : book.category == null;
+        if (title != null ? !title.toLowerCase().equals(book.title.toLowerCase()) : book.title != null) return false;
+        return category != null ? category.toLowerCase().equals(book.category.toLowerCase()) : book.category == null;
 
     }
 

@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by damian on 4/28/16.
  */
-class BookSearchUtils {
+class BookSearcherUtils {
 
     public static List<String> getPathToElement(String givenPathToSearch) {
         String[] tableWithPath = givenPathToSearch.split("[<>]");

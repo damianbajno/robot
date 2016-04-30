@@ -14,12 +14,14 @@ public class BookStoreContainer {
 
     static {
         BookStore bookStoreBookrix = new BookStore("bookrix", "http://www.bookrix.com/books.html", "<div class=item-content>", "<a class=word-break>", "<ul class=item-details><li>");
-        BookStore bookStoreGoodreads = new BookStore("goodreads", "https://www.goodreads.com/genres/business", "<div class=description descriptionContainer>", "<a class=bookTitle>", "brak");
-        BookStore bookStoreGutenberg = new BookStore("gutenberg", "https://www.gutenberg.org/ebooks/searchBooks/?query=free+book&go=Go", "<div class=header>", "<h1 itemprop=name>", "brak");
+        BookStore bookStoreGoodreads = new BookStore("goodreads", "https://www.goodreads.com/genres/business", "<div class=description descriptionContainer>", "<a class=bookTitle>", "<brak");
+        BookStore bookStorePwn = new BookStore("Pwn", "http://ksiegarnia.pw n.pl/Inwestycje,68736511,p.html", "<span class=name itemprop=itemReviewed>", "<ul class=details.*>2<li><h3>2<span><a>");
+
 
         bookStoreHashMap.put(bookStoreBookrix.getName(), bookStoreBookrix);
         bookStoreHashMap.put(bookStoreGoodreads.getName(), bookStoreGoodreads);
-        bookStoreHashMap.put(bookStoreGutenberg.getName(), bookStoreGutenberg);
+        bookStoreHashMap.put(bookStorePwn.getName(), bookStorePwn);
+
     }
 
     public static BookStore getBookStore(int number){

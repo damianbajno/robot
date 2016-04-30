@@ -16,8 +16,8 @@ import java.util.*;
  * @see LinkSearch
  */
 
-public class BookSearch {
-    private static Logger logger = Logger.getLogger(BookSearch.class);
+public class BookSearcher {
+    private static Logger logger = Logger.getLogger(BookSearcher.class);
 
     private BookStore bookStore;
     private List<Book> booksList;
@@ -25,7 +25,7 @@ public class BookSearch {
     /**
      * @param bookStore specify where to search books, and on what tags to search
      */
-    public BookSearch(BookStore bookStore) {
+    public BookSearcher(BookStore bookStore) {
         this.bookStore = bookStore;
         this.booksList = new ArrayList<Book>();
     }
@@ -82,36 +82,38 @@ public class BookSearch {
     public List<Book> searchBooks(Document document) {
         ArrayList<Book> books=new ArrayList<>();
 
-        List<String> pathToTitleElement = BookSearchUtils.getPathToElement(bookStore.getSearchForTitle());
-        List<String> pathToCategoryElement = BookSearchUtils.getPathToElement(bookStore.getSearchForCategory());
+        List<String> pathToTitleElement = BookSearcherUtils.getPathToElement(bookStore.getSearchForTitle());
+        List<String> pathToCategoryElement = BookSearcherUtils.getPathToElement(bookStore.getSearchForCategory());
 
         Elements titleElements = document.findEvery(pathToTitleElement.get(1));
         Elements categoryElements = document.findEvery(pathToCategoryElement.get(1));
 
+        String title=null;
+        String previousTitle="";
         for (int i = 0; i < titleElements.size(); i++) {
             Book book=null;
-            String title;
             String category="brak";
             try {
                 title = searchElement(titleElements.getElement(i), pathToTitleElement);
                 category = searchElement(categoryElements.getElement(i), pathToCategoryElement);
-                book=new Book(title, category, bookStore);
             } catch (NotFound e) {
                 e.printStackTrace();
             } finally {
-                books.add(book);
+                if (!previousTitle.equals(title)) {
+                    book = new Book(title, category, bookStore);
+                    books.add(book);
+                }
+                previousTitle=title;
             }
 
         }
         return books;
     }
 
-
-
     private String searchElement(Element element, List<String> pathToElement) {
         try {
             for (int i = 2; i < pathToElement.size(); i=i+2) {
-                Elements pathToElement1 = element.findEvery(pathToElement.get(i+1));
+                Elements pathToElement1 = element.findEach(pathToElement.get(i+1));
                 element= pathToElement1.getElement(Integer.valueOf(pathToElement.get(i))-1);
             }
         } finally {
@@ -122,6 +124,6 @@ public class BookSearch {
 
     @Override
     public String toString() {
-        return "BookSearch [" + bookStore.toString() + "]";
+        return "BookSearcher [" + bookStore.toString() + "]";
     }
 }

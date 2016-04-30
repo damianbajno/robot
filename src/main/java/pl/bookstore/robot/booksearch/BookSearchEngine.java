@@ -1,7 +1,5 @@
 package pl.bookstore.robot.booksearch;
 
-import com.jaunt.NotFound;
-import com.jaunt.ResponseException;
 import org.apache.log4j.Logger;
 import pl.bookstore.robot.hibernate.BookPersister;
 import pl.bookstore.robot.pojo.Book;
@@ -30,8 +28,8 @@ public class BookSearchEngine {
             bookPersister.openSession();
 
         BookStore bookStore = bookStores.get(0);
-        BookSearch bookSearch=new BookSearch(bookStore);
-            List<Book> books = bookSearch.searchBooks();
+        BookSearcher bookSearcher =new BookSearcher(bookStore);
+            List<Book> books = bookSearcher.searchBooks();
             books.forEach(book -> bookStore.addBook(book));
 
             bookPersister.saveBooks(books);
