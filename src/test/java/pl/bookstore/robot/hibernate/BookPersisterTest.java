@@ -1,4 +1,5 @@
 package pl.bookstore.robot.hibernate;
+
 import org.assertj.core.api.Assertions;
 import org.mockito.Mockito;
 import org.testng.Assert;
@@ -17,21 +18,21 @@ import static org.mockito.Mockito.when;
 public class BookPersisterTest {
 
     @Test
-    public void testIfSessionIsOpenedCorrectly(){
+    public void testIfSessionIsOpenedCorrectly() {
         BookPersister bookPersister = Mockito.mock(BookPersister.class);
         when(bookPersister.openSession()).thenReturn(true);
         Assert.assertEquals(bookPersister.openSession(), true);
     }
 
     @Test
-    public void testIfSessionIsClosedCorrectly(){
+    public void testIfSessionIsClosedCorrectly() {
         BookPersister bookPersister = Mockito.mock(BookPersister.class);
         when(bookPersister.closeSessionFactory()).thenReturn(true);
         Assert.assertEquals(bookPersister.closeSessionFactory(), true);
     }
 
     @Test(groups = "IntegrationTest")
-    public void testIfBookStoreIsSavedInDB(){
+    public void testIfBookStoreIsSavedInDB() {
         //given
         BookPersister bookPersister = new BookPersister();
         BookStore bookStoreExpected = new BookStore("nexto.pl", "http://www.nexto.pl/", "<a href>", "eTitle", "Crime");
@@ -56,11 +57,11 @@ public class BookPersisterTest {
         bookPersister.closeSessionFactory();
     }
 
-    @Test (groups = "IntegrationTest")
-    public void testIfBookIsSavedInDatabase(){
+    @Test(groups = "IntegrationTest")
+    public void testIfBookIsSavedInDatabase() {
         //given
         BookPersister persistBook = new BookPersister();
-        Book bookExpected = new Book("KSIONSZKA" ,"To jest dramat k*rwa");
+        Book bookExpected = new Book("KSIONSZKA", "To jest dramat k*rwa");
 
         //when
         persistBook.openSession();
@@ -84,10 +85,10 @@ public class BookPersisterTest {
     public void testIfSavedBookHasConnectionWithBookStore() {
         //given
         BookPersister bookPersister = new BookPersister();
-        Book bookExpected = new Book("KSIONSZKA" ,"To jest dramat k*rwa");
+        Book bookExpected = new Book("KSIONSZKA", "To jest dramat k*rwa");
         BookStore bookStoreExpected = new BookStore("nexto.pl", "http://www.nexto.pl/", "<a href>", "eTitle", "Crime");
-        bookStoreExpected.addBook(bookExpected);
-
+        bookExpected.setBookStore(bookStoreExpected);
+        
         //when
         bookPersister.openSession();
         bookPersister.saveBookStore(bookStoreExpected);

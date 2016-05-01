@@ -1,9 +1,11 @@
 package pl.bookstore.robot.helper;
 
 import com.jaunt.*;
-import javafx.scene.input.DataFormat;
 
+import java.text.DateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by damian on 4/30/16.
@@ -11,9 +13,6 @@ import java.util.Date;
 public class TestClass {
 
     public static void main(String[] args) throws ResponseException,NotFound {
-        Date date=new Date();
-        System.out.println(date.toString());
-        DAteFor
 
     }
 }

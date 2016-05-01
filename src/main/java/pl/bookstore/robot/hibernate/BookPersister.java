@@ -9,8 +9,6 @@ import org.hibernate.resource.transaction.spi.TransactionStatus;
 import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -87,7 +85,7 @@ public class BookPersister {
     }
 
     public  boolean saveBooks(List<Book> bookList) {
-        bookList.forEach(books -> session.save(books));
+        bookList.forEach(book -> session.save(book));
         logger.info("Book saved in database");
 
         return true;

@@ -76,7 +76,7 @@ public class LinkSearch {
                     logger.info("Site added to LinksSet = " + hyperLink);
                     linksSet.add(hyperLink);
 
-                    if (linksSet.size() < 10) searchHyperLinksOnPage(hyperLink);
+                    if (linksSet.size() < 3) searchHyperLinksOnPage(hyperLink);
                 }
             }
         }

@@ -21,8 +21,8 @@ public class CreateTableToTest {
         BookStore[] bookStores=BookStoreContainer.getBookStores();
         Book[] books={new Book("a1", "b1"),new Book("a2", "b2"), new Book("a3", "b3")};
 
-        for (int i = 0; i < bookStores.length; i++) {
-            bookStores[i].addBook(books[i]);
+        for (int i = 0; i < books.length; i++) {
+            books[i].setBookStore(bookStores[i]);
         }
 
         bookPersister.openSession();

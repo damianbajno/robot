@@ -42,7 +42,7 @@ public class BookSearcher {
         Iterator<String> linksIterator = hyperLinks.iterator();
 
         while (linksIterator.hasNext()) {
-            searchBooks(linksIterator.next());
+            this.booksList.addAll(searchBooks(linksIterator.next()));
         }
 
         return this.booksList;
@@ -97,11 +97,12 @@ public class BookSearcher {
                 title = searchElement(titleElements.getElement(i), pathToTitleElement);
                 category = searchElement(categoryElements.getElement(i), pathToCategoryElement);
             } catch (NotFound e) {
-                e.printStackTrace();
+                logger.info("Did not find any Books on site "+ document.getUrl());
             } finally {
                 if (!previousTitle.equals(title)) {
                     book = new Book(title, category, bookStore);
                     books.add(book);
+                    logger.info("Finded book "+book);
                 }
                 previousTitle=title;
             }

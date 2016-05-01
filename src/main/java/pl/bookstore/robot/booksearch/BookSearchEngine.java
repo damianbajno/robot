@@ -9,8 +9,9 @@ import java.util.List;
 
 /**
  * Class which search books stores for books
- *
+ * <p>
  * Created by damian on 31.03.16.
+ *
  * @author Damian Bajno (pseudo thread, Di)
  */
 public class BookSearchEngine {
@@ -19,22 +20,22 @@ public class BookSearchEngine {
     public static void main(String[] args) {
         logger.info("==== Book engine started ====");
 
-        BookPersister bookPersister=new BookPersister();
+        BookPersister bookPersister = new BookPersister();
         bookPersister.openSession();
         List<BookStore> bookStores = bookPersister.getBookStores();
         bookPersister.commitSession();
 
-//        for (BookStore bookStore: bookStores) {
-            bookPersister.openSession();
 
-        BookStore bookStore = bookStores.get(0);
-        BookSearcher bookSearcher =new BookSearcher(bookStore);
-            List<Book> books = bookSearcher.searchBooks();
-            books.forEach(book -> bookStore.addBook(book));
+        BookStore bookStore = bookStores.get(2);
+        BookSearcher bookSearcher = new BookSearcher(bookStore);
+        List<Book> books = bookSearcher.searchBooks();
+        books.forEach(book -> book.setBookStore(bookStore));
 
-            bookPersister.saveBooks(books);
-            bookPersister.commitSession();
-//        }
+
+        logger.info("Started saving books");
+        bookPersister.openSession();
+        bookPersister.saveBooks(books);
+        bookPersister.commitSession();
 
     }
 }

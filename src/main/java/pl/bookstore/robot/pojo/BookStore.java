@@ -20,9 +20,6 @@ public class BookStore {
     private String searchForBook;
     private String searchForTitle;
     private String searchForCategory;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "bookStore")
-    @Column(name = "BookStoreID")
-    private List<Book> bookList=new ArrayList<>();
 
     public BookStore(String name){this.name=name;}
 
@@ -107,16 +104,6 @@ public class BookStore {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public void addBook(Book book){
-        bookList.add(book);
-        book.setBookStore(this);
-    }
-
-    public void removeBook(Book book){
-        bookList.remove(book);
-        book.setBookStore(null);
     }
 
     @Override
