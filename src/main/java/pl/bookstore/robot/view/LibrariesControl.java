@@ -114,10 +114,10 @@ public class LibrariesControl implements Initializable {
             bookPersister.commitSession();
             logger.info("Added to database " + bookStore.toString());
         } else {
+            BookStore selectedBookStore = bookStoresListView.getSelectionModel().getSelectedItem();
             bookPersister.openSession();
-            bookStore = bookPersister.getBookStore(bookStore.getName());
-            changeFieldsInBookStore(bookStore);
-            bookPersister.updateBookStore(bookStore);
+            changeFieldsInBookStore(selectedBookStore);
+            bookPersister.updateBookStore(selectedBookStore);
             bookPersister.commitSession();
         }
 

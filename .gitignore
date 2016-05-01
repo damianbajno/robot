@@ -4,7 +4,7 @@
 #User DB 
 *~
 robot.iml
-*.log.1
+*.log.*
 commitMS.txt
 
 ### Eclipse ###
