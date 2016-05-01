@@ -2,6 +2,7 @@ package pl.bookstore.robot.view;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -24,6 +25,7 @@ import java.util.function.Predicate;
 
 public class LibrariesControl implements Initializable {
     private Logger logger = Logger.getLogger(LibrariesControl.class);
+    final String TEXT_IN_INFO_LABEL = "Name of library have to be unique";
 
     @FXML
     private ChoiceBox<Profile> profileChoiceBox;
@@ -36,11 +38,12 @@ public class LibrariesControl implements Initializable {
     @FXML
     private TextField libraryURL;
     @FXML
-    private TextField searchForBook;
-    @FXML
     private TextField searchForTitle;
     @FXML
     private TextField searchForCategory;
+    @FXML
+    private Label infoLabel;
+
 
     private ObservableList<BookStore> bookStoreListObservable = FXCollections.observableArrayList();
     private ObservableList<Profile> profileListObservable = FXCollections.observableArrayList();
@@ -102,7 +105,7 @@ public class LibrariesControl implements Initializable {
     }
 
     @FXML
-    private void handleAddModifyButton() {
+    public void handleAddModifyButton() {
         BookStore bookStore = fillBookStoreWithFields();
         if (!containBookStoreListLibraryName(bookStoreListObservable, bookStore)) {
             bookStoreListObservable.add(bookStore);
@@ -110,6 +113,12 @@ public class LibrariesControl implements Initializable {
             bookPersister.saveBookStore(bookStore);
             bookPersister.commitSession();
             logger.info("Added to database " + bookStore.toString());
+        } else {
+            bookPersister.openSession();
+            bookStore = bookPersister.getBookStore(bookStore.getName());
+            changeFieldsInBookStore(bookStore);
+            bookPersister.updateBookStore(bookStore);
+            bookPersister.commitSession();
         }
 
     }
@@ -133,6 +142,14 @@ public class LibrariesControl implements Initializable {
         }
     }
 
+    @FXML
+    public void handleClearButton(Event event) {
+        libraryName.setText("");
+        libraryURL.setText("");
+        searchForTitle.setText("");
+        searchForCategory.setText("");
+    }
+
     private void popUpWindowAlertOnSelectionLibrary() {
         Alert alert = new Alert(AlertType.WARNING);
         alert.initOwner(null);
@@ -145,7 +162,6 @@ public class LibrariesControl implements Initializable {
     private void fillFieldsByBookStore(BookStore bookStore) {
         libraryName.setText(bookStore.getName());
         libraryURL.setText(bookStore.getUrl());
-        searchForBook.setText(bookStore.getSearchForBook());
         searchForTitle.setText(bookStore.getSearchForTitle());
         searchForCategory.setText(bookStore.getSearchForCategory());
     }
@@ -154,9 +170,15 @@ public class LibrariesControl implements Initializable {
         BookStore bookStore = new BookStore();
         bookStore.setName(libraryName.getText());
         bookStore.setUrl(libraryURL.getText());
-        bookStore.setSearchForBook(searchForBook.getText());
         bookStore.setSearchForTitle(searchForTitle.getText());
         bookStore.setSearchForCategory(searchForCategory.getText());
         return bookStore;
+    }
+
+    private void changeFieldsInBookStore(BookStore bookStore) {
+        bookStore.setName(libraryName.getText());
+        bookStore.setUrl(libraryURL.getText());
+        bookStore.setSearchForTitle(searchForTitle.getText());
+        bookStore.setSearchForCategory(searchForCategory.getText());
     }
 }

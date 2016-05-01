@@ -60,6 +60,13 @@ public class BookPersister {
         return true;
     }
 
+    public boolean updateBookStore(BookStore bookStore){
+        session.update(bookStore);
+        logger.info("Book store saved in database");
+
+        return true;
+    }
+
     public boolean saveBookStores(List<BookStore> bookStoreList){
         bookStoreList.forEach(booksStore -> session.save(booksStore) );
         logger.info("Book stores saved in database");
@@ -68,9 +75,13 @@ public class BookPersister {
     }
 
     public BookStore getBookStore(String name){
-        Query getBookStoreQuery = session.createQuery("FROM "+BookStore.class.getSimpleName()+" BS where BS.name='"+name+"'");
-        List<BookStore> bookStores = getBookStoreQuery.list();
+        Criteria criteria = session.createCriteria(BookStore.class);
+        List<BookStore> bookStores = criteria.add(Restrictions.eq("name", name)).list();
         return bookStores.get(0);
+    }
+
+    public BookStore getBookStore(int number){
+        return session.get(BookStore.class, number);
     }
 
     public List<BookStore> getBookStores(){
@@ -117,6 +128,9 @@ public class BookPersister {
         return criteria.list();
     }
 
+    public Session getSession(){
+        return session;
+    }
 
 }
 

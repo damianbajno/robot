@@ -6,23 +6,47 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="450.0" maxWidth="800.0" minHeight="400.0" minWidth="800.0" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.bookstore.robot.view.LibrariesControl">
+<AnchorPane maxHeight="519.0" maxWidth="800.0" minHeight="400.0" minWidth="800.0" prefHeight="519.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.bookstore.robot.view.LibrariesControl">
    <children>
-      <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-      </MenuBar>
-      <ListView fx:id="bookStoresListView" layoutX="14.0" layoutY="47.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="60.0" />
+      <ListView fx:id="bookStoresListView" layoutX="14.0" layoutY="47.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="60.0">
+         <tooltip>
+            <Tooltip text="One click show books, two clicks edit library" />
+         </tooltip></ListView>
       <Label layoutX="5.0" layoutY="29.0" text="List of libraries" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="40.0" />
-      <Label layoutX="261.0" layoutY="36.0" text="Books promotions" AnchorPane.leftAnchor="261.0" AnchorPane.topAnchor="36.0" />
-      <Button layoutX="642.0" layoutY="330.0" mnemonicParsing="false" onAction="#handleAddModifyButton" prefWidth="150.0" text="Add/Modify" AnchorPane.leftAnchor="642.0" AnchorPane.topAnchor="330.0" />
+      <Label layoutX="256.0" layoutY="36.0" text="Books promotions" AnchorPane.leftAnchor="256.0" AnchorPane.topAnchor="36.0" />
+      <Button layoutX="670.0" layoutY="334.0" mnemonicParsing="false" onMouseClicked="#handleAddModifyButton" prefHeight="25.0" prefWidth="118.0" text="Add/Modify" AnchorPane.leftAnchor="670.0" AnchorPane.topAnchor="334.0" />
       <Button layoutX="119.0" layoutY="272.0" mnemonicParsing="false" onAction="#handleRemoveButton" prefWidth="90.0" text="Remove" AnchorPane.leftAnchor="119.0" AnchorPane.topAnchor="272.0" />
       <TextArea fx:id="booksTextArea" editable="false" layoutX="255.0" layoutY="60.0" prefHeight="200.0" prefWidth="535.0" wrapText="true" AnchorPane.leftAnchor="255.0" AnchorPane.topAnchor="60.0" />
-      <TextField fx:id="libraryURL" layoutX="12.0" layoutY="403.0" prefHeight="25.0" prefWidth="626.0" promptText="URL adress" AnchorPane.leftAnchor="12.0" />
-      <TextField fx:id="libraryName" layoutX="12.0" layoutY="329.0" prefHeight="25.0" prefWidth="303.0" promptText="Library name" AnchorPane.leftAnchor="12.0" />
-      <TextField fx:id="searchForBook" layoutX="354.0" layoutY="329.0" prefHeight="25.0" prefWidth="280.0" promptText="Search for books" AnchorPane.leftAnchor="354.0" />
-      <TextField fx:id="searchForCategory" layoutX="354.0" layoutY="362.0" prefHeight="25.0" prefWidth="286.0" promptText="Search for category" AnchorPane.leftAnchor="354.0" />
-      <TextField fx:id="searchForTitle" layoutX="14.0" layoutY="364.0" prefHeight="25.0" prefWidth="303.0" promptText="Search for title" AnchorPane.leftAnchor="14.0" />
-      <Label layoutX="10.0" layoutY="307.0" text="Add new library" AnchorPane.leftAnchor="10.0" />
-      <Label fx:id="profileLabel" layoutX="260.0" layoutY="14.0" text="Profile" />
-      <ChoiceBox fx:id="profileChoiceBox" layoutX="325.0" layoutY="9.0" onContextMenuRequested="#chooseProfile" prefWidth="150.0" />
+      <Label fx:id="profileLabel" layoutX="257.0" layoutY="14.0" text="Choose Profile: " />
+      <ChoiceBox fx:id="profileChoiceBox" layoutX="387.0" layoutY="9.0" onContextMenuRequested="#chooseProfile" prefHeight="25.0" prefWidth="318.0" />
+      <Button fx:id="clearButton" layoutX="670.0" layoutY="382.0" mnemonicParsing="false" onMouseClicked="#handleClearButton" prefHeight="25.0" prefWidth="118.0" text="Reset" />
+      <Label layoutX="13.0" layoutY="300.0" text="Add/Modify library (to add library, library name have to be unique)" />
+      <GridPane layoutX="12.0" layoutY="314.0" prefHeight="186.0" prefWidth="636.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="631.0" minWidth="10.0" prefWidth="631.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="332.0" minWidth="0.0" prefWidth="5.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Name" />
+            <TextField fx:id="libraryName" prefHeight="25.0" prefWidth="293.0" promptText="Library name" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+            <Label text="Path to title" GridPane.rowIndex="4" />
+            <TextField fx:id="searchForTitle" prefHeight="25.0" prefWidth="303.0" promptText="Search for title" GridPane.rowIndex="5" />
+            <TextField fx:id="searchForCategory" prefHeight="25.0" prefWidth="286.0" promptText="Search for category" GridPane.rowIndex="7" />
+            <Label text="Path to category" GridPane.rowIndex="6" />
+            <Label text="Url to site" GridPane.rowIndex="2" />
+            <TextField fx:id="libraryURL" prefHeight="25.0" prefWidth="626.0" promptText="URL adress" GridPane.rowIndex="3" />
+         </children>
+      </GridPane>
    </children>
 </AnchorPane>
