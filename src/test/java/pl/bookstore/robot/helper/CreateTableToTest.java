@@ -1,8 +1,11 @@
 package pl.bookstore.robot.helper;
 
 import pl.bookstore.robot.hibernate.BookPersister;
+import pl.bookstore.robot.hibernate.ProfilePersister;
 import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
+import pl.bookstore.robot.pojo.Profile;
+import pl.bookstore.robot.pojo.ProfileBuilder;
 
 import java.util.Iterator;
 import java.util.List;
@@ -13,7 +16,7 @@ import java.util.List;
 public class CreateTableToTest {
 
     public static void main(String[] args) {
-        CreateTableToTest.sendBookStoreAndBooksToDatabasesHibernate();
+        CreateTableToTest.createTableProfile();
     }
 
     public static void sendBookStoreAndBooksToDatabasesHibernate() {
@@ -33,6 +36,14 @@ public class CreateTableToTest {
 
         bookPersister.commitSession();
         bookPersister.closeSessionFactory();
+    }
+
+    public static void createTableProfile(){
+        ProfilePersister profilePersister=new ProfilePersister();
+
+        Profile profile = new Profile("Damian");
+//        profile.setBookStore(BookStoreContainer.getBookStore(0));
+        profilePersister.persistProfile(profile);
     }
 
     public static void printDatabasesBookStoresHibernate() {

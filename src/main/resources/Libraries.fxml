@@ -50,6 +50,6 @@
          </children>
       </GridPane>
       <Label layoutX="256.0" layoutY="13.0" text="Kategorie" />
-      <Button fx:id="addProfileButton" layoutX="448.0" layoutY="8.0" mnemonicParsing="false" onMouseClicked="#createProfile" text="Add" />
+      <Button fx:id="addProfileButton" layoutX="448.0" layoutY="8.0" mnemonicParsing="false" onMouseClicked="#addProfile" text="Add" />
    </children>
 </AnchorPane>
