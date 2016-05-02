@@ -1,6 +1,7 @@
 package pl.bookstore.robot.view;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -11,8 +12,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import org.apache.log4j.Logger;
-import pl.bookstore.robot.booksearch.Profile;
-import pl.bookstore.robot.booksearch.ProfileBuilder;
+import org.controlsfx.control.CheckComboBox;
+import pl.bookstore.robot.pojo.Profile;
+import pl.bookstore.robot.pojo.ProfileBuilder;
 import pl.bookstore.robot.hibernate.BookPersister;
 import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
@@ -22,10 +24,17 @@ import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class LibrariesControl implements Initializable {
+    private int FIRST_ITEM_ONLY_ITEM_IN_LIST = 0;
+
     private Logger logger = Logger.getLogger(LibrariesControl.class);
-    final String TEXT_IN_INFO_LABEL = "Name of library have to be unique";
+    private ObservableList<BookStore> bookStoreListObservable = FXCollections.observableArrayList();
+    private ObservableList<Profile> profileListObservable = FXCollections.observableArrayList();
+    private ObservableList<String> categoryListObservable = FXCollections.observableArrayList();
+    private BookPersister bookPersister;
+    private List<Book> bookShowList;
 
     @FXML
     private ChoiceBox<Profile> profileChoiceBox;
@@ -42,22 +51,39 @@ public class LibrariesControl implements Initializable {
     @FXML
     private TextField searchForCategory;
     @FXML
-    private Label infoLabel;
-
-
-    private ObservableList<BookStore> bookStoreListObservable = FXCollections.observableArrayList();
-    private ObservableList<Profile> profileListObservable = FXCollections.observableArrayList();
-    private BookPersister bookPersister;
+    private CheckComboBox<String> categoryComboBox;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        categoryComboBox.getItems().add("Damian");
+        categoryComboBox.getItems().setAll(categoryListObservable);
+
+        categoryComboBox.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
+            @Override
+            public void onChanged(Change<? extends String> c) {
+                System.out.println("chooseCategory");
+
+                ObservableList<String> selectedCategory = categoryComboBox.getCheckModel().getCheckedItems();
+                selectedCategory.forEach(b -> {
+                    System.out.println(b);
+                });
+
+                booksTextArea.clear();
+
+                bookShowList.stream().filter(book -> {
+                    return selectedCategory.contains(book.getCategory());
+                }).forEach(book -> booksTextArea.appendText(book + "\n"));
+
+            }
+        });
+
         bookPersister = new BookPersister();
         bookPersister.openSession();
         List<BookStore> bookStores = bookPersister.getBookStores();
         bookPersister.commitSession();
 
         bookStoreListObservable.addAll(bookStores);
-
 
         bookStoresListView.setCellFactory(new Callback<ListView<BookStore>, ListCell<BookStore>>() {
             @Override
@@ -83,24 +109,29 @@ public class LibrariesControl implements Initializable {
                 }
 
                 if (event.getClickCount() == 2) {
+
                     bookPersister.openSession();
                     ObservableList<BookStore> selectedBookStore = bookStoresListView.getSelectionModel().getSelectedItems();
-                    int FIRST_ITEM_ONLY_ITEM_IN_LIST = 0;
-                    List<Book> books = bookPersister.getBookFromBookStore(selectedBookStore.get(FIRST_ITEM_ONLY_ITEM_IN_LIST));
+                    bookShowList = bookPersister.getBookFromBookStore(selectedBookStore.get(FIRST_ITEM_ONLY_ITEM_IN_LIST));
                     bookPersister.commitSession();
+
                     booksTextArea.clear();
-                    books.forEach(book -> booksTextArea.appendText(book+"\n"));
+                    bookShowList.forEach(book -> booksTextArea.appendText(book + "\n"));
+
+                    categoryComboBox.getItems().clear();
+                    List<String> categoryList = bookShowList.stream().map(book -> book.getCategory()).distinct().collect(Collectors.toList());
+                    categoryComboBox.getItems().addAll(categoryList);
                 }
             }
         });
 
-        ProfileBuilder profileBuilder=new ProfileBuilder();
+        ProfileBuilder profileBuilder = new ProfileBuilder();
         profileListObservable.add(profileBuilder.getProfile1());
         profileChoiceBox.setItems(profileListObservable);
     }
 
     @FXML
-    public void chooseProfile(){
+    public void chooseProfile() {
 
     }
 
@@ -181,4 +212,9 @@ public class LibrariesControl implements Initializable {
         bookStore.setSearchForTitle(searchForTitle.getText());
         bookStore.setSearchForCategory(searchForCategory.getText());
     }
+
+    public void createProfile(Event event) {
+
+    }
+
 }
