@@ -14,11 +14,8 @@ import javafx.util.Callback;
 import org.apache.log4j.Logger;
 import org.controlsfx.control.CheckComboBox;
 import pl.bookstore.robot.hibernate.ProfilePersister;
-import pl.bookstore.robot.pojo.Profile;
-import pl.bookstore.robot.pojo.ProfileBuilder;
+import pl.bookstore.robot.pojo.*;
 import pl.bookstore.robot.hibernate.BookPersister;
-import pl.bookstore.robot.pojo.Book;
-import pl.bookstore.robot.pojo.BookStore;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -67,10 +64,7 @@ public class LibrariesControl implements Initializable {
             public void onChanged(Change<? extends String> c) {
                 ObservableList<String> selectedCategory = categoryComboBox.getCheckModel().getCheckedItems();
 
-                booksTextArea.clear();
-                bookShowList.stream().filter(book -> {
-                    return selectedCategory.contains(book.getCategory());
-                }).forEach(book -> booksTextArea.appendText(book + "\n"));
+                filterBooksByCategory(selectedCategory);
 
             }
         });
@@ -130,9 +124,18 @@ public class LibrariesControl implements Initializable {
         profileChoiceBox.setItems(profileListObservable);
     }
 
+    private void filterBooksByCategory(List<String> categories) {
+        booksTextArea.clear();
+        bookShowList.stream().filter(book -> {
+            return categories.contains(book.getCategory());
+        }).forEach(book -> booksTextArea.appendText(book + "\n"));
+    }
+
     @FXML
     public void chooseProfile() {
-
+        Profile profileSelected = profileChoiceBox.getSelectionModel().getSelectedItem();
+        List<String> categories = profileSelected.getCategories();
+        filterBooksByCategory(categories);
     }
 
     @FXML
@@ -217,8 +220,11 @@ public class LibrariesControl implements Initializable {
     public void addProfile(Event event) {
         ObservableList<String> selectedCategoryList = categoryComboBox.getCheckModel().getCheckedItems();
         BookStore selectedBookStore = bookStoresListView.getSelectionModel().getSelectedItem();
-        Profile profile = ProfileBuilder.build(selectedBookStore, selectedCategoryList);
-        profilePersister.persistProfile(profile);
+
+        Profile profile = ProfileBuilder.build(selectedCategoryList);
+        profilePersister.persistProfile(profile, selectedBookStore);
+
+        profileListObservable.add(profile);
     }
 
 }

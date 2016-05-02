@@ -7,6 +7,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
+import pl.bookstore.robot.pojo.Category;
 import pl.bookstore.robot.pojo.Profile;
 
 public class HibernateUtil {
@@ -18,7 +19,7 @@ public class HibernateUtil {
             // loads configuration and mappings
             Configuration configuration = new Configuration().configure();
             configuration.addAnnotatedClass(BookStore.class).addAnnotatedClass(Book.class)
-                    .addAnnotatedClass(Profile.class);
+                    .addAnnotatedClass(Profile.class).addAnnotatedClass(Category.class);
             ServiceRegistry serviceRegistry
                     = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties()).build();

@@ -1,12 +1,11 @@
 package pl.bookstore.robot.pojo;
 
 import javafx.collections.ObservableList;
-import pl.bookstore.robot.pojo.BookStore;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 /**
  * Created by damian on 21.04.16.
@@ -16,49 +15,60 @@ public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String type;
-    @ElementCollection
-    private List<String> values;
-//    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    private BookStore bookStore;
+    private String name;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Category> categories=new ArrayList<>();
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
+    private BookStore bookStore;
 
-    public Profile(String type) {
-        this.type = type;
-        values =new ArrayList<String>();
+    public Profile(String name) {
+        this.name = name;
     }
 
-    public boolean addCategory(String s) {
-        return values.add(s);
+    public Profile() {
     }
 
-    public String remove(int index) {
-        return values.remove(index);
+    public boolean addCategory(String category) {
+        return categories.add(new Category(category));
     }
 
-    public void clear() {
-        values.clear();
+    public void addCategories(ObservableList<String> categories) {
+        List<Category> categoryList = categories.stream().map(c -> new Category(c)).collect(Collectors.toList());
+        this.categories.addAll(categoryList);
     }
 
-    public boolean remove(Object o) {
-        return values.remove(o);
+    public void setBookStore(BookStore bookStore) {
+        this.bookStore = bookStore;
+    }
+
+    public List<String> getCategories() {
+        return categories.stream().map(c -> c.toString()).collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Profile profile = (Profile) o;
+
+        if (name != null ? !name.equals(profile.name) : profile.name != null) return false;
+        if (categories != null ? !categories.equals(profile.categories) : profile.categories != null) return false;
+        return bookStore != null ? bookStore.equals(profile.bookStore) : profile.bookStore == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (categories != null ? categories.hashCode() : 0);
+        result = 31 * result + (bookStore != null ? bookStore.hashCode() : 0);
+        return result;
     }
 
     @Override
     public String toString() {
-        return  type + " search by=" + values ;
+        return  name + " search " + categories;
     }
 
-    public void addCategories(ObservableList<String> categories) {
-        values.addAll(categories);
-    }
-
-    public void addCategories(String[] categories) {
-        for (int i = 0; i < categories.length; i++) {
-            values.add(categories[i]);
-        }
-    }
-
-//    public void setBookStore(BookStore bookStore) {
-//        this.bookStore = bookStore;
-//    }
 }

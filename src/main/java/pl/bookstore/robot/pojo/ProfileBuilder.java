@@ -8,9 +8,10 @@ import javafx.collections.ObservableList;
 public class ProfileBuilder {
     private static Profile profile;
 
-    public static Profile build(BookStore bookStore, ObservableList<String> categories) {
-        profile = new Profile("Category");
-//        profile.setBookStore(bookStore);
+    public static Profile build(ObservableList<String> categories) {
+        StringBuilder name=new StringBuilder();
+        categories.stream().map(c -> c.charAt(0)).forEach(b -> name.append(b));
+        profile = new Profile(name.toString());
         profile.addCategories(categories);
         return profile;
     };

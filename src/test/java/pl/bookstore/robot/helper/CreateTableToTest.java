@@ -16,7 +16,7 @@ import java.util.List;
 public class CreateTableToTest {
 
     public static void main(String[] args) {
-        CreateTableToTest.createTableProfile();
+        CreateTableToTest.sendBookStoreAndBooksToDatabasesHibernate();
     }
 
     public static void sendBookStoreAndBooksToDatabasesHibernate() {
@@ -42,8 +42,7 @@ public class CreateTableToTest {
         ProfilePersister profilePersister=new ProfilePersister();
 
         Profile profile = new Profile("Damian");
-//        profile.setBookStore(BookStoreContainer.getBookStore(0));
-        profilePersister.persistProfile(profile);
+        profilePersister.persistProfile(profile, BookStoreContainer.getBookStore(0));
     }
 
     public static void printDatabasesBookStoresHibernate() {

@@ -14,14 +14,13 @@ public class ProfilePersisterTest {
     public void ifIPutProfileToTableItWillBeInTable(){
         //given
         ProfilePersister profilePersister=new ProfilePersister();
-        Profile profile = new Profile("Damian");
-//        profile.setBookStore(BookStoreContainer.getBookStore(0));
+        Profile profile = new Profile("Damian1");
         profile.addCategory("a");
-//        profile.addCategory("b");
-//        profile.addCategory("c");
+        profile.addCategory("b");
+        profile.addCategory("c");
 
         //when
-        profilePersister.persistProfile(profile);
+        profilePersister.persistProfile(profile, BookStoreContainer.getBookStore(0));
 
         //then
         profilePersister.getProfilesFromBookStore(BookStoreContainer.getBookStore(0)).contains(profile);

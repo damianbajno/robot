@@ -46,8 +46,10 @@ public class ProfilePersister {
     }
 
 
-    public void persistProfile(Profile profile){
+    public void persistProfile(Profile profile, BookStore bookStore){
         openSession();
+        BookStore bookStoreLoaded= session.load(BookStore.class, bookStore.getId());
+        profile.setBookStore(bookStoreLoaded);
         session.persist(profile);
         commitSession();
     }
