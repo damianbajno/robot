@@ -17,7 +17,7 @@ public class Profile {
     private int id;
     private String name;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Category> categories=new ArrayList<>();
+    private List<Category> categories=new ArrayList<Category>();
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
     private BookStore bookStore;
 

@@ -9,12 +9,12 @@ import org.apache.log4j.Logger;
 import java.io.IOException;
 import java.net.URL;
 
-public class GuiApp extends Application {
-	Logger logger=Logger.getLogger(GuiApp.class);
+public class GuiMainClass extends Application {
+	Logger logger=Logger.getLogger(GuiMainClass.class);
 
 	@Override
 	public void start(Stage primaryStage) {
-		logger.info(GuiApp.class.toString()+"started");
+		logger.info(GuiMainClass.class.toString()+"started");
 		primaryStage.setTitle("Bookstore");
 
 		try {

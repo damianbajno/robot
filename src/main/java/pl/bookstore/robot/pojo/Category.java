@@ -15,6 +15,9 @@ public class Category {
     int id;
     String category;
 
+    public Category() {
+    }
+
     public Category(String category) {
         this.category=category;
     }
