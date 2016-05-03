@@ -43,16 +43,16 @@ public class BookSearcherTest {
 
     @DataProvider(name = "findBookOnPage")
     public Object[][] dataProviderForSearchABookInPage() {
-        Object[][] data = {
-                {0, new Book("New Life", "Romance")},
-                {1, new Book("Going Viral : The 9 Secrets of Irresistible Marketing", "brak")},
-                {2, new Book("Inwestycje", "Inwestycje")}
+        Object[][] bookStoreNumber = {
+                {0},
+                {1},
+                {2},
         };
-        return data;
+        return bookStoreNumber;
     }
 
     @Test(groups = "IntegrationTest", dataProvider = "findBookOnPage")
-    public void ifISearchPageWithBooksItRetrieveBooks(int bookStoreNumber, Book expectedBook) throws NotFound, ResponseException {
+    public void ifISearchPageWithBooksItRetrieveBooks(int bookStoreNumber) throws NotFound, ResponseException {
         //given
         BookStore bookStore = BookStoreContainer.getBookStore(bookStoreNumber);
         BookSearcher bookSearcher = new BookSearcher(bookStore);
@@ -62,7 +62,6 @@ public class BookSearcherTest {
 
         //then
         Assertions.assertThat(books.size()).isGreaterThan(0);
-        Assertions.assertThat(books).contains(expectedBook);
     }
 
 
