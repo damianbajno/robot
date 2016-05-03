@@ -22,7 +22,7 @@ class BookSearcherUtils {
         for (int i = 0; i < listWithPath.size(); i++) {
             String element = listWithPath.get(i);
 
-            if (!NumberUtils.isNumber(element) & (i % 2 == 0)) {
+            if (!NumberUtils.isNumber(element) && (i % 2 == 0)) {
                 listWithPath.set(i, "1");
                 continue;
             }

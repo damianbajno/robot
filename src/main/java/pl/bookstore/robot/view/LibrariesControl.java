@@ -112,7 +112,11 @@ public class LibrariesControl implements Initializable {
 
                     profileListObservable.clear();
                     List<Profile> profileList = profilePersister.getProfilesFromBookStore(selectedBookStore);
+                    profileList.forEach(p -> {
+                        System.out.println(p);
+                    });
                     profileListObservable.addAll(profileList);
+
                 }
             }
         });
@@ -120,7 +124,7 @@ public class LibrariesControl implements Initializable {
         profileChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Profile>() {
             @Override
             public void changed(ObservableValue<? extends Profile> observable, Profile oldValue, Profile newValue) {
-
+                filterBooksByCategoryAndAddToTextArea(newValue.getCategories());
             }
         });
     }
@@ -134,9 +138,8 @@ public class LibrariesControl implements Initializable {
 
     private void filterBooksByCategoryAndAddToTextArea(List<String> categories) {
         booksTextArea.clear();
-        bookShowList.stream().filter(book -> {
-            return categories.contains(book.getCategory());
-        }).forEach(book -> booksTextArea.appendText(book + "\n"));
+        bookShowList.stream().filter(book -> categories.contains(book.getCategory()))
+                .forEach(book -> booksTextArea.appendText(book + "\n"));
     }
 
     @FXML

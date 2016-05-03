@@ -9,7 +9,9 @@ import org.hibernate.resource.transaction.spi.TransactionStatus;
 import pl.bookstore.robot.pojo.BookStore;
 import pl.bookstore.robot.pojo.Profile;
 
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by damian on 5/2/16.
@@ -59,6 +61,6 @@ public class ProfilePersister {
         Criteria criteria = session.createCriteria(Profile.class);
         List<Profile> profileList = criteria.add(Restrictions.eq("bookStore", bookStore)).list();
         commitSession();
-        return profileList;
+        return profileList.stream().distinct().collect(Collectors.toList());
     };
 }

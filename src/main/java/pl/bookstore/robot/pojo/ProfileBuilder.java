@@ -14,10 +14,6 @@ public class ProfileBuilder {
         profile = new Profile(name.toString());
         profile.addCategories(categories);
         return profile;
-    };
-
-    private ProfileBuilder() {
-        profile = new Profile("Category");
     }
 
 }

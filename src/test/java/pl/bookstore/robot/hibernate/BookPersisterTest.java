@@ -80,32 +80,32 @@ public class BookPersisterTest {
 
     }
 
-
-    @Test
-    public void testIfSavedBookHasConnectionWithBookStore() {
-        //given
-        BookPersister bookPersister = new BookPersister();
-        Book bookExpected = new Book("KSIONSZKA", "To jest dramat k*rwa");
-        BookStore bookStoreExpected = new BookStore("nexto.pl", "http://www.nexto.pl/", "<a href>", "eTitle", "Crime");
-        bookExpected.setBookStore(bookStoreExpected);
-        
-        //when
-        bookPersister.openSession();
-        bookPersister.saveBookStore(bookStoreExpected);
-        bookPersister.saveBook(bookExpected);
-        bookPersister.commitSession();
-
-        //then
-        bookPersister.openSession();
-        List<Book> books = bookPersister.getBookFromBookStore(bookStoreExpected);
-        Assertions.assertThat(books).contains(bookExpected);
-        bookPersister.commitSession();
-
-        //clear database
-        bookPersister.openSession();
-        bookPersister.deleteBook(bookExpected);
-        bookPersister.commitSession();
-
-    }
+//
+//    @Test(enabled = false)
+//    public void testIfSavedBookHasConnectionWithBookStore() {
+//        //given
+//        BookPersister bookPersister = new BookPersister();
+//        Book bookExpected = new Book("KSIONSZKA", "To jest dramat k*rwa");
+//        BookStore bookStoreExpected = new BookStore("nexto.pl", "http://www.nexto.pl/", "<a href>", "eTitle", "Crime");
+//        bookExpected.setBookStore(bookStoreExpected);
+//
+//        //when
+//        bookPersister.openSession();
+//        bookPersister.saveBookStore(bookStoreExpected);
+//        bookPersister.saveBook(bookExpected);
+//        bookPersister.commitSession();
+//
+//        //then
+//        bookPersister.openSession();
+//        List<Book> books = bookPersister.getBookFromBookStore(bookStoreExpected);
+//        Assertions.assertThat(books).contains(bookExpected);
+//        bookPersister.commitSession();
+//
+//        //clear database
+//        bookPersister.openSession();
+//        bookPersister.deleteBook(bookExpected);
+//        bookPersister.commitSession();
+//
+//    }
 
 }

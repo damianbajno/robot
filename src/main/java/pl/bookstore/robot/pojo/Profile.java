@@ -16,8 +16,8 @@ public class Profile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Category> categories=new ArrayList<Category>();
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> categories=new ArrayList<>();
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
     private BookStore bookStore;
 
@@ -29,12 +29,11 @@ public class Profile {
     }
 
     public boolean addCategory(String category) {
-        return categories.add(new Category(category));
+        return categories.add(category);
     }
 
     public void addCategories(ObservableList<String> categories) {
-        List<Category> categoryList = categories.stream().map(c -> new Category(c)).collect(Collectors.toList());
-        this.categories.addAll(categoryList);
+        this.categories.addAll(categories);
     }
 
     public void setBookStore(BookStore bookStore) {
@@ -42,7 +41,7 @@ public class Profile {
     }
 
     public List<String> getCategories() {
-        return categories.stream().map(c -> c.toString()).collect(Collectors.toList());
+        return categories;
     }
 
     @Override
@@ -52,15 +51,16 @@ public class Profile {
 
         Profile profile = (Profile) o;
 
+        if (id != profile.id) return false;
         if (name != null ? !name.equals(profile.name) : profile.name != null) return false;
         if (categories != null ? !categories.equals(profile.categories) : profile.categories != null) return false;
         return bookStore != null ? bookStore.equals(profile.bookStore) : profile.bookStore == null;
-
     }
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (categories != null ? categories.hashCode() : 0);
         result = 31 * result + (bookStore != null ? bookStore.hashCode() : 0);
         return result;
@@ -68,7 +68,7 @@ public class Profile {
 
     @Override
     public String toString() {
-        return  name + " search " + categories;
+        return  "search by " + categories;
     }
 
 }

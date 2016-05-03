@@ -5,10 +5,9 @@
     <test name="AllTests">
         <packages>
             <package name="pl.bookstore.robot.booksearch"/>
+            <package name="pl.bookstore.robot.hibernate"/>
         </packages>
         <classes>
-            <class name="pl.bookstore.robot.hibernate.BookPersisterTest"/>
-            
             <class name="pl.bookstore.robot.utils.UrlUtilsTest"/>
         </classes>
     </test>
