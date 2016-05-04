@@ -150,6 +150,20 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>findbugs-maven-plugin</artifactId>
                 <version>3.0.3</version>
+                    <executions>
+                        <execution>
+                            <id>default-findbugs</id>
+                            <phase>prepare-package</phase>
+                            <goals>
+                                <goal>findbugs</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.hudsonci.plugins</groupId>
+                <artifactId>dry</artifactId>
+                <version>2.28</version>
             </plugin>
         </plugins>
     </build>

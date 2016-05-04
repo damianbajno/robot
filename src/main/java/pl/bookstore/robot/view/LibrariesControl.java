@@ -217,10 +217,7 @@ public class LibrariesControl implements Initializable {
 
     private BookStore fillBookStoreWithFields() {
         BookStore bookStore = new BookStore();
-        bookStore.setName(libraryName.getText());
-        bookStore.setUrl(libraryURL.getText());
-        bookStore.setSearchForTitle(searchForTitle.getText());
-        bookStore.setSearchForCategory(searchForCategory.getText());
+        changeFieldsInBookStore(bookStore);
         return bookStore;
     }
 
