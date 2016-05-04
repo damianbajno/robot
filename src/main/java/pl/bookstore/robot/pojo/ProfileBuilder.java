@@ -8,10 +8,15 @@ import javafx.collections.ObservableList;
 public class ProfileBuilder {
     private static Profile profile;
 
+    /**
+     * Create profile from given categories, profile name is created from first letters of categories.
+     *
+     * @param categories list of categories
+     * @return instance of class profile
+     */
+
     public static Profile build(ObservableList<String> categories) {
-        StringBuilder name=new StringBuilder();
-        categories.stream().map(c -> c.charAt(0)).forEach(b -> name.append(b));
-        profile = new Profile(name.toString());
+        profile = new Profile();
         profile.addCategories(categories);
         return profile;
     }

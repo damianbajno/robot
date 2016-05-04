@@ -9,6 +9,13 @@ import org.apache.log4j.Logger;
 import java.io.IOException;
 import java.net.URL;
 
+/**
+ *
+ * Class with main method which run program gui.
+ *
+ * @author Damian Bajno
+ */
+
 public class GuiMainClass extends Application {
 	Logger logger=Logger.getLogger(GuiMainClass.class);
 

@@ -23,6 +23,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>org.jacoco.report</artifactId>
+            <version>0.7.6.201602180812</version>
+        </dependency>
+        <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>5.1.0.Final</version>
@@ -126,7 +131,7 @@
                 <version>0.7.6.201602180812</version>
                 <executions>
                     <execution>
-                        <id>default-prepare-agent</id>
+                        <id>jacoco-initialize</id>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
@@ -139,48 +144,15 @@
                         </goals>
                     </execution>
                     <execution>
-                        <id>default-check</id>
+                        <id>jacoco-site</id>
+                        <phase>package</phase>
                         <goals>
-                            <goal>check</goal>
+                            <goal>report</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
-                <version>3.0.3</version>
-                    <executions>
-                        <execution>
-                            <id>default-findbugs</id>
-                            <phase>prepare-package</phase>
-                            <goals>
-                                <goal>findbugs</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.hudsonci.plugins</groupId>
-                <artifactId>dry</artifactId>
-                <version>2.28</version>
-            </plugin>
+
         </plugins>
     </build>
-
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
-                <version>3.0.3</version>
-            </plugin>
-            <plugin>
-                <groupId>org.hudsonci.plugins</groupId>
-                <artifactId>dry</artifactId>
-                <version>2.28</version>
-            </plugin>
-        </plugins>
-    </reporting>
-
 </project>

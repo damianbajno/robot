@@ -111,6 +111,13 @@ public class BookSearcher {
         return books;
     }
 
+    /**
+     *
+     * @param element where to search e.g. title, category
+     * @param pathToElement path to searched text e.g. title, category
+     * @return text searched in element
+     */
+
     private String searchElement(Element element, List<String> pathToElement) {
         try {
             for (int i = 2; i < pathToElement.size(); i=i+2) {
@@ -121,7 +128,6 @@ public class BookSearcher {
             return element.getText().trim();
         }
     }
-
 
     @Override
     public String toString() {

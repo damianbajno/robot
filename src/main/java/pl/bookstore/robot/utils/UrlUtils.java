@@ -1,12 +1,26 @@
 package pl.bookstore.robot.utils;
 
+import com.jaunt.HttpResponse;
+import com.jaunt.UserAgent;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ *
+ * Class which have methods to manage URL.
+ *
  * Created by damian on 21.03.16.
  */
 public class UrlUtils {
+
+    /**
+     *
+     * Method check if given string is url by matching pattern.
+     *
+     * @param url
+     * @return boolean
+     */
 
     public static boolean checkIfUrl(String url){
         if (url==null) return false;
@@ -17,11 +31,13 @@ public class UrlUtils {
         return matcher.matches();
     }
 
-    public static String addHttpToBegining(String url){
-           if (url.contains("https://") || url.contains("http://"))
-               return url;
-            return "https://" + url;
-    }
+    /**
+     *
+     * Retrieve url to main page from given string.
+     *
+     * @param url
+     * @return retrieving url to main page
+     */
 
     public static String getUrlToMainPage(String url){
         int urlBeginningIndex;
