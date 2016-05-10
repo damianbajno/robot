@@ -15,6 +15,12 @@
         <maven>3.3.3</maven>
     </prerequisites>
 
+    <description>
+        Robot application which task is to download data from predefined websites. Data such a bookstore name , book name , author, categories.
+        User through nice GUI is able to obtain information about books in promotion. Bookstores of interest can be either added and removed from list.
+        The data associated with bookstore and book are saved in database. Robot is able to run through defined bookstores remotely.
+    </description>
+
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -38,6 +44,11 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>org.jacoco.report</artifactId>
+            <version>0.7.6.201602180812</version>
+        </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
@@ -164,7 +175,6 @@
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>findbugs-maven-plugin</artifactId>
@@ -186,8 +196,12 @@
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${jacoco.version}</version>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.3</version>
+            </plugin>
 
         </plugins>
     </reporting>
-
 </project>

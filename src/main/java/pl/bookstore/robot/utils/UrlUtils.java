@@ -42,7 +42,7 @@ public class UrlUtils {
      * Retrieve url to main page from given string.
      *
      * @param url
-     * @return
+     * @return String
      */
 
     public static String getUrlToMainPage(String url) {
