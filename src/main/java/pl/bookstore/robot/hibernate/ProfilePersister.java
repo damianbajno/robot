@@ -32,13 +32,12 @@ public class ProfilePersister {
     SessionFactory sessionFactory = pl.bookstore.robot.hibernate.HibernateUtil.getSessionFactory();
     Session session;
 
-<<<<<<< HEAD
+
     /**
      * openSession method to open hibernate sessions
      * @return true if session is opened correctly
      */
-=======
->>>>>>> d0e0433d052b2c35993e14e621d30e0f6c917c49
+
 
     public  boolean openSession(){
         logger.info("sessionFactory created");
@@ -104,15 +103,7 @@ public class ProfilePersister {
      * @see ProcessBuilder classes
      * @return list of book profiles
      */
-=======
-     *
-     * Methods retrieves all profiles connected to bookstore from database
-     *
-      * @param bookStore
-     * @return list of profiles
-     */
 
->>>>>>> d0e0433d052b2c35993e14e621d30e0f6c917c49
     public List<Profile> getProfilesFromBookStore(BookStore bookStore){
         openSession();
         Criteria criteria = session.createCriteria(Profile.class);

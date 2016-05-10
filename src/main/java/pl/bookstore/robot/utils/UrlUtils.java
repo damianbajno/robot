@@ -45,15 +45,15 @@ public class UrlUtils {
      * @return
      */
 
-    public static String getUrlToMainPage(String url){
-//        int urlBeginningIndex;
-//        int urlEndIndex;
-//
-//        if ((urlBeginningIndex = (url.indexOf('/') + 2))==1) urlBeginningIndex=0;
-//        if ((urlEndIndex = url.indexOf('/', urlBeginningIndex))<4) urlEndIndex=url.length();
-//        return url.substring(urlBeginningIndex, urlEndIndex);
-               UserAgent userAgent=new UserAgent();
-               HttpResponse response = userAgent.response;
+    public static String getUrlToMainPage(String url) {
+        int urlBeginningIndex;
+        int urlEndIndex;
+
+        if ((urlBeginningIndex = (url.indexOf('/') + 2)) == 1) urlBeginningIndex = 0;
+        if ((urlEndIndex = url.indexOf('/', urlBeginningIndex)) < 4) urlEndIndex = url.length();
+        return url.substring(urlBeginningIndex, urlEndIndex);
+
 
     }
+
 }
