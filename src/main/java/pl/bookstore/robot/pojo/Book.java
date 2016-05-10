@@ -4,13 +4,15 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "Book")
+@Table(name="Book")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String title;
     private String category;
+
+
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private BookStore bookStore=new BookStore();
     private Date data=new Date();

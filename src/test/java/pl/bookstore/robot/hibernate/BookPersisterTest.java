@@ -35,7 +35,7 @@ public class BookPersisterTest {
     public void testIfBookStoreIsSavedInDB() {
         //given
         BookPersister bookPersister = new BookPersister();
-        BookStore bookStoreExpected = new BookStore("nexto.pl", "http://www.nexto.pl/", "<a href>", "eTitle", "Crime");
+        BookStore bookStoreExpected = new BookStore("nexto.pl", "http://www.nexto.pl/", "eTitle", "Crime");
 
         //when
 

@@ -10,6 +10,7 @@ import java.util.List;
  */
 
 @Entity
+@Table(name="BookStore")
 public class BookStore {
 
     @Id
@@ -29,14 +30,6 @@ public class BookStore {
         this.searchForBook = "";
         this.searchForTitle = "";
         this.searchForCategory = "";
-    }
-
-    public BookStore(String name, String url, String searchForBook, String searchForTitle, String searchForCategory) {
-        this.name = name;
-        this.url = url;
-        this.searchForBook = searchForBook;
-        this.searchForTitle = searchForTitle;
-        this.searchForCategory = searchForCategory;
     }
 
     public BookStore(String name, String url, String searchForTitle, String searchForCategory) {

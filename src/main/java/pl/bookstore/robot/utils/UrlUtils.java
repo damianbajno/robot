@@ -5,7 +5,13 @@ import java.util.regex.Pattern;
 
 /**
  * Created by damian on 21.03.16.
+ * UrlUtils performs operations
+ * associated with url handling.
+ * i.e extracting website name, checking whether input string is url etc.
+ * @author Stycz
+ * @version 1.0
  */
+
 public class UrlUtils {
 
     public static boolean checkIfUrl(String url){
