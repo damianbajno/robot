@@ -20,9 +20,7 @@ public class ProfileBuilder {
      */
 
     public static Profile build(ObservableList<String> categories) {
-        StringBuilder name=new StringBuilder();
-        categories.stream().map(c -> c.charAt(0)).forEach(b -> name.append(b));
-        profile = new Profile(name.toString());
+        profile = new Profile();
         profile.addCategories(categories);
         return profile;
     }

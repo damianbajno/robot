@@ -20,6 +20,10 @@ import java.util.stream.Collectors;
  * with book profile of interest in database
  * @author Fred
  * @version 1.0
+ *
+ * Class which handle saving profiles in databases
+ *
+ * Created by damian on 5/2/16.
  */
 public class ProfilePersister {
     Logger logger = Logger.getLogger(BookPersister.class);
@@ -32,7 +36,6 @@ public class ProfilePersister {
      * @return true if session is opened correctly
      */
 
-
     public  boolean openSession(){
         logger.info("sessionFactory created");
         session = sessionFactory.openSession();
@@ -43,7 +46,7 @@ public class ProfilePersister {
     }
 
     /**
-     * commitSesion method to commit changes to database
+     * commitSession method to commit changes to database
      * @return true if session is committed correctly
      */
 
@@ -91,10 +94,18 @@ public class ProfilePersister {
     }
 
     /**
+
      * getProfilesFromBookStore method to extract book profile from database
      * @see Profile  and
      * @see ProcessBuilder classes
      * @return list of book profiles
+
+     *
+     * Methods retrieves all profiles connected to bookstore from database
+     *
+      * @param bookStore
+     * @return list of profiles
+
      */
 
     public List<Profile> getProfilesFromBookStore(BookStore bookStore){
