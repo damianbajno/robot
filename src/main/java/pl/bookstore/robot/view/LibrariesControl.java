@@ -69,6 +69,7 @@ public class LibrariesControl implements Initializable {
             public void onChanged(Change<? extends String> c) {
                 ObservableList<String> selectedCategory = categoryComboBox.getCheckModel().getCheckedItems();
                 filterBooksByCategoryAndAddToTextArea(selectedCategory);
+                profileChoiceBox.getSelectionModel().clearSelection();
             }
         });
 
@@ -124,8 +125,9 @@ public class LibrariesControl implements Initializable {
         profileChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Profile>() {
             @Override
             public void changed(ObservableValue<? extends Profile> observable, Profile oldValue, Profile newValue) {
-                filterBooksByCategoryAndAddToTextArea(newValue.getCategories());
-            }
+                if (newValue!=null)
+                    filterBooksByCategoryAndAddToTextArea(newValue.getCategories());
+                }
         });
     }
 
@@ -217,10 +219,7 @@ public class LibrariesControl implements Initializable {
 
     private BookStore fillBookStoreWithFields() {
         BookStore bookStore = new BookStore();
-        bookStore.setName(libraryName.getText());
-        bookStore.setUrl(libraryURL.getText());
-        bookStore.setSearchForTitle(searchForTitle.getText());
-        bookStore.setSearchForCategory(searchForCategory.getText());
+        changeFieldsInBookStore(bookStore);
         return bookStore;
     }
 

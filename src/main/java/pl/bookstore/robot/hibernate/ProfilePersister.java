@@ -14,21 +14,31 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+<<<<<<< HEAD
  * Class which task corresponds to opening,
  * committing, closing session for saving data associated
  * with book profile of interest in database
  * @author Fred
  * @version 1.0
+=======
+ *
+ * Class which handle saving profiles in databases
+ *
+ * Created by damian on 5/2/16.
+>>>>>>> d0e0433d052b2c35993e14e621d30e0f6c917c49
  */
 public class ProfilePersister {
     Logger logger = Logger.getLogger(BookPersister.class);
     SessionFactory sessionFactory = pl.bookstore.robot.hibernate.HibernateUtil.getSessionFactory();
     Session session;
 
+<<<<<<< HEAD
     /**
      * openSession method to open hibernate sessions
      * @return true if session is opened correctly
      */
+=======
+>>>>>>> d0e0433d052b2c35993e14e621d30e0f6c917c49
 
     public  boolean openSession(){
         logger.info("sessionFactory created");
@@ -65,6 +75,14 @@ public class ProfilePersister {
         return true;
     }
 
+    /**
+     *
+     * Method saves to database profile connecting it to bookstore
+     *
+     * @param profile
+     * @param bookStore
+     */
+
 
     /**
      * persistProfile method to insert book profile in database
@@ -80,11 +98,21 @@ public class ProfilePersister {
     }
 
     /**
+<<<<<<< HEAD
      * getProfilesFromBookStore method to extract bookprofile from database
      * @see Profile  and
      * @see ProcessBuilder classes
      * @return list of book profiles
      */
+=======
+     *
+     * Methods retrieves all profiles connected to bookstore from database
+     *
+      * @param bookStore
+     * @return list of profiles
+     */
+
+>>>>>>> d0e0433d052b2c35993e14e621d30e0f6c917c49
     public List<Profile> getProfilesFromBookStore(BookStore bookStore){
         openSession();
         Criteria criteria = session.createCriteria(Profile.class);
