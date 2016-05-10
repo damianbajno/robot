@@ -9,7 +9,12 @@ import java.util.stream.Collectors;
 
 /**
  * Created by damian on 21.04.16.
+ * Class contains all necessary fields and methods
+ * associated with book profile creation
+ * @author Fred
+ * @version 1.0
  */
+
 @Entity
 public class Profile {
     @Id

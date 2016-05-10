@@ -4,6 +4,10 @@ import javafx.collections.ObservableList;
 
 /**
  * Created by damian on 22.04.16.
+ * Class for creating new book profiles
+ * @author Stycz
+ * @version 1.0
+ *
  */
 public class ProfileBuilder {
     private static Profile profile;

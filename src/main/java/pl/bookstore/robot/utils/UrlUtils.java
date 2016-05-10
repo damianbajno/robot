@@ -11,7 +11,13 @@ import java.util.regex.Pattern;
  * Class which have methods to manage URL.
  *
  * Created by damian on 21.03.16.
+ * UrlUtils performs operations
+ * associated with url handling.
+ * i.e extracting website name, checking whether input string is url etc.
+ * @author Stycz
+ * @version 1.0
  */
+
 public class UrlUtils {
 
     /**
@@ -39,12 +45,15 @@ public class UrlUtils {
      * @return retrieving url to main page
      */
 
-    public static String getUrlToMainPage(String url){
+    public static String getUrlToMainPage(String url) {
         int urlBeginningIndex;
         int urlEndIndex;
 
-        if ((urlBeginningIndex = (url.indexOf('/') + 2))==1) urlBeginningIndex=0;
-        if ((urlEndIndex = url.indexOf('/', urlBeginningIndex))<4) urlEndIndex=url.length();
+        if ((urlBeginningIndex = (url.indexOf('/') + 2)) == 1) urlBeginningIndex = 0;
+        if ((urlEndIndex = url.indexOf('/', urlBeginningIndex)) < 4) urlEndIndex = url.length();
         return url.substring(urlBeginningIndex, urlEndIndex);
+
+
     }
+
 }

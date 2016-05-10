@@ -14,16 +14,32 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+ * Class which task corresponds to opening,
+ * committing, closing session for saving data associated
+ * with book profile of interest in database
+ * @author Fred
+ * @version 1.0
+=======
+>>>>>>> d2cb3a1bba1b5f84534a8241dc5b56d2172911aa
  *
  * Class which handle saving profiles in databases
  *
  * Created by damian on 5/2/16.
+>>>>>>> d0e0433d052b2c35993e14e621d30e0f6c917c49
  */
 public class ProfilePersister {
     Logger logger = Logger.getLogger(BookPersister.class);
     SessionFactory sessionFactory = pl.bookstore.robot.hibernate.HibernateUtil.getSessionFactory();
     Session session;
 
+
+    /**
+     * openSession method to open hibernate sessions
+     * @return true if session is opened correctly
+     */
 
     public  boolean openSession(){
         logger.info("sessionFactory created");
@@ -33,6 +49,11 @@ public class ProfilePersister {
 
         return true;
     }
+
+    /**
+     * commitSession method to commit changes to database
+     * @return true if session is committed correctly
+     */
 
     public boolean commitSession(){
         session.getTransaction().commit();
@@ -44,6 +65,10 @@ public class ProfilePersister {
         return true;
     }
 
+    /**
+     * closeSession method to close hibernate session
+     * @return true if session is closed correctly
+     */
     public boolean closeSessionFactory(){
         sessionFactory.close();
         logger.warn("Session closed");
@@ -60,6 +85,11 @@ public class ProfilePersister {
      */
 
 
+    /**
+     * persistProfile method to insert book profile in database
+     * @see Profile  and
+     * @see ProcessBuilder classes
+     */
     public void persistProfile(Profile profile, BookStore bookStore){
         openSession();
         BookStore bookStoreLoaded= session.load(BookStore.class, bookStore.getId());
