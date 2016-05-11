@@ -83,11 +83,18 @@ public class ProfilePersister {
     }
 
     /**
+
+     * getProfilesFromBookStore method to extract book profile from database
+     * @see Profile  and
+     * @see ProcessBuilder classes
+     * @return list of book profiles
+
      *
      * Methods retrieves all profiles connected to bookstore from database
      *
       * @param bookStore object saved to database
      * @return list of profiles
+
      */
 
     public List<Profile> getProfilesFromBookStore(BookStore bookStore){

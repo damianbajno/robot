@@ -42,7 +42,7 @@ public class BookPersister {
     }
 
     /**
-     * commitSesion method to commit changes to database
+     * commitSession method to commit changes to database
      * @return true if session is committed correctly
      */
     public boolean commitSession(){
@@ -70,6 +70,7 @@ public class BookPersister {
      * saveBookStore method to save particular bookstore in database
      * @param bookStore object to save in database
      * @return true if bookstore is saved successfully
+     * @param bookStore is a instance of BookStore class
      */
 
     public boolean saveBookStore(BookStore bookStore) {
@@ -83,6 +84,7 @@ public class BookPersister {
      * updateBookStore method to update particular bookstore in database
      * @param bookStore object will be updated in database
      * @return true if database os updated successfully
+     * @param bookStore is a instance of BookStore class
      */
     public boolean updateBookStore(BookStore bookStore){
         session.update(bookStore);
@@ -95,6 +97,7 @@ public class BookPersister {
      * saveBookStores method to save bookstores in database
      * @param bookStoreList list of books will be saved in database
      * @return true if bookstores are added correctly
+     * @param bookStoreList is a list of instances of BookStore class
      */
     public boolean saveBookStores(List<BookStore> bookStoreList){
         bookStoreList.forEach(booksStore -> session.save(booksStore) );
@@ -115,12 +118,9 @@ public class BookPersister {
     }
 
     /**
-     * Retrieve BookStore by Id
-     *
-     * @param number  id of bookstore
-     * @return bookstore with given id
+     * @param number is the number of books which we want to retrieve
+     * @return particular bookstore
      */
-
     public BookStore getBookStore(int number){
         return session.get(BookStore.class, number);
     }
@@ -130,7 +130,6 @@ public class BookPersister {
      *
      * @return List of BookStores
      */
-
     public List<BookStore> getBookStores(){
         Query getBookStoreQuery = session.createQuery("from "+BookStore.class.getSimpleName());
         return  getBookStoreQuery.list();
@@ -142,7 +141,6 @@ public class BookPersister {
      * @param title book title to search in database
      * @return book with given title
      */
-
     public Book getBook(String title){
         Query getBookResult = session.createQuery("FROM "+Book.class.getSimpleName()+" B where B.title='"+title+"'");
         Book bookFromDB = (Book) getBookResult;
@@ -156,7 +154,7 @@ public class BookPersister {
      * @return if saved return true
      */
 
-    public  boolean saveBooks(List<Book> bookList) {
+    public boolean saveBooks(List<Book> bookList) {
         bookList.forEach(book -> session.save(book));
         logger.info("Book saved in database");
 
@@ -191,8 +189,8 @@ public class BookPersister {
      * Delete book from database
      *
      * @param book to delete in database
+     *
      */
-
     public void deleteBook(Book book) {
         session.delete(book);
     }
@@ -200,21 +198,19 @@ public class BookPersister {
     /**
      * Retrieve all books from database
      *
-     * @return List of Books
+     * getBooks method to retrieve books from database
+     * @return list of books
      */
-
     public List<Book> getBooks() {
         Query getBookQuery = session.createQuery("from "+Book.class.getSimpleName());
         return getBookQuery.list();
     }
-
     /**
-     * Retrieve all books connected to given bookStore from database
-     *
-     * @param bookStore
-     * @return List of Books connected to given bookStore
+     * getBookFromBookStore method to retrieve books from database
+     * @param bookStore is the BookStore object
+     * @see BookStore
+     * @return list of books from particular book store
      */
-
     public List<Book> getBookFromBookStore(BookStore bookStore) {
         Criteria criteria = session.createCriteria(Book.class);
         criteria.add(Restrictions.eq("bookStore", bookStore));
