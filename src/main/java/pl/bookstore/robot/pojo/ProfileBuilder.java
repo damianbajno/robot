@@ -19,7 +19,8 @@ public class ProfileBuilder {
      * @return instance of class profile
      */
 
-    public static Profile build(ObservableList<String> categories) {
+    public static Profile build(ObservableList<String> categories) throws NoCategorySelectedException {
+        if (categories.isEmpty()) throw new NoCategorySelectedException("No category was selected");
         profile = new Profile();
         profile.addCategories(categories);
         return profile;

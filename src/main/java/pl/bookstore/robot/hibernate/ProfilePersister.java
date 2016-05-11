@@ -14,21 +14,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
  * Class which task corresponds to opening,
  * committing, closing session for saving data associated
  * with book profile of interest in database
- * @author Fred
+ * @author Damian
  * @version 1.0
-=======
->>>>>>> d2cb3a1bba1b5f84534a8241dc5b56d2172911aa
- *
- * Class which handle saving profiles in databases
- *
- * Created by damian on 5/2/16.
->>>>>>> d0e0433d052b2c35993e14e621d30e0f6c917c49
  */
 public class ProfilePersister {
     Logger logger = Logger.getLogger(BookPersister.class);
@@ -80,16 +70,10 @@ public class ProfilePersister {
      *
      * Method saves to database profile connecting it to bookstore
      *
-     * @param profile
-     * @param bookStore
+     * @param profile which will be persisted to databases
+     * @param bookStore object which will be connected to profile
      */
 
-
-    /**
-     * persistProfile method to insert book profile in database
-     * @see Profile  and
-     * @see ProcessBuilder classes
-     */
     public void persistProfile(Profile profile, BookStore bookStore){
         openSession();
         BookStore bookStoreLoaded= session.load(BookStore.class, bookStore.getId());
@@ -102,7 +86,7 @@ public class ProfilePersister {
      *
      * Methods retrieves all profiles connected to bookstore from database
      *
-      * @param bookStore
+      * @param bookStore object saved to database
      * @return list of profiles
      */
 

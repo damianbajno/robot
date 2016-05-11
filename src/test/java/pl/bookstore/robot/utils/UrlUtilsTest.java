@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 public class UrlUtilsTest {
 
     @Test
-    public void retriveMainPageUrlFromUrl(){
+    public void retrieveMainPageUrlFromUrl(){
         //given
         String url="//demotywatory.pl/dsad";
         final String expectedUrl = "demotywatory.pl";

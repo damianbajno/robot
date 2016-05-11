@@ -6,6 +6,7 @@
         <packages>
             <package name="pl.bookstore.robot.booksearch"/>
             <package name="pl.bookstore.robot.hibernate"/>
+            <package name="pl.bookstore.robot.pojo"/>
         </packages>
         <classes>
             <class name="pl.bookstore.robot.utils.UrlUtilsTest"/>

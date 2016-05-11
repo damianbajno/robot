@@ -34,7 +34,7 @@ public class LibrariesControl implements Initializable {
     private ObservableList<Profile> profileListObservable = FXCollections.observableArrayList();
     private ObservableList<String> categoryListObservable = FXCollections.observableArrayList();
     private BookPersister bookPersister = new BookPersister();
-    private ProfilePersister profilePersister =new ProfilePersister();
+    private ProfilePersister profilePersister = new ProfilePersister();
     private List<Book> bookShowList;
 
     @FXML
@@ -125,9 +125,9 @@ public class LibrariesControl implements Initializable {
         profileChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Profile>() {
             @Override
             public void changed(ObservableValue<? extends Profile> observable, Profile oldValue, Profile newValue) {
-                if (newValue!=null)
+                if (newValue != null)
                     filterBooksByCategoryAndAddToTextArea(newValue.getCategories());
-                }
+            }
         });
     }
 
@@ -178,7 +178,7 @@ public class LibrariesControl implements Initializable {
             bookPersister.commitSession();
             bookStoresListView.getItems().remove(selectedIndex);
         } else {
-            popUpWindowAlertOnSelectionLibrary();
+            popUpWindowAlertOnSelectionLibrary("No Selection", "No Library Selected", "Please select a library.");
         }
     }
 
@@ -187,10 +187,15 @@ public class LibrariesControl implements Initializable {
         ObservableList<String> selectedCategoryList = categoryComboBox.getCheckModel().getCheckedItems();
         BookStore selectedBookStore = bookStoresListView.getSelectionModel().getSelectedItem();
 
-        Profile profile = ProfileBuilder.build(selectedCategoryList);
-        profilePersister.persistProfile(profile, selectedBookStore);
+        try {
+            Profile profile = ProfileBuilder.build(selectedCategoryList);
+            profilePersister.persistProfile(profile, selectedBookStore);
 
-        profileListObservable.add(profile);
+            profileListObservable.add(profile);
+        } catch (NoCategorySelectedException e) {
+            popUpWindowAlertOnSelectionLibrary("Warning category selection",
+                    "Warning category selection", "Any category was selected. Please select category.");
+        }
     }
 
     @FXML
@@ -201,7 +206,7 @@ public class LibrariesControl implements Initializable {
         searchForCategory.setText("");
     }
 
-    private void popUpWindowAlertOnSelectionLibrary() {
+    private void popUpWindowAlertOnSelectionLibrary(String title, String header, String Content) {
         Alert alert = new Alert(AlertType.WARNING);
         alert.initOwner(null);
         alert.setTitle("No Selection");

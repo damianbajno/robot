@@ -28,7 +28,7 @@
         <xerial.version>3.8.11.2</xerial.version>
         <log4j.version>1.2.17</log4j.version>
         <apache.version>3.4</apache.version>
-        <jaunt.version>1.1.6</jaunt.version>
+        <jaunt.version>1.6</jaunt.version>
         <aspectjrt.version>1.7.3</aspectjrt.version>
         <aspectjtools.version>1.5.4</aspectjtools.version>
         <controlsfx.version>8.40.10</controlsfx.version>

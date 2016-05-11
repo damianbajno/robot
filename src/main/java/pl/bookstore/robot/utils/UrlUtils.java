@@ -7,13 +7,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- *
  * Class which have methods to manage URL.
- *
+ * <p>
  * Created by damian on 21.03.16.
  * UrlUtils performs operations
  * associated with url handling.
  * i.e extracting website name, checking whether input string is url etc.
+ *
  * @author Stycz
  * @version 1.0
  */
@@ -21,27 +21,9 @@ import java.util.regex.Pattern;
 public class UrlUtils {
 
     /**
-     *
-     * Method check if given string is url by matching pattern.
-     *
-     * @param url
-     * @return boolean
-     */
-
-    public static boolean checkIfUrl(String url){
-        if (url==null) return false;
-
-        Pattern pattern=Pattern.compile("(http)?(s)?(://)?(www.)?[a-z0-9-]+[.][a-z]{1,5}(/)*.*");
-        Matcher matcher = pattern.matcher(url);
-
-        return matcher.matches();
-    }
-
-    /**
-     *
      * Retrieve url to main page from given string.
      *
-     * @param url
+     * @param url given url to sub page
      * @return retrieving url to main page
      */
 
@@ -52,8 +34,6 @@ public class UrlUtils {
         if ((urlBeginningIndex = (url.indexOf('/') + 2)) == 1) urlBeginningIndex = 0;
         if ((urlEndIndex = url.indexOf('/', urlBeginningIndex)) < 4) urlEndIndex = url.length();
         return url.substring(urlBeginningIndex, urlEndIndex);
-
-
     }
 
 }
