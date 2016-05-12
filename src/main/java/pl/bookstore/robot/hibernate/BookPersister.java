@@ -93,37 +93,6 @@ public class BookPersister {
         return true;
     }
 
-    /**
-     * persistBookStores method to save bookstores in database
-     * @param bookStoreList list of books will be saved in database
-     * @return true if bookstores are added correctly
-     * @param bookStoreList is a list of instances of BookStore class
-     */
-    public boolean persistBookStores(List<BookStore> bookStoreList){
-        bookStoreList.forEach(booksStore -> session.persist(booksStore) );
-        logger.info("Book stores saved in database");
-
-        return true;
-    }
-
-    /**
-     * getBookStore method to extract particular bookstore from database
-     * @param name retrieve BookStore by name
-     * @return first element (zero element) of bookStores list
-     */
-    public BookStore getBookStore(String name){
-        Criteria criteria = session.createCriteria(BookStore.class);
-        List<BookStore> bookStores = criteria.add(Restrictions.eq("name", name)).list();
-        return bookStores.get(0);
-    }
-
-    /**
-     * @param number is the number of books which we want to retrieve
-     * @return particular bookstore
-     */
-    public BookStore getBookStore(int number){
-        return session.get(BookStore.class, number);
-    }
 
     /**
      * Retrieve all BookStores from database
@@ -133,18 +102,6 @@ public class BookPersister {
     public List<BookStore> getBookStores(){
         Query getBookStoreQuery = session.createQuery("from "+BookStore.class.getSimpleName());
         return  getBookStoreQuery.list();
-    }
-
-    /**
-     * Retrieve book by title;
-     *
-     * @param title book title to search in database
-     * @return book with given title
-     */
-    public Book getBook(String title){
-        Query getBookResult = session.createQuery("FROM "+Book.class.getSimpleName()+" B where B.title='"+title+"'");
-        List<Book> bookFromDB = getBookResult.list();
-        return bookFromDB.get(0);
     }
 
     /**
@@ -208,17 +165,6 @@ public class BookPersister {
     public List<Book> getBooks() {
         Query getBookQuery = session.createQuery("from "+Book.class.getSimpleName());
         return getBookQuery.list();
-    }
-    /**
-     * getBookFromBookStore method to retrieve books from database
-     * @param bookStore is the BookStore object
-     * @see BookStore
-     * @return list of books from particular book store
-     */
-    public List<Book> getBookFromBookStore(BookStore bookStore) {
-        Criteria criteria = session.createCriteria(Book.class);
-        criteria.add(Restrictions.eq("bookStore", bookStore));
-        return criteria.list();
     }
 
     /**

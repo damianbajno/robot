@@ -62,7 +62,6 @@ public class ProfilePersister {
     public boolean closeSessionFactory(){
         sessionFactory.close();
         logger.warn("Session closed");
-
         return true;
     }
 
@@ -81,28 +80,5 @@ public class ProfilePersister {
         session.persist(profile);
         commitSession();
     }
-
-    /**
-
-     * getProfilesFromBookStore method to extract book profile from database
-     * @see Profile  and
-     * @see ProcessBuilder classes
-     * @return list of book profiles
-
-     *
-     * Methods retrieves all profiles connected to bookstore from database
-     *
-      * @param bookStore object saved to database
-     * @return list of profiles
-
-     */
-
-    public List<Profile> getProfilesFromBookStore(BookStore bookStore){
-        openSession();
-        Criteria criteria = session.createCriteria(Profile.class);
-        List<Profile> profileList = criteria.add(Restrictions.eq("bookStore", bookStore)).list();
-        commitSession();
-        return profileList.stream().distinct().collect(Collectors.toList());
-    };
 
 }

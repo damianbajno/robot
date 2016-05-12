@@ -78,7 +78,6 @@ public class Book implements Serializable{
 
         if (title != null ? !title.toLowerCase().equals(book.title.toLowerCase()) : book.title != null) return false;
         return category != null ? category.toLowerCase().equals(book.category.toLowerCase()) : book.category == null;
-
     }
 
     @Override
