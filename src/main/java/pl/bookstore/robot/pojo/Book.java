@@ -1,23 +1,23 @@
 package pl.bookstore.robot.pojo;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-public class Book {
+public class Book implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String title;
     private String category;
-
-
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private BookStore bookStore=new BookStore();
+    @ManyToOne(fetch = FetchType.EAGER)
+    private BookStore bookStore;
     private Date data=new Date();
 
     public Book(String title) {
         this.title = title;
+        bookStore=new BookStore();
     }
 
     public Book(String title, String category) {
@@ -65,6 +65,7 @@ public class Book {
     }
 
     public void setBookStore(BookStore bookStore) {
+        bookStore.addBook(this);
         this.bookStore = bookStore;
     }
 

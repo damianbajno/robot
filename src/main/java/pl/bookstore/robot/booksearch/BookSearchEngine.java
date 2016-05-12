@@ -34,7 +34,7 @@ public class BookSearchEngine {
 
         logger.info("Started saving books");
         bookPersister.openSession();
-        bookPersister.saveBooks(books);
+        bookPersister.persistBooks(books);
         bookPersister.commitSession();
 
     }

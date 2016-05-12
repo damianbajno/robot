@@ -10,7 +10,6 @@ import javafx.collections.ObservableList;
  *
  */
 public class ProfileBuilder {
-    private static Profile profile;
 
     /**
      * Create profile from given categories, profile name is created from first letters of categories.
@@ -21,7 +20,7 @@ public class ProfileBuilder {
 
     public static Profile build(ObservableList<String> categories) throws NoCategorySelectedException {
         if (categories.isEmpty()) throw new NoCategorySelectedException("No category was selected");
-        profile = new Profile();
+        Profile profile = new Profile();
         profile.addCategories(categories);
         return profile;
     }

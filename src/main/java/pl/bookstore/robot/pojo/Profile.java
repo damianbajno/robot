@@ -21,11 +21,12 @@ public class Profile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> categories=new ArrayList<>();
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
+    private List<String> categories;
+    @ManyToOne(fetch = FetchType.EAGER)
     private BookStore bookStore;
 
-    Profile() {
+    public Profile() {
+        categories=new ArrayList<String>();
     }
 
     public boolean addCategory(String category) {
@@ -37,6 +38,7 @@ public class Profile {
     }
 
     public void setBookStore(BookStore bookStore) {
+        bookStore.addProfile(this);
         this.bookStore = bookStore;
     }
 
@@ -53,11 +55,12 @@ public class Profile {
 
         if (categories != null ? !categories.equals(profile.categories) : profile.categories != null) return false;
         return bookStore != null ? bookStore.equals(profile.bookStore) : profile.bookStore == null;
+
     }
 
     @Override
     public int hashCode() {
-        int result = (categories != null ? categories.hashCode() : 0);
+        int result = categories != null ? categories.hashCode() : 0;
         result = 31 * result + (bookStore != null ? bookStore.hashCode() : 0);
         return result;
     }

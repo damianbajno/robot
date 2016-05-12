@@ -1,6 +1,9 @@
 package pl.bookstore.robot.pojo;
 
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,24 +14,33 @@ import java.util.List;
 
 @Entity
 public class BookStore {
-
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private String url;
-    private String searchForBook;
     private String searchForTitle;
     private String searchForCategory;
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REMOVE})
+    @Fetch(FetchMode.SELECT)
+    private List<Book> bookList;
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REMOVE})
+    @Fetch(FetchMode.SELECT)
+    private List<Profile> profileList;
 
-    public BookStore(String name){this.name=name;}
+    public BookStore(String name) {
+        this.name = name;
+        this.bookList = new ArrayList<Book>();
+        this.profileList=new ArrayList<Profile>();
+    }
 
-    public BookStore(){
+    public BookStore() {
         this.name = "brak";
         this.url = "";
-        this.searchForBook = "";
         this.searchForTitle = "";
         this.searchForCategory = "";
+        this.bookList = new ArrayList<Book>();
+        this.profileList=new ArrayList<Profile>();
     }
 
     public BookStore(String name, String url, String searchForTitle, String searchForCategory) {
@@ -36,6 +48,8 @@ public class BookStore {
         this.url = url;
         this.searchForTitle = searchForTitle;
         this.searchForCategory = searchForCategory;
+        this.bookList=new ArrayList<Book>();
+        this.profileList=new ArrayList<Profile>();
     }
 
 
@@ -56,10 +70,13 @@ public class BookStore {
         return "BookStore{" +
                 "name='" + name + '\'' +
                 ", url='" + url + '\'' +
-                ", searchForElement='" + searchForBook + '\'' +
                 ", searchForTitle='" + searchForTitle + '\'' +
                 ", searchForCategory='" + searchForCategory + '\'' +
                 '}';
+    }
+
+    public void addBook(Book book){
+        bookList.add(book);
     }
 
     public void setName(String name) {
@@ -68,14 +85,6 @@ public class BookStore {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getSearchForBook() {
-        return searchForBook;
-    }
-
-    public void setSearchForBook(String searchForBook) {
-        this.searchForBook = searchForBook;
     }
 
     public String getSearchForCategory() {
@@ -105,11 +114,8 @@ public class BookStore {
 
         BookStore bookStore = (BookStore) o;
 
-        if (id != bookStore.id) return false;
         if (name != null ? !name.equals(bookStore.name) : bookStore.name != null) return false;
         if (url != null ? !url.equals(bookStore.url) : bookStore.url != null) return false;
-        if (searchForBook != null ? !searchForBook.equals(bookStore.searchForBook) : bookStore.searchForBook != null)
-            return false;
         if (searchForTitle != null ? !searchForTitle.equals(bookStore.searchForTitle) : bookStore.searchForTitle != null)
             return false;
         return searchForCategory != null ? searchForCategory.equals(bookStore.searchForCategory) : bookStore.searchForCategory == null;
@@ -118,12 +124,16 @@ public class BookStore {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (url != null ? url.hashCode() : 0);
-        result = 31 * result + (searchForBook != null ? searchForBook.hashCode() : 0);
         result = 31 * result + (searchForTitle != null ? searchForTitle.hashCode() : 0);
         result = 31 * result + (searchForCategory != null ? searchForCategory.hashCode() : 0);
         return result;
     }
+
+    public void addProfile(Profile profile) {
+        profileList.add(profile);
+    }
+
 }

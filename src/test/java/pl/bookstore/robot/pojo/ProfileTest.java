@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
  */
 public class ProfileTest {
 
-    @Test(groups = "NewTest")
+    @Test
     public void testIfProfilesAreEqualIfTheyAreEmpty() {
         //given
         Profile profileFirst = new Profile();
@@ -22,7 +22,7 @@ public class ProfileTest {
         Assertions.assertThat(isEquals).isTrue();
     }
 
-    @Test(groups = "NewTest")
+    @Test
     public void testIfProfileCategoriesAreEqualProfilesAreEqual() {
         //given
         ObservableList<String> observableList = FXCollections.observableArrayList();
@@ -39,7 +39,7 @@ public class ProfileTest {
         Assertions.assertThat(isEquals).isTrue();
     }
 
-    @Test(groups = "NewTest")
+    @Test
     public void testIfProfileCategoriesAreDifferentProfilesAreEqual() {
         //given
         ObservableList<String> observableList = FXCollections.observableArrayList();

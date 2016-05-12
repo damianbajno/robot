@@ -67,14 +67,14 @@ public class BookPersister {
         return true;
     }
     /**
-     * saveBookStore method to save particular bookstore in database
+     * persistBookStore method to save particular bookstore in database
      * @param bookStore object to save in database
      * @return true if bookstore is saved successfully
      * @param bookStore is a instance of BookStore class
      */
 
-    public boolean saveBookStore(BookStore bookStore) {
-        session.save(bookStore);
+    public boolean persistBookStore(BookStore bookStore) {
+        session.persist(bookStore);
         logger.info("Book store saved in database");
 
         return true;
@@ -94,13 +94,13 @@ public class BookPersister {
     }
 
     /**
-     * saveBookStores method to save bookstores in database
+     * persistBookStores method to save bookstores in database
      * @param bookStoreList list of books will be saved in database
      * @return true if bookstores are added correctly
      * @param bookStoreList is a list of instances of BookStore class
      */
-    public boolean saveBookStores(List<BookStore> bookStoreList){
-        bookStoreList.forEach(booksStore -> session.save(booksStore) );
+    public boolean persistBookStores(List<BookStore> bookStoreList){
+        bookStoreList.forEach(booksStore -> session.persist(booksStore) );
         logger.info("Book stores saved in database");
 
         return true;
@@ -143,8 +143,8 @@ public class BookPersister {
      */
     public Book getBook(String title){
         Query getBookResult = session.createQuery("FROM "+Book.class.getSimpleName()+" B where B.title='"+title+"'");
-        Book bookFromDB = (Book) getBookResult;
-        return bookFromDB;
+        List<Book> bookFromDB = getBookResult.list();
+        return bookFromDB.get(0);
     }
 
     /**
@@ -154,8 +154,8 @@ public class BookPersister {
      * @return if saved return true
      */
 
-    public boolean saveBooks(List<Book> bookList) {
-        bookList.forEach(book -> session.save(book));
+    public boolean persistBooks(List<Book> bookList) {
+        bookList.forEach(book -> session.persist(book));
         logger.info("Book saved in database");
 
         return true;
@@ -168,8 +168,8 @@ public class BookPersister {
      * @return if saved return true
      */
 
-    public boolean saveBook(Book book) {
-        session.save(book);
+    public boolean persistBook(Book book) {
+        session.persist(book);
         logger.info("Book saved in database");
 
         return true;
@@ -192,7 +192,11 @@ public class BookPersister {
      *
      */
     public void deleteBook(Book book) {
-        session.delete(book);
+        Query selectBooks = session.createQuery("from Book as b where b.title='" + book.getTitle() + "'");
+        List<Book> bookList = selectBooks.list();
+        for (Book  b : bookList) {
+            session.delete(b);
+        }
     }
 
     /**

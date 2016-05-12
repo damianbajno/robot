@@ -76,8 +76,8 @@ public class ProfilePersister {
 
     public void persistProfile(Profile profile, BookStore bookStore){
         openSession();
-        BookStore bookStoreLoaded= session.load(BookStore.class, bookStore.getId());
-        profile.setBookStore(bookStoreLoaded);
+        BookStore loadedBookStore = session.load(BookStore.class, bookStore.getId());
+        profile.setBookStore(loadedBookStore);
         session.persist(profile);
         commitSession();
     }
@@ -104,4 +104,5 @@ public class ProfilePersister {
         commitSession();
         return profileList.stream().distinct().collect(Collectors.toList());
     };
+
 }

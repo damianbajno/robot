@@ -37,7 +37,7 @@ public class ProfileBuilderTest {
     }
 
     @Test
-    public void ifITryToBuildProfileWithoutAnyCategoryItThrowsExceptionNoCategorySelected() {
+    public void ifITryToCreateProfileWithoutAnyCategoryItThrowsExceptionNoCategorySelected() {
         //given
         ObservableList<String> listWithoutAnyCategory = FXCollections.observableArrayList();
 

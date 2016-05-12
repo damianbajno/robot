@@ -15,5 +15,6 @@
 
         <mapping class="pl.bookstore.robot.pojo.BookStore"></mapping>
         <mapping class="pl.bookstore.robot.pojo.Book"></mapping>
+        <mapping class="pl.bookstore.robot.pojo.Profile"></mapping>
     </session-factory>
 </hibernate-configuration>

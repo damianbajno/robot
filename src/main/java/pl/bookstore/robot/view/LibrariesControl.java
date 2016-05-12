@@ -93,6 +93,7 @@ public class LibrariesControl implements Initializable {
             public void handle(MouseEvent event) {
                 if (event.getClickCount() == 1) {
                     BookStore bookStore = bookStoresListView.getSelectionModel().getSelectedItem();
+                    System.out.println("BookStore ID "+bookStore.getId());
                     fillFieldsByBookStore(bookStore);
                 }
 
@@ -150,7 +151,7 @@ public class LibrariesControl implements Initializable {
         if (!containBookStoreListLibraryName(bookStoreListObservable, bookStore)) {
             bookStoreListObservable.add(bookStore);
             bookPersister.openSession();
-            bookPersister.saveBookStore(bookStore);
+            bookPersister.persistBookStore(bookStore);
             bookPersister.commitSession();
             logger.info("Added to database " + bookStore.toString());
         } else {
