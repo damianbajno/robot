@@ -22,7 +22,7 @@ public class Profile {
     private int id;
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> categories;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private BookStore bookStore;
 
     public Profile() {

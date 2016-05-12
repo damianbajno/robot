@@ -20,13 +20,20 @@ public class CreateTableToTest {
     public static void sendBookStoreAndBooksToDatabasesHibernate() {
         BookPersister bookPersister = new BookPersister();
         BookStore[] bookStores = BookStoreContainer.getBookStores();
-        Book[] books = {new Book("a1", "b1"), new Book("a2", "b2"), new Book("a3", "b3")};
+        Book[] books = {new Book("a1", "b1"), new Book("a2", "b2"), new Book("a3", "b3"),
+                new Book("a4", "b4"), new Book("a5", "b5")};
 
         books[0].setBookStore(bookStores[0]);
         books[1].setBookStore(bookStores[1]);
         books[2].setBookStore(bookStores[2]);
+        books[3].setBookStore(bookStores[2]);
+        books[4].setBookStore(bookStores[2]);
 
         bookPersister.openSession();
+
+        bookPersister.persistBookStore(bookStores[0]);
+        bookPersister.persistBookStore(bookStores[1]);
+        bookPersister.persistBookStore(bookStores[2]);
 
         bookPersister.persistBook(books[0]);
         bookPersister.persistBook(books[1]);

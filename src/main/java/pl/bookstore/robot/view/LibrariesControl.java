@@ -91,35 +91,41 @@ public class LibrariesControl implements Initializable {
         bookStoresListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if (event.getClickCount() == 1) {
-                    BookStore bookStore = bookStoresListView.getSelectionModel().getSelectedItem();
-                    System.out.println("BookStore ID "+bookStore.getId());
-                    fillFieldsByBookStore(bookStore);
-                }
+                BookStore selectedBookStore = bookStoresListView.getSelectionModel().getSelectedItem();
 
-                if (event.getClickCount() == 2) {
-                    ObservableList<BookStore> selectedBookStoreList = bookStoresListView.getSelectionModel().getSelectedItems();
-                    BookStore selectedBookStore = selectedBookStoreList.get(FIRST_ITEM_ONLY_ITEM_IN_LIST);
+                if (selectedBookStore != null) {
 
-                    bookPersister.openSession();
-                    bookShowList = bookPersister.getBookFromBookStore(selectedBookStore);
-                    bookPersister.commitSession();
+                    if (event.getClickCount() == 1) {
+                        System.out.println("BookStore ID " + selectedBookStore.getId());
+                        fillFieldsByBookStore(selectedBookStore);
+                    }
 
-                    booksTextArea.clear();
-                    bookShowList.forEach(book -> booksTextArea.appendText(book + "\n"));
+                    if (event.getClickCount() == 2) {
 
-                    categoryComboBox.getItems().clear();
-                    List<String> categoryList = bookShowList.stream().map(book -> book.getCategory()).distinct().collect(Collectors.toList());
-                    categoryComboBox.getItems().addAll(categoryList);
 
-                    profileListObservable.clear();
-                    List<Profile> profileList = profilePersister.getProfilesFromBookStore(selectedBookStore);
-                    profileList.forEach(p -> {
-                        System.out.println(p);
-                    });
-                    profileListObservable.addAll(profileList);
+                        bookPersister.openSession();
+                        bookShowList = bookPersister.getBookFromBookStore(selectedBookStore);
+                        bookPersister.commitSession();
 
-                }
+                        booksTextArea.clear();
+                        bookShowList.forEach(book -> booksTextArea.appendText(book + "\n"));
+
+                        categoryComboBox.getItems().clear();
+                        List<String> categoryList = bookShowList.stream().map(book -> book.getCategory()).distinct().collect(Collectors.toList());
+                        categoryComboBox.getItems().addAll(categoryList);
+
+                        profileListObservable.clear();
+                        List<Profile> profileList = profilePersister.getProfilesFromBookStore(selectedBookStore);
+                        profileList.forEach(p -> {
+                            System.out.println(p);
+                        });
+                        profileListObservable.addAll(profileList);
+
+                    }
+                } else
+                    popUpWindowAlertOnSelectionLibrary("Warning category selection",
+                            "Warning category selection", "Any category was selected. Please select category.");
+
             }
         });
 
@@ -171,13 +177,12 @@ public class LibrariesControl implements Initializable {
 
     @FXML
     private void removeBookStoreButton() {
-        int selectedIndex = bookStoresListView.getSelectionModel().getSelectedIndex();
-        if (selectedIndex >= 0) {
-            BookStore bookStore = bookStoresListView.getItems().get(selectedIndex);
+        BookStore bookStore = bookStoresListView.getSelectionModel().getSelectedItem();
+        if (bookStore != null) {
             bookPersister.openSession();
             bookPersister.deleteBookStore(bookStore);
             bookPersister.commitSession();
-            bookStoresListView.getItems().remove(selectedIndex);
+            bookStoresListView.getItems().remove(bookStore);
         } else {
             popUpWindowAlertOnSelectionLibrary("No Selection", "No Library Selected", "Please select a library.");
         }

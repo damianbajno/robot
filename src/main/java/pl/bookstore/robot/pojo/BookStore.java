@@ -1,10 +1,11 @@
 package pl.bookstore.robot.pojo;
 
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class BookStore {
     @Fetch(FetchMode.SELECT)
     private List<Book> bookList;
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REMOVE})
+    @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
     @Fetch(FetchMode.SELECT)
     private List<Profile> profileList;
 
