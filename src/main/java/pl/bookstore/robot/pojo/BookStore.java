@@ -22,12 +22,10 @@ public class BookStore {
     private String url;
     private String searchForTitle;
     private String searchForCategory;
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REMOVE})
-    @Fetch(FetchMode.SELECT)
+    @OneToMany(fetch = FetchType.EAGER,
+            cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REMOVE})
     private List<Book> bookList;
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REMOVE})
-    @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
-    @Fetch(FetchMode.SELECT)
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REMOVE})
     private List<Profile> profileList;
 
     public BookStore(String name) {
@@ -79,6 +77,10 @@ public class BookStore {
 
     public void addBook(Book book){
         bookList.add(book);
+    }
+
+    public List<Profile> getProfileList() {
+        return profileList;
     }
 
     public void setName(String name) {
@@ -138,4 +140,7 @@ public class BookStore {
         profileList.add(profile);
     }
 
+    public List<Book> getBookList() {
+        return bookList;
+    }
 }

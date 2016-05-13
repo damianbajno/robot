@@ -159,7 +159,7 @@ public class BookPersister {
     /**
      * Retrieve all books from database
      *
-     * getBooks method to retrieve books from database
+     * getBookList method to retrieve books from database
      * @return list of books
      */
     public List<Book> getBooks() {

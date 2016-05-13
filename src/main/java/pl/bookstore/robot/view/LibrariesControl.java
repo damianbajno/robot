@@ -101,13 +101,8 @@ public class LibrariesControl implements Initializable {
                     }
 
                     if (event.getClickCount() == 2) {
-
-
-                        bookPersister.openSession();
-                        bookShowList = bookPersister.getBookFromBookStore(selectedBookStore);
-                        bookPersister.commitSession();
-
                         booksTextArea.clear();
+                        bookShowList=selectedBookStore.getBookList();
                         bookShowList.forEach(book -> booksTextArea.appendText(book + "\n"));
 
                         categoryComboBox.getItems().clear();
@@ -115,11 +110,7 @@ public class LibrariesControl implements Initializable {
                         categoryComboBox.getItems().addAll(categoryList);
 
                         profileListObservable.clear();
-                        List<Profile> profileList = profilePersister.getProfilesFromBookStore(selectedBookStore);
-                        profileList.forEach(p -> {
-                            System.out.println(p);
-                        });
-                        profileListObservable.addAll(profileList);
+                        profileListObservable.addAll(selectedBookStore.getProfileList());
 
                     }
                 } else
