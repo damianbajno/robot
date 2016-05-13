@@ -20,53 +20,10 @@ import java.util.stream.Collectors;
  * @author Damian
  * @version 1.0
  */
-public class ProfilePersister {
+public class ProfilePersister extends HibernateUtil{
     Logger logger = Logger.getLogger(BookPersister.class);
-    SessionFactory sessionFactory = pl.bookstore.robot.hibernate.HibernateUtil.getSessionFactory();
-    Session session;
-
 
     /**
-     * openSession method to open hibernate sessions
-     * @return true if session is opened correctly
-     */
-
-    public  boolean openSession(){
-        logger.info("sessionFactory created");
-        session = sessionFactory.openSession();
-        session.beginTransaction();
-        logger.warn("Session opened");
-
-        return true;
-    }
-
-    /**
-     * commitSession method to commit changes to database
-     * @return true if session is committed correctly
-     */
-
-    public boolean commitSession(){
-        session.getTransaction().commit();
-        if (session.getTransaction().getStatus() != TransactionStatus.COMMITTED) {
-            logger.error("Session status different than COMMITTED");
-            return false;
-        }
-        session.close();
-        return true;
-    }
-
-    /**
-     * closeSession method to close hibernate session
-     * @return true if session is closed correctly
-     */
-    public boolean closeSessionFactory(){
-        sessionFactory.close();
-        logger.warn("Session closed");
-        return true;
-    }
-
-    /**
-     *
      * Method saves to database profile connecting it to bookstore
      *
      * @param profile which will be persisted to databases
@@ -74,11 +31,10 @@ public class ProfilePersister {
      */
 
     public void persistProfile(Profile profile, BookStore bookStore){
-        openSession();
         BookStore loadedBookStore = session.load(BookStore.class, bookStore.getId());
         profile.setBookStore(loadedBookStore);
         session.persist(profile);
-        commitSession();
     }
+
 
 }

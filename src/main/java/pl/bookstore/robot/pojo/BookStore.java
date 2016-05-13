@@ -22,8 +22,7 @@ public class BookStore {
     private String url;
     private String searchForTitle;
     private String searchForCategory;
-    @OneToMany(fetch = FetchType.EAGER,
-            cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REMOVE})
+    @OneToMany(fetch = FetchType.EAGER ,cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REMOVE})
     private List<Book> bookList;
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REMOVE})
     private List<Profile> profileList;

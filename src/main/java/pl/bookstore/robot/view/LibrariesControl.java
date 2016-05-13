@@ -20,6 +20,7 @@ import pl.bookstore.robot.pojo.*;
 import pl.bookstore.robot.hibernate.BookPersister;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -27,15 +28,13 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class LibrariesControl implements Initializable {
-    private int FIRST_ITEM_ONLY_ITEM_IN_LIST = 0;
-
     private Logger logger = Logger.getLogger(LibrariesControl.class);
     private ObservableList<BookStore> bookStoreListObservable = FXCollections.observableArrayList();
     private ObservableList<Profile> profileListObservable = FXCollections.observableArrayList();
     private ObservableList<String> categoryListObservable = FXCollections.observableArrayList();
     private BookPersister bookPersister = new BookPersister();
     private ProfilePersister profilePersister = new ProfilePersister();
-    private List<Book> bookShowList;
+    private List<Book> bookShowList=new ArrayList<Book>();
 
     @FXML
     private ChoiceBox<Profile> profileChoiceBox;
@@ -110,7 +109,11 @@ public class LibrariesControl implements Initializable {
                         categoryComboBox.getItems().addAll(categoryList);
 
                         profileListObservable.clear();
-                        profileListObservable.addAll(selectedBookStore.getProfileList());
+                        List<Profile> profileList = selectedBookStore.getProfileList();
+                        profileList.forEach(p -> {
+                            System.out.println(p);
+                        });
+                        profileListObservable.addAll(profileList);
 
                     }
                 } else
@@ -186,7 +189,9 @@ public class LibrariesControl implements Initializable {
 
         try {
             Profile profile = ProfileBuilder.build(selectedCategoryList);
+            profilePersister.openSession();
             profilePersister.persistProfile(profile, selectedBookStore);
+            profilePersister.commitSession();
 
             profileListObservable.add(profile);
         } catch (NoCategorySelectedException e) {
