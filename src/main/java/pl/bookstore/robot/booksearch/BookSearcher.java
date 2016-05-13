@@ -6,11 +6,13 @@ import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
 
 import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 /**
- * Class is designed to search books in books store,
- * you have three methods to search books: on link,
- * document, on every page in bookstore.
+ * Class is designed to search books in bookstore,
+ * has three methods: following given link,
+ * within HTML document and on every page in bookstore.
  *
  * @author Damian Bajno (pseudo thread, Di)
  * @see LinkSearch
@@ -39,13 +41,9 @@ public class BookSearcher {
 
     public List<Book> searchBooks() {
         HashSet<String> hyperLinks = searchLinksOnSite();
-        Iterator<String> linksIterator = hyperLinks.iterator();
 
-        while (linksIterator.hasNext()) {
-            this.booksList.addAll(searchBooks(linksIterator.next()));
-        }
-
-        return this.booksList;
+        hyperLinks.stream().forEach(s -> booksList.addAll(searchBooks(s)));
+        return booksList;
     }
 
     /**
@@ -78,31 +76,31 @@ public class BookSearcher {
      * @param document where books are search
      * @return list of books found in document
      */
-
+//FIXME: use Anti-Corruption Layer to insulate against Jaunt API
     public List<Book> searchBooks(Document document) {
-        ArrayList<Book> books=new ArrayList<>();
+        ArrayList<Book> books = new ArrayList<>();
 
-        List<String> pathToTitleElement = BookSearcherUtils.getPathToElement(bookStore.getSearchForTitle());
-        List<String> pathToCategoryElement = BookSearcherUtils.getPathToElement(bookStore.getSearchForCategory());
+        Steps toTitle = Steps.from(BookSearcherUtils.getPathToElement(bookStore.getSearchForTitle()));
+        Steps toCategory = Steps.from(BookSearcherUtils.getPathToElement(bookStore.getSearchForCategory()));
 
-        Elements titleElements = document.findEvery(pathToTitleElement.get(1));
-        Elements categoryElements = document.findEvery(pathToCategoryElement.get(1));
+        Elements titleElements = document.findEvery(toTitle.nextItem());
+        Elements categoryElements = document.findEvery(toCategory.nextItem());
 
-        String title=null;
-        String previousTitle="";
+        String title = null;
+        String previousTitle = "";
         for (int i = 0; i < titleElements.size(); i++) {
-            Book book=null;
-            String category="brak";
+            Book book = null;
+            String category = "brak";
             try {
-                title = searchElement(titleElements.getElement(i), pathToTitleElement);
-                category = searchElement(categoryElements.getElement(i), pathToCategoryElement);
+                title = searchElement(titleElements.getElement(i), toTitle);
+                category = searchElement(categoryElements.getElement(i), toCategory);
             } catch (NotFound e) {
-                logger.info("Did not find any Books on site "+ document.getUrl());
+                logger.info("Did not found any Books on site "+ document.getUrl());
             } finally {
                 if (!previousTitle.equals(title)) {
                     book = new Book(title, category, bookStore);
                     books.add(book);
-                    logger.info("Finded book "+book);
+                    logger.info("Found book "+book);
                 }
                 previousTitle=title;
             }
@@ -114,19 +112,24 @@ public class BookSearcher {
     /**
      *
      * @param element where to search e.g. title, category
-     * @param pathToElement path to searched text e.g. title, category
+     * @param steps path to searched text e.g. title, category
      * @return text searched in element
      */
 
-    private String searchElement(Element element, List<String> pathToElement) {
-        try {
-            for (int i = 2; i < pathToElement.size(); i=i+2) {
-                Elements pathToElement1 = element.findEach(pathToElement.get(i+1));
-                element= pathToElement1.getElement(Integer.parseInt(pathToElement.get(i))-1);
+    private String searchElement(Element element, Steps steps) {
+        while(steps.hasNext()) {
+            Elements elems = element.findEach(steps.nextItem());
+            try {
+                 element = elems.getElement(steps.nextCount());
+            } catch (NotFound notFound) {
+                logger.error("Search for title/category failed: " + notFound.getMessage());
+            } finally {
+                System.out.println("FINALLY: "+element.getText());
+                return element.getText().trim();
             }
-        } finally {
-            return element.getText().trim();
         }
+        System.out.println("RETURN: "+element.getText());
+        return element.getText().trim();
     }
 
     @Override

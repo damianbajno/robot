@@ -31,6 +31,7 @@ class BookSearcherUtils {
 
         switchFromTableToArray(tableWithPath, listWithPath);
 
+
         for (int i = 0; i < listWithPath.size(); i++) {
             String element = listWithPath.get(i);
 
@@ -46,14 +47,6 @@ class BookSearcherUtils {
 
         return listWithPath;
     }
-
-    /**
-     *
-     * Method to switch from array to list.
-     *
-     * @param array data to put in list
-     * @param list where are added elements from array
-     */
 
     private static void switchFromTableToArray(String[] array, List<String> list) {
         for (int i = 0; i < array.length; i++) {
