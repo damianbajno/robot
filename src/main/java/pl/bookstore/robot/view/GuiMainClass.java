@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import org.apache.log4j.Logger;
-import pl.bookstore.robot.hibernate.Dao;
+import pl.bookstore.robot.dao.Dao;
 
 import java.io.IOException;
 import java.net.URL;

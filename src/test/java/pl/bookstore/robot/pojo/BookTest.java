@@ -37,19 +37,6 @@ public class BookTest {
     }
 
     @Test
-    public void testIfToStringReturnsInProperWay(){
-        BookStore bookStore = new BookStore("nexto.pl");
-        Book book1 = new Book("Hobbit", "Fantasy", bookStore);
-        String expected = "Book{" +
-                "title='" + book1.getTitle() + '\'' +
-                ", category='" + book1.getCategory()+ '\'' +
-                ", bookStoreName='" + bookStore.getName() + '\'' +
-                '}';
-
-        Assertions.assertThat(expected).isEqualTo(book1.toString());
-    }
-
-    @Test
     public void testIfHashCodeFromBookObjectIsNotNull(){
         Book book = new Book();
         Assertions.assertThat(book.hashCode()).isNotNull();

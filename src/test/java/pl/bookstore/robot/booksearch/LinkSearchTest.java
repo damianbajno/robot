@@ -6,7 +6,7 @@ import com.jaunt.ResponseException;
 import com.jaunt.UserAgent;
 import org.assertj.core.api.Assertions;
 import org.testng.annotations.Test;
-import pl.bookstore.robot.hibernate.BookStoreDao;
+import pl.bookstore.robot.dao.BookStoreDao;
 import pl.bookstore.robot.pojo.BookStore;
 
 import java.util.HashSet;
@@ -35,7 +35,7 @@ public class LinkSearchTest {
 
     }
 
-    @Test
+    @Test(enabled = false)
     public void checkIfConnectionToPageIsSuccessful() {
         //given
         BookStoreDao bookStoreDao = new BookStoreDao();

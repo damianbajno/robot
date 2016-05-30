@@ -16,9 +16,9 @@
     </prerequisites>
 
     <description>
-        Robot application which task is to download data from predefined websites. Data such a bookstore name , book name , author, categories.
-        User through nice GUI is able to obtain information about books in promotion. Bookstores of interest can be either added and removed from list.
-        The data associated with bookstore and book are saved in database. Robot is able to run through defined bookstores remotely.
+        Robot application which task is to search books from predefined websites. Data such a bookstore name, book name, categorise.
+        User through GUI is able to obtain information about books available in BookStore. Bookstores can be added and removed from BookStore
+        list. The data associated with bookstores and books are saved in database. Robot is able to search books in defined BookStore.
     </description>
 
     <properties>

@@ -1,4 +1,4 @@
-package pl.bookstore.robot.hibernate;
+package pl.bookstore.robot.dao;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;

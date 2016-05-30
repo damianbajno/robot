@@ -1,4 +1,4 @@
-package pl.bookstore.robot.hibernate;
+package pl.bookstore.robot.dao;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
@@ -11,7 +11,7 @@ import pl.bookstore.robot.pojo.BookStore;
 import pl.bookstore.robot.pojo.Profile;
 
 /**
- * Class for declaring necessary hibernate component
+ * Class for declaring necessary dao component
  * SessionFactory and required methods
  * @author Stycz
  * @version 1.0

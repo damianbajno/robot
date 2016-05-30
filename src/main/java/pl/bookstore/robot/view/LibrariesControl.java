@@ -15,8 +15,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import org.apache.log4j.Logger;
 import org.controlsfx.control.CheckComboBox;
-import pl.bookstore.robot.hibernate.BookStoreDao;
-import pl.bookstore.robot.hibernate.ProfileDao;
+import pl.bookstore.robot.dao.BookStoreDao;
+import pl.bookstore.robot.dao.ProfileDao;
 import pl.bookstore.robot.pojo.*;
 
 import java.net.URL;

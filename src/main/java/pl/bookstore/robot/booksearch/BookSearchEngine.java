@@ -1,8 +1,8 @@
 package pl.bookstore.robot.booksearch;
 
 import org.apache.log4j.Logger;
-import pl.bookstore.robot.hibernate.BookDao;
-import pl.bookstore.robot.hibernate.BookStoreDao;
+import pl.bookstore.robot.dao.BookDao;
+import pl.bookstore.robot.dao.BookStoreDao;
 import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
 

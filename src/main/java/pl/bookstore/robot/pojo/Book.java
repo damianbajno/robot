@@ -23,7 +23,6 @@ public class Book{
     public Book(String title, String category) {
         this.title = title;
         this.category = category;
-        bookStore=new BookStore();
     }
 
     public Book(String title, String category, BookStore bookStore) {
@@ -92,7 +91,6 @@ public class Book{
         return "Book{" +
                 "title='" + title + '\'' +
                 ", category='" + category + '\'' +
-                ", bookStoreName='" + bookStore.getName() + '\'' +
                 '}';
     }
 }

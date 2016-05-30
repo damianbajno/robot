@@ -1,7 +1,7 @@
 package pl.bookstore.robot.helper;
 
-import pl.bookstore.robot.hibernate.BookDao;
-import pl.bookstore.robot.hibernate.BookStoreDao;
+import pl.bookstore.robot.dao.BookDao;
+import pl.bookstore.robot.dao.BookStoreDao;
 import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
 
