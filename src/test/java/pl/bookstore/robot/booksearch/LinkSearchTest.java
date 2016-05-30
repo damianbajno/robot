@@ -6,7 +6,6 @@ import com.jaunt.ResponseException;
 import com.jaunt.UserAgent;
 import org.assertj.core.api.Assertions;
 import org.testng.annotations.Test;
-import pl.bookstore.robot.hibernate.BookDAO;
 import pl.bookstore.robot.hibernate.BookStoreDao;
 import pl.bookstore.robot.pojo.BookStore;
 

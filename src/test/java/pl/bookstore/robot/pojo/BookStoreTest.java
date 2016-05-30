@@ -40,7 +40,6 @@ public class BookStoreTest {
         String expected = "BookStore{" +
                 "name='" + "nexto.pl" + '\'' +
                 ", url='" + "www.nexto.pl" + '\'' +
-                ", searchForElement='" + null + '\'' +
                 ", searchForTitle='" + "Hobbit" + '\'' +
                 ", searchForCategory='" + "Fantasy" + '\'' +
                 '}';

@@ -11,6 +11,7 @@ import java.util.LinkedHashMap;
  * Created by damian on 4/28/16.
  */
 public class BookStoreContainer {
+
     private final static LinkedHashMap<String, BookStore> bookStoreHashMap = new LinkedHashMap();
 
     static {

@@ -1,6 +1,6 @@
 package pl.bookstore.robot.helper;
 
-import pl.bookstore.robot.hibernate.BookDAO;
+import pl.bookstore.robot.hibernate.BookDao;
 import pl.bookstore.robot.hibernate.BookStoreDao;
 import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
@@ -13,14 +13,14 @@ import java.util.List;
  */
 public class CreateTableToTest {
     private static BookStoreDao bookStoreDAO = new BookStoreDao();
-    private static BookDAO bookDAO = new BookDAO();
+    private static BookDao bookDao = new BookDao();
 
     public static void main(String[] args) {
 
         CreateTableToTest.sendBookStoreAndBooksToDatabasesHibernate();
     }
 
-    public static void sendBookStoreAndBooksToDatabasesHibernate() {
+    private static void sendBookStoreAndBooksToDatabasesHibernate() {
 
         BookStore[] bookStores = BookStoreContainer.getBookStores();
         Book[] books = {new Book("a1", "b1"), new Book("a2", "b2"), new Book("a3", "b3"),
@@ -37,9 +37,9 @@ public class CreateTableToTest {
         bookStoreDAO.persist(bookStores[1]);
         bookStoreDAO.persist(bookStores[2]);
 
-        bookDAO.persist(books[0]);
-        bookDAO.persist(books[1]);
-        bookDAO.persist(books[2]);
+        bookDao.persist(books[0]);
+        bookDao.persist(books[1]);
+        bookDao.persist(books[2]);
     }
 
     public static void printDatabasesBookStoresHibernate() {

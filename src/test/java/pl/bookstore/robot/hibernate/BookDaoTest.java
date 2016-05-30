@@ -13,18 +13,18 @@ import static org.mockito.Mockito.when;
 /**
  * Created by stycz0007 on 14.04.16.
  */
-public class BookDAOTest {
+public class BookDaoTest {
 //
 //    @Test
 //    public void testIfSessionIsOpenedCorrectly() {
-//        BookDAO bookDAO = Mockito.mock(BookDAO.class);
+//        BookDao bookDAO = Mockito.mock(BookDao.class);
 //        when(bookDAO.openSession()).thenReturn(true);
 //        Assert.assertEquals(bookDAO.openSession(), true);
 //    }
 //
 //    @Test
 //    public void testIfSessionIsClosedCorrectly() {
-//        BookDAO bookDAO = Mockito.mock(BookDAO.class);
+//        BookDao bookDAO = Mockito.mock(BookDao.class);
 //        when(bookDAO.closeSessionFactory()).thenReturn(true);
 //        Assert.assertEquals(bookDAO.closeSessionFactory(), true);
 //    }
@@ -32,7 +32,7 @@ public class BookDAOTest {
 //    @Test(groups = "IntegrationTest")
 //    public void testIfBookStoreIsSavedInDB() {
 //        //given
-//        BookDAO bookDAO = new BookDAO();
+//        BookDao bookDAO = new BookDao();
 //        BookStore bookStoreExpected = new BookStore("nexto.pl", "http://www.nexto.pl/", "eTitle", "Crime");
 //
 //        //when
@@ -58,7 +58,7 @@ public class BookDAOTest {
 //    @Test(groups = "IntegrationTest")
 //    public void testIfBookIsSavedInDatabase() {
 //        //given
-//        BookDAO persist = new BookDAO();
+//        BookDao persist = new BookDao();
 //        Book bookExpected = new Book("KSIONSZKA", "To jest dramat k*rwa");
 //
 //        //when
@@ -82,7 +82,7 @@ public class BookDAOTest {
 //    @Test
 //    public void testIfSavedBookHasConnectionWithBookStore() {
 //        //given
-//        BookDAO bookPersister = new BookDAO();
+//        BookDao bookPersister = new BookDao();
 //        Book bookExpected = new Book("KSIONSZKA", "To jest dramat k*rwa");
 //        BookStore bookStoreExpected = new BookStore("nexto.pl", "http://www.nexto.pl/", "eTitle", "Crime");
 //        bookExpected.setBookStore(bookStoreExpected);

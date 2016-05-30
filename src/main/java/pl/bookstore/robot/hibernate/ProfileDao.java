@@ -12,8 +12,8 @@ import pl.bookstore.robot.pojo.Profile;
  * @author Damian
  * @version 1.0
  */
-public class ProfileDAO extends DAO {
-    private Logger logger = Logger.getLogger(ProfileDAO.class);
+public class ProfileDao extends Dao {
+    private Logger logger = Logger.getLogger(ProfileDao.class);
 
     /**
      * Method saves to database profile connecting it to bookstore
@@ -21,7 +21,6 @@ public class ProfileDAO extends DAO {
      * @param profile which will be persisted to databases
      * @param bookStore object which will be connected to profile
      */
-
     public void persist(Profile profile, BookStore bookStore){
         try {
             beginTransaction();
@@ -31,12 +30,12 @@ public class ProfileDAO extends DAO {
             getSession().update(bookStore);
 
             commitTransaction();
+
+            logger.trace("Profile save to database = "+ profile.toString());
         } catch (HibernateException e){
             logger.warn("ProfileDao couldn't persist profile");
             e.printStackTrace();
         }
     }
-
-
 
 }

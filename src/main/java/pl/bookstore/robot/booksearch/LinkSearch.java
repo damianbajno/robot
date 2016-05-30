@@ -13,7 +13,6 @@ import java.util.HashSet;
  *
  * @author Damian Bajno (pseudo thread, Di)
  */
-
 public class LinkSearch {
     private Logger logger = Logger.getLogger(LinkSearch.class);
 
@@ -35,8 +34,9 @@ public class LinkSearch {
      */
 
     public HashSet<String> searchHyperlinksOnPageAndSubPages() {
+        logger.info("Started searching links in "+ bookStore.getName());
         searchHyperLinksOnPage(bookStore.getUrl());
-        logger.error("Site dose not found " + bookStore.getUrl());
+        logger.info("Finished searching links in "+ bookStore.getName());
         return linksSet;
     }
 
@@ -44,7 +44,6 @@ public class LinkSearch {
      * @param link search links in specified link
      * @return set of links found in link
      */
-
     HashSet<String> searchHyperLinksOnPage(String link) {
         try {
             logger.info("Searching links on page " + link);
@@ -63,7 +62,6 @@ public class LinkSearch {
      * @param document search links in specified link
      * @return set of links found in link
      */
-
     HashSet<String> searchHyperLinksOnPage(Document document) throws NotFound {
 
         if (document != null) {
@@ -73,7 +71,7 @@ public class LinkSearch {
                 String hyperLink = aElementOnSite.getAt("href").toString();
 
                 if (matchesConditions(hyperLink)) {
-                    logger.info("Site added to LinksSet = " + hyperLink);
+                    logger.info("Site added to search for books = " + hyperLink);
                     linksSet.add(hyperLink);
 
                     if (linksSet.size() < 3) searchHyperLinksOnPage(hyperLink);
@@ -103,16 +101,6 @@ public class LinkSearch {
             logger.error(e.getMessage());
         }
         return document;
-    }
-
-    /**
-     * Method check if link to page is valid
-     *
-     * @return if url is valid
-     */
-
-    public boolean checkIfUrlToBookStoreIsValid(){
-        return checkIfUrlIsValid(bookStore.getUrl());
     }
 
     private boolean checkIfUrlIsValid(String url) {

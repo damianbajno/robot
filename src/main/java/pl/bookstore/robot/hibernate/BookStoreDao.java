@@ -10,20 +10,21 @@ import java.util.List;
 /**
  * Created by damian on 5/30/16.
  */
-public class BookStoreDao extends DAO {
-    private Logger logger = Logger.getLogger(BookDAO.class);
+public class BookStoreDao extends Dao {
+    private Logger logger = Logger.getLogger(BookDao.class);
 
     /**
      * persist method to save particular bookstore in database
      *
      * @param bookStore object to save in database
      */
-
     public void persist(BookStore bookStore) {
         try {
             beginTransaction();
             getSession().persist(bookStore);
             commitTransaction();
+
+            logger.trace("BookStore saved to database = "+bookStore.toString());
         } catch (HibernateException e) {
             logger.warn("BookDao couldn't persist " + bookStore.toString());
             rollback();
@@ -74,7 +75,6 @@ public class BookStoreDao extends DAO {
      *
      * @param bookStore to delete in database
      */
-
     public void delete(BookStore bookStore) {
         try {
             beginTransaction();
@@ -85,5 +85,4 @@ public class BookStoreDao extends DAO {
             logger.warn("BookStoreDao couldn't delete "+ bookStore.toString());
         }
     }
-
 }

@@ -6,7 +6,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.resource.transaction.spi.TransactionStatus;
 import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
 import pl.bookstore.robot.pojo.Profile;
@@ -17,9 +16,8 @@ import pl.bookstore.robot.pojo.Profile;
  * @author Stycz
  * @version 1.0
  */
-
-public class DAO {
-    private Logger logger = Logger.getLogger(DAO.class);
+public class Dao {
+    private Logger logger = Logger.getLogger(Dao.class);
     private Session session;
 
     private static final Configuration configuration = new Configuration()
@@ -32,7 +30,7 @@ public class DAO {
             .buildSessionFactory(builder.build());
 
 
-    protected DAO() {
+    protected Dao() {
     }
 
     protected static Session getSession() {
@@ -65,9 +63,9 @@ public class DAO {
         }
     }
 
-    protected static void close() {
-        getSession().close();
-    }
+    /**
+     * Method to close SessionFactory
+     */
 
     public static void closeSessionFactory(){
         if (!sessionfactory.isClosed())

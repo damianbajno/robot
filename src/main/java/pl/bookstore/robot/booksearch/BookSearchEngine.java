@@ -1,7 +1,7 @@
 package pl.bookstore.robot.booksearch;
 
 import org.apache.log4j.Logger;
-import pl.bookstore.robot.hibernate.BookDAO;
+import pl.bookstore.robot.hibernate.BookDao;
 import pl.bookstore.robot.hibernate.BookStoreDao;
 import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
@@ -21,7 +21,7 @@ public class BookSearchEngine {
     public static void main(String[] args) {
         logger.info("==== BookSearch Engine started ====");
 
-        BookDAO bookDAO = new BookDAO();
+        BookDao bookDao = new BookDao();
         BookStoreDao bookStoreDao=new BookStoreDao();
         List<BookStore> bookStoreList = bookStoreDao.getBookStoreList();
 
@@ -31,10 +31,9 @@ public class BookSearchEngine {
             bookList.forEach(book -> book.setBookStore(bookStore));
 
 
-            logger.info("Started saving bookList");
-            bookDAO.persistBookList(bookList);
+            logger.info("Started saving bookList from "+ bookStore.toString());
+            bookDao.persistBookList(bookList);
         }
-
 
     }
 }

@@ -50,17 +50,6 @@ public class BookTest {
     }
 
     @Test
-    public void testIfEmptyBookReturnsEmptyToString(){
-        Book book = new Book();
-        String expected = "Book{" +
-                "title='" + null + '\'' +
-                ", category='" + null+ '\'' +
-                ", bookStoreName='" + "brak" + '\'' +
-                '}';
-    Assertions.assertThat(expected).isEqualTo(book.toString());
-    }
-
-    @Test
     public void testIfHashCodeFromBookObjectIsNotNull(){
         Book book = new Book();
         Assertions.assertThat(book.hashCode()).isNotNull();

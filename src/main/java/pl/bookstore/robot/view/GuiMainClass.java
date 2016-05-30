@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import org.apache.log4j.Logger;
-import pl.bookstore.robot.hibernate.DAO;
+import pl.bookstore.robot.hibernate.Dao;
 
 import java.io.IOException;
 import java.net.URL;
@@ -20,11 +20,12 @@ import java.net.URL;
  */
 
 public class GuiMainClass extends Application {
-	Logger logger=Logger.getLogger(GuiMainClass.class);
+	private static Logger logger=Logger.getLogger(GuiMainClass.class);
 
 	@Override
 	public void start(Stage primaryStage) {
-		logger.info(GuiMainClass.class.toString()+"started");
+		logger.trace(GuiMainClass.class.toString()+"started");
+
 		primaryStage.setTitle("Bookstore");
 
 		try {
@@ -39,7 +40,7 @@ public class GuiMainClass extends Application {
 			primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 				@Override
 				public void handle(WindowEvent event) {
-					DAO.closeSessionFactory();
+					Dao.closeSessionFactory();
 					logger.info("SessionFactory was closed");
 				}
 			});

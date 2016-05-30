@@ -26,7 +26,6 @@ public class UrlUtils {
      * @param url given url to sub page
      * @return retrieving url to main page
      */
-
     public static String getUrlToMainPage(String url) {
         int urlBeginningIndex;
         int urlEndIndex;
@@ -35,5 +34,4 @@ public class UrlUtils {
         if ((urlEndIndex = url.indexOf('/', urlBeginningIndex)) < 4) urlEndIndex = url.length();
         return url.substring(urlBeginningIndex, urlEndIndex);
     }
-
 }
