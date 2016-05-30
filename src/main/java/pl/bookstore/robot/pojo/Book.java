@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-public class Book implements Serializable{
+public class Book{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

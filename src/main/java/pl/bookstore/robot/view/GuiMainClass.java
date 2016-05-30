@@ -1,10 +1,13 @@
 package pl.bookstore.robot.view;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import org.apache.log4j.Logger;
+import pl.bookstore.robot.hibernate.DAO;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,6 +35,15 @@ public class GuiMainClass extends Application {
 			Scene scene = new Scene(loader.load());
 
 			primaryStage.setScene(scene);
+
+			primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+				@Override
+				public void handle(WindowEvent event) {
+					DAO.closeSessionFactory();
+					logger.info("SessionFactory was closed");
+				}
+			});
+
 			primaryStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();

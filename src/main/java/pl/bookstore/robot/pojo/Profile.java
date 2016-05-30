@@ -29,6 +29,14 @@ public class Profile {
         categories=new ArrayList<String>();
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public boolean addCategory(String category) {
         return categories.add(category);
     }

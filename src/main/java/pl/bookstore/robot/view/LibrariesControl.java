@@ -15,9 +15,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import org.apache.log4j.Logger;
 import org.controlsfx.control.CheckComboBox;
-import pl.bookstore.robot.hibernate.ProfilePersister;
+import pl.bookstore.robot.hibernate.BookStoreDao;
+import pl.bookstore.robot.hibernate.ProfileDAO;
 import pl.bookstore.robot.pojo.*;
-import pl.bookstore.robot.hibernate.BookPersister;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -32,9 +32,9 @@ public class LibrariesControl implements Initializable {
     private ObservableList<BookStore> bookStoreListObservable = FXCollections.observableArrayList();
     private ObservableList<Profile> profileListObservable = FXCollections.observableArrayList();
     private ObservableList<String> categoryListObservable = FXCollections.observableArrayList();
-    private BookPersister bookPersister = new BookPersister();
-    private ProfilePersister profilePersister = new ProfilePersister();
-    private List<Book> bookShowList=new ArrayList<Book>();
+    private BookStoreDao bookStoreDao = new BookStoreDao();
+    private ProfileDAO profileDAO = new ProfileDAO();
+    private List<Book> bookList = new ArrayList<Book>();
 
     @FXML
     private ChoiceBox<Profile> profileChoiceBox;
@@ -55,9 +55,7 @@ public class LibrariesControl implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        List<BookStore> bookStores = getBookStores();
-
-        bookStoreListObservable.addAll(bookStores);
+        bookStoreListObservable.addAll(bookStoreDao.getBookStoreList());
 
         categoryComboBox.getItems().setAll(categoryListObservable);
         bookStoresListView.setItems(bookStoreListObservable);
@@ -101,25 +99,21 @@ public class LibrariesControl implements Initializable {
 
                     if (event.getClickCount() == 2) {
                         booksTextArea.clear();
-                        bookShowList=selectedBookStore.getBookList();
-                        bookShowList.forEach(book -> booksTextArea.appendText(book + "\n"));
+                        bookList = selectedBookStore.getBookList();
+                        bookList.forEach(book -> booksTextArea.appendText(book + "\n"));
 
                         categoryComboBox.getItems().clear();
-                        List<String> categoryList = bookShowList.stream().map(book -> book.getCategory()).distinct().collect(Collectors.toList());
+                        List<String> categoryList = bookList.stream().map(book -> book.getCategory()).distinct().collect(Collectors.toList());
                         categoryComboBox.getItems().addAll(categoryList);
 
                         profileListObservable.clear();
                         List<Profile> profileList = selectedBookStore.getProfileList();
-                        profileList.forEach(p -> {
-                            System.out.println(p);
-                        });
                         profileListObservable.addAll(profileList);
 
                     }
                 } else
                     popUpWindowAlertOnSelectionLibrary("Warning category selection",
                             "Warning category selection", "Any category was selected. Please select category.");
-
             }
         });
 
@@ -132,16 +126,9 @@ public class LibrariesControl implements Initializable {
         });
     }
 
-    private List<BookStore> getBookStores() {
-        bookPersister.openSession();
-        List<BookStore> bookStores = bookPersister.getBookStores();
-        bookPersister.commitSession();
-        return bookStores;
-    }
-
     private void filterBooksByCategoryAndAddToTextArea(List<String> categories) {
         booksTextArea.clear();
-        bookShowList.stream().filter(book -> categories.contains(book.getCategory()))
+        bookList.stream().filter(book -> categories.contains(book.getCategory()))
                 .forEach(book -> booksTextArea.appendText(book + "\n"));
     }
 
@@ -149,17 +136,15 @@ public class LibrariesControl implements Initializable {
     public void handleAddModifyButton() {
         BookStore bookStore = fillBookStoreWithFields();
         if (!containBookStoreListLibraryName(bookStoreListObservable, bookStore)) {
+
             bookStoreListObservable.add(bookStore);
-            bookPersister.openSession();
-            bookPersister.persistBookStore(bookStore);
-            bookPersister.commitSession();
+            bookStoreDao.persist(bookStore);
             logger.info("Added to database " + bookStore.toString());
+
         } else {
             BookStore selectedBookStore = bookStoresListView.getSelectionModel().getSelectedItem();
-            bookPersister.openSession();
             changeFieldsInBookStore(selectedBookStore);
-            bookPersister.updateBookStore(selectedBookStore);
-            bookPersister.commitSession();
+            bookStoreDao.update(selectedBookStore);
         }
 
     }
@@ -173,9 +158,7 @@ public class LibrariesControl implements Initializable {
     private void removeBookStoreButton() {
         BookStore bookStore = bookStoresListView.getSelectionModel().getSelectedItem();
         if (bookStore != null) {
-            bookPersister.openSession();
-            bookPersister.deleteBookStore(bookStore);
-            bookPersister.commitSession();
+            bookStoreDao.delete(bookStore);
             bookStoresListView.getItems().remove(bookStore);
         } else {
             popUpWindowAlertOnSelectionLibrary("No Selection", "No Library Selected", "Please select a library.");
@@ -189,9 +172,7 @@ public class LibrariesControl implements Initializable {
 
         try {
             Profile profile = ProfileBuilder.build(selectedCategoryList);
-            profilePersister.openSession();
-            profilePersister.persistProfile(profile, selectedBookStore);
-            profilePersister.commitSession();
+            profileDAO.persist(profile, selectedBookStore);
 
             profileListObservable.add(profile);
         } catch (NoCategorySelectedException e) {
@@ -208,12 +189,12 @@ public class LibrariesControl implements Initializable {
         searchForCategory.setText("");
     }
 
-    private void popUpWindowAlertOnSelectionLibrary(String title, String header, String Content) {
+    private void popUpWindowAlertOnSelectionLibrary(String title, String header, String content) {
         Alert alert = new Alert(AlertType.WARNING);
         alert.initOwner(null);
-        alert.setTitle("No Selection");
-        alert.setHeaderText("No Library Selected");
-        alert.setContentText("Please select a library.");
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
         alert.showAndWait();
     }
 

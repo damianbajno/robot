@@ -6,14 +6,14 @@ import com.jaunt.ResponseException;
 import com.jaunt.UserAgent;
 import org.assertj.core.api.Assertions;
 import org.testng.annotations.Test;
-import pl.bookstore.robot.hibernate.BookPersister;
+import pl.bookstore.robot.hibernate.BookDAO;
+import pl.bookstore.robot.hibernate.BookStoreDao;
 import pl.bookstore.robot.pojo.BookStore;
 
 import java.util.HashSet;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 /**
  * Created by damian on 06.04.16.
@@ -39,10 +39,8 @@ public class LinkSearchTest {
     @Test
     public void checkIfConnectionToPageIsSuccessful() {
         //given
-        BookPersister bookPersister = new BookPersister();
-        bookPersister.openSession();
-        List<BookStore> bookStores = bookPersister.getBookStores();
-        bookPersister.commitSession();
+        BookStoreDao bookStoreDao = new BookStoreDao();
+        List<BookStore> bookStores = bookStoreDao.getBookStoreList();
 
         for (BookStore bookStore : bookStores) {
             LinkSearch linkSearch = new LinkSearch(bookStore);

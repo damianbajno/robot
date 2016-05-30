@@ -1,7 +1,8 @@
 package pl.bookstore.robot.booksearch;
 
 import org.apache.log4j.Logger;
-import pl.bookstore.robot.hibernate.BookPersister;
+import pl.bookstore.robot.hibernate.BookDAO;
+import pl.bookstore.robot.hibernate.BookStoreDao;
 import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
 
@@ -18,24 +19,22 @@ public class BookSearchEngine {
     static Logger logger = Logger.getLogger(BookSearchEngine.class);
 
     public static void main(String[] args) {
-        logger.info("==== Book engine started ====");
+        logger.info("==== BookSearch Engine started ====");
 
-        BookPersister bookPersister = new BookPersister();
-        bookPersister.openSession();
-        List<BookStore> bookStores = bookPersister.getBookStores();
-        bookPersister.commitSession();
+        BookDAO bookDAO = new BookDAO();
+        BookStoreDao bookStoreDao=new BookStoreDao();
+        List<BookStore> bookStoreList = bookStoreDao.getBookStoreList();
 
-
-        BookStore bookStore = bookStores.get(2);
-        BookSearcher bookSearcher = new BookSearcher(bookStore);
-        List<Book> books = bookSearcher.searchBooks();
-        books.forEach(book -> book.setBookStore(bookStore));
+        for (BookStore bookStore : bookStoreList) {
+            BookSearcher bookSearcher = new BookSearcher(bookStore);
+            List<Book> bookList = bookSearcher.searchBooks();
+            bookList.forEach(book -> book.setBookStore(bookStore));
 
 
-        logger.info("Started saving books");
-        bookPersister.openSession();
-        bookPersister.persistBooks(books);
-        bookPersister.commitSession();
+            logger.info("Started saving bookList");
+            bookDAO.persistBookList(bookList);
+        }
+
 
     }
 }

@@ -2,14 +2,11 @@ package pl.bookstore.robot.hibernate;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.assertj.core.api.Assertions;
 import org.testng.annotations.Test;
 import pl.bookstore.robot.helper.BookStoreContainer;
 import pl.bookstore.robot.pojo.NoCategorySelectedException;
 import pl.bookstore.robot.pojo.Profile;
 import pl.bookstore.robot.pojo.ProfileBuilder;
-
-import java.util.List;
 
 /**
  * Created by damian on 5/2/16.
@@ -20,7 +17,7 @@ public class ProfilePersisterTest {
     @Test(groups = "NewTest")
     public void ifIPutProfileToTableItWillBeInTable(){
         //given
-        ProfilePersister profilePersister=new ProfilePersister();
+        ProfileDAO profilePersister=new ProfileDAO();
         Profile profile = null;
         ObservableList<String> categoryList = FXCollections.observableArrayList();
         categoryList.add("Romance");
@@ -32,7 +29,7 @@ public class ProfilePersisterTest {
         }
 
         //when
-        profilePersister.persistProfile(profile, BookStoreContainer.getBookStore(0));
+        profilePersister.persist(profile, BookStoreContainer.getBookStore(0));
         profile.setBookStore(BookStoreContainer.getBookStore(0));
 
         //then
