@@ -14,35 +14,37 @@ import java.util.List;
  *
  * @author Damian Bajno (pseudo thread, Di)
  */
-public class BookSearchEngine extends Thread {
+public class BookSearchEngine{
     private static Logger logger = Logger.getLogger(BookSearchEngine.class);
     private static BookStoreDao bookStoreDao = new BookStoreDao();
-    private BookStore bookStore;
-
-    public BookSearchEngine(BookStore bookStore) {
-        this.bookStore = bookStore;
-    }
 
     public static void main(String[] args) {
-        logger.info("==== BookSearch Engine started ====");
+        logger.trace("==== BookSearch Engine started ====");
 
         List<BookStore> bookStoreList = bookStoreDao.getBookStoreList();
 
         for (BookStore bookStore : bookStoreList) {
-            BookSearchEngine bookSearchEngine=new BookSearchEngine(bookStore);
-            bookSearchEngine.start();
+            BookSearchThread bookSearchThread = new BookSearchThread(bookStore);
+            bookSearchThread.start();
         }
     }
 
+    private static class BookSearchThread extends Thread {
+        private BookStore bookStore;
 
-    @Override
-    public void run() {
-        BookSearcher bookSearcher = new BookSearcher(bookStore);
-        List<Book> bookList = bookSearcher.searchBooks();
-        bookList.forEach(book -> bookStore.addBook(book));
+        public BookSearchThread(BookStore bookStore) {
+            this.bookStore = bookStore;
+        }
 
-        logger.info("Started saving bookList from "+ bookStore.toString());
-        bookStoreDao.update(bookStore);
+        @Override
+        public void run() {
+            BookSearcher bookSearcher = new BookSearcher(bookStore);
+            List<Book> bookList = bookSearcher.searchBooks();
+            bookList.forEach(book -> bookStore.addBook(book));
+
+            logger.info("Started saving bookList from " + bookStore.toString());
+            bookStoreDao.update(bookStore);
+        }
     }
 }
 
