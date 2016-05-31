@@ -133,7 +133,7 @@ public class LibrariesControl implements Initializable {
     }
 
     @FXML
-    public void handleAddModifyButton() {
+    private void handleAddModifyButton() {
         BookStore bookStore = fillBookStoreWithFields();
         if (!containBookStoreListLibraryName(bookStoreListObservable, bookStore)) {
 
@@ -149,7 +149,7 @@ public class LibrariesControl implements Initializable {
 
     }
 
-    public boolean containBookStoreListLibraryName(Collection<BookStore> bookStores, BookStore bookStore) {
+    private boolean containBookStoreListLibraryName(Collection<BookStore> bookStores, BookStore bookStore) {
         Predicate<BookStore> bookStoreFilter = bookStoreS -> bookStoreS.getName().equals(bookStore.getName());
         return bookStores.stream().filter(bookStoreFilter).findFirst().isPresent();
     }
@@ -166,7 +166,7 @@ public class LibrariesControl implements Initializable {
     }
 
     @FXML
-    public void addProfileButton() {
+    private void addProfileButton() {
         ObservableList<String> selectedCategoryList = categoryComboBox.getCheckModel().getCheckedItems();
         BookStore selectedBookStore = bookStoresListView.getSelectionModel().getSelectedItem();
 
@@ -182,7 +182,7 @@ public class LibrariesControl implements Initializable {
     }
 
     @FXML
-    public void handleClearButton(Event event) {
+    private void handleClearButton(Event event) {
         libraryName.setText("");
         libraryURL.setText("");
         searchForTitle.setText("");

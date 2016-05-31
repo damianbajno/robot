@@ -8,9 +8,7 @@ import pl.bookstore.robot.pojo.BookStore;
 import java.util.*;
 
 /**
- * Class is designed to search books in books store,
- * you have three methods to search books: on link,
- * document, on every page in bookstore.
+ * Search books in Bookstore.
  *
  * @author Damian Bajno (pseudo thread, Di)
  * @see LinkSearch
@@ -22,7 +20,7 @@ public class BookSearcher {
     private List<Book> booksList;
 
     /**
-     * @param bookStore specify where to search books, and on what tags to search
+     * @param bookStore specify where to search books
      */
     public BookSearcher(BookStore bookStore) {
         this.bookStore = bookStore;
@@ -50,7 +48,7 @@ public class BookSearcher {
     }
 
     /**
-     * @return HashSet with sub pages on specify link
+     * @return set of urls to pages in BookStore
      */
     HashSet<String> searchLinksOnSite() {
         LinkSearch linkSearch = new LinkSearch(bookStore);
@@ -60,10 +58,10 @@ public class BookSearcher {
     /**
      * Search Books in link.
      *
-     * @param link where books are search
-     * @return list of books found in link
+     * @param link url to page where are searched books
+     * @return list of books found in page
      */
-    public List<Book> searchBooks(String link) {
+    List<Book> searchBooks(String link) {
         try {
             UserAgent userAgent = new UserAgent();
             logger.info("Searching book on site = " + link);
@@ -76,12 +74,12 @@ public class BookSearcher {
     }
 
     /**
-     * Search book in JAunt Document
+     * Search books in Jaunt Document
      *
-     * @param document where books are search
+     * @param document
      * @return list of books found in document
      */
-    public List<Book> searchBooks(Document document) {
+    List<Book> searchBooks(Document document) {
         ArrayList<Book> books = new ArrayList<>();
 
         List<String> pathToTitleElement = BookSearcherUtils.getPathToElement(bookStore.getSearchForTitle());
@@ -113,11 +111,6 @@ public class BookSearcher {
         return books;
     }
 
-    /**
-     * @param element       where to search e.g. title, category
-     * @param pathToElement path to searched text e.g. title, category
-     * @return text searched in element
-     */
     private String searchElement(Element element, List<String> pathToElement) {
         try {
             for (int i = 2; i < pathToElement.size(); i = i + 2) {

@@ -9,7 +9,7 @@ import pl.bookstore.robot.pojo.BookStore;
 import java.util.List;
 
 /**
- * Class which search books stores for books
+ * Search books in all BookStores and save them in database.
  * <p>
  * Created by damian on 31.03.16.
  *

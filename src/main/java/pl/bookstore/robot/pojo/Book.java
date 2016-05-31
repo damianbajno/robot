@@ -1,7 +1,6 @@
 package pl.bookstore.robot.pojo;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
 @Entity
@@ -11,18 +10,19 @@ public class Book{
     private int id;
     private String title;
     private String category;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private BookStore bookStore;
     private Date data=new Date();
 
     public Book(String title) {
         this.title = title;
-        bookStore=new BookStore();
+        this.bookStore=new BookStore();
     }
 
     public Book(String title, String category) {
         this.title = title;
         this.category = category;
+        this.bookStore=new BookStore();
     }
 
     public Book(String title, String category, BookStore bookStore) {
@@ -32,6 +32,7 @@ public class Book{
     }
 
     public Book() {
+        this.bookStore=new BookStore();
     }
 
     public int getId() {
@@ -75,8 +76,8 @@ public class Book{
 
         Book book = (Book) o;
 
-        if (title != null ? !title.toLowerCase().equals(book.title.toLowerCase()) : book.title != null) return false;
-        return category != null ? category.toLowerCase().equals(book.category.toLowerCase()) : book.category == null;
+        if (title != null ? !title.equals(book.title) : book.title != null) return false;
+         return category != null ? category.equals(book.category) : book.category == null;
     }
 
     @Override
@@ -91,6 +92,7 @@ public class Book{
         return "Book{" +
                 "title='" + title + '\'' +
                 ", category='" + category + '\'' +
+                ", bookStoreName='" + bookStore.getName() + '\'' +
                 '}';
     }
 }

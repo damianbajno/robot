@@ -1,8 +1,7 @@
 package pl.bookstore.robot.pojo;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import org.assertj.core.api.Assertions;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 /**
@@ -10,50 +9,52 @@ import org.testng.annotations.Test;
  */
 public class ProfileTest {
 
-    @Test
-    public void testIfProfilesAreEqualIfTheyAreEmpty() {
-        //given
-        Profile profileFirst = new Profile();
-        Profile profileSecond = new Profile();
+    @DataProvider(name = "profilesProvider")
+    public Object[][] getProfiles() throws NoCategorySelectedException {
+        Profile profile = ProfileBuilder.build("DamianCategory");
+        Profile profileBS1 = ProfileBuilder.build("DamianCategory");
+        Profile profileBS2 = ProfileBuilder.build("DamianCategory");
+        profileBS1.setBookStore(new BookStore("BS1"));
+        profileBS2.setBookStore(new BookStore("BS2"));
 
-        //when
-        boolean isEquals = profileFirst.equals(profileSecond);
+        Profile profileBS11 = ProfileBuilder.build("DamianCategory");
+        Profile profileBS22 = ProfileBuilder.build("DamianCategory");
+        profileBS11.setBookStore(null);
+        profileBS22.setBookStore(new BookStore("BS2"));
 
-        Assertions.assertThat(isEquals).isTrue();
+        Object[][] profileTable = {
+                {new Profile(), new Profile(), true},
+                {ProfileBuilder.build("Comedy"), ProfileBuilder.build("Comedy"), true},
+                {ProfileBuilder.build("Comedy1"), ProfileBuilder.build("Comedy"), false},
+                {ProfileBuilder.build("Comedy"), null, false},
+                {ProfileBuilder.build("Comedy"), new BookStore() , false},
+                {profile, profile, true},
+                {profileBS1, profileBS2, false},
+                {profileBS11, profileBS22, false},
+        };
+        return profileTable;
     }
 
-    @Test
-    public void testIfProfileCategoriesAreEqualProfilesAreEqual() {
-        //given
-        ObservableList<String> observableList = FXCollections.observableArrayList();
-        observableList.add("Comedy");
-        Profile profileFirst = new Profile();
-        profileFirst.addCategories(observableList);
-        Profile profileSecond = new Profile();
-        profileSecond.addCategories(observableList);
-
+    @Test(dataProvider = "profilesProvider")
+    public void testIfProfileCategoriesAreEqualProfilesAreEqual(Profile firstProfile, Profile secondProfile, Boolean equal) throws NoCategorySelectedException {
         //when
-        boolean isEquals = profileFirst.equals(profileSecond);
+        boolean areEqual = firstProfile.equals(secondProfile);
 
         //then
-        Assertions.assertThat(isEquals).isTrue();
+        Assertions.assertThat(areEqual).isEqualTo(equal);
     }
 
-    @Test
-    public void testIfProfileCategoriesAreDifferentProfilesAreEqual() {
-        //given
-        ObservableList<String> observableList = FXCollections.observableArrayList();
-        observableList.add("Comedy");
-        Profile profileFirst = new Profile();
-        profileFirst.addCategories(observableList);
-        observableList.add("Music");
-        Profile profileSecond = new Profile();
-        profileFirst.addCategories(observableList);
-
+    @Test(dataProvider = "profilesProvider")
+    public void testContractBetweenEqualAndHashCode(Profile firstProfile, Profile secondProfile, Boolean equal) {
         //when
-        boolean isEquals = profileFirst.equals(profileSecond);
+        if (firstProfile != null && secondProfile != null) {
+            int firstProfileHashCode = firstProfile.hashCode();
+            int secondProfileHashCode = secondProfile.hashCode();
+            boolean isEqual = (firstProfileHashCode == secondProfileHashCode);
 
-        //then
-        Assertions.assertThat(isEquals).isFalse();
+            Assertions.assertThat(isEqual).isEqualTo(equal);
+        }
     }
+
 }
+

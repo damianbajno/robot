@@ -21,7 +21,7 @@ public class BookSearcherTest {
         Object[][] data = {
                 {0, this.getHtmlPageBookBookrix(), new Book("New Life", "Romance")},
                 {1, this.getHtmlPageGoodreads(), new Book("Going Viral : The 9 Secrets of Irresistible Marketing", "brak")},
-                {2, this.getHtmlPagePwn(), new Book("Inwestycje", "Inwestycje")}
+                {2, this.getHtmlPagePwn(), new Book("Inwestycje", "INWESTYCJE")}
         };
         return data;
     }

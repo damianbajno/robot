@@ -5,7 +5,6 @@ import javafx.collections.ObservableList;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by damian on 21.04.16.

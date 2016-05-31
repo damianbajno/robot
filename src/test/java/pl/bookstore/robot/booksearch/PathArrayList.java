@@ -1,19 +1,16 @@
-package pl.bookstore.robot.utils;
+package pl.bookstore.robot.booksearch;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by damian on 4/28/16.
- */
 public class PathArrayList {
-    ArrayList<String> path;
+    private static ArrayList<String> path;
 
-    public PathArrayList() {
+    private PathArrayList() {
         path=new ArrayList<>();
     }
 
-    public List<String> addElements(String ... pathElements){
+    static List<String> addElements(String ... pathElements){
         path=new ArrayList<>();
         for (String pathElement : pathElements) {
             path.add(pathElement);
@@ -21,7 +18,4 @@ public class PathArrayList {
         return path;
     }
 
-    public int size() {
-        return path.size();
-    }
 }

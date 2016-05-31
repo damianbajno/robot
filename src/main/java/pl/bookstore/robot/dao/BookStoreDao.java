@@ -8,6 +8,8 @@ import pl.bookstore.robot.pojo.BookStore;
 import java.util.List;
 
 /**
+ * Saving, updating, getting, deleting bookstores from databases.
+ *
  * Created by damian on 5/30/16.
  */
 public class BookStoreDao extends Dao {

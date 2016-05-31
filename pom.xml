@@ -16,9 +16,9 @@
     </prerequisites>
 
     <description>
-        Robot application which task is to search books from predefined websites. Data such a bookstore name, book name, categorise.
-        User through GUI is able to obtain information about books available in BookStore. Bookstores can be added and removed from BookStore
-        list. The data associated with bookstores and books are saved in database. Robot is able to search books in defined BookStore.
+        Robot search books (name, category) from predefined websites. User through GUI is able to obtain
+        information about books available in BookStore. Bookstores can be added and removed from BookStore
+        list. The data associated with bookstores and books are saved in database.
     </description>
 
     <properties>
@@ -41,13 +41,16 @@
         <maven.compiler.plugin.version>3.5.1</maven.compiler.plugin.version>
         <maven.surefire.plugin.version>2.17</maven.surefire.plugin.version>
         <findbugs.maven.plugin.version>3.0.3</findbugs.maven.plugin.version>
+        <javadoc.plugin.version>2.10.3</javadoc.plugin.version>
+        <maven.project.info.raports.plugin>2.7</maven.project.info.raports.plugin>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.jacoco</groupId>
             <artifactId>org.jacoco.report</artifactId>
-            <version>0.7.6.201602180812</version>
+            <version>${jacoco.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -58,6 +61,7 @@
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <version>${assertj.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
@@ -97,24 +101,9 @@
             <version>${apache.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjrt</artifactId>
-            <version>${aspectjrt.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjtools</artifactId>
-            <version>${aspectjtools.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.controlsfx</groupId>
             <artifactId>controlsfx</artifactId>
             <version>${controlsfx.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jacoco</groupId>
-            <artifactId>org.jacoco.report</artifactId>
-            <version>${jacoco.version}</version>
         </dependency>
     </dependencies>
 
@@ -147,6 +136,10 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>${maven.project.info.raports.plugin}</version>
             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
@@ -199,7 +192,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.3</version>
+                <version>${javadoc.plugin.version}</version>
             </plugin>
 
         </plugins>

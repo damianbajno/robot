@@ -20,5 +20,16 @@ public class UrlUtilsTest {
         Assertions.assertThat(urlToMainPage).isEqualTo(expectedUrl);
     }
 
+    @Test
+    public void retrieveMainPageUrlFromManePageUrl(){
+        //given
+        String url="demotywatory.pl";
+        final String expectedUrl = "demotywatory.pl";
+
+        //when
+        String urlToMainPage = UrlUtils.getUrlToMainPage(url);
+        //then
+        Assertions.assertThat(urlToMainPage).isEqualTo(expectedUrl);
+    }
 
 }

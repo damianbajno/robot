@@ -6,20 +6,19 @@ import pl.bookstore.robot.pojo.BookStore;
 import pl.bookstore.robot.pojo.Profile;
 
 /**
- * Class which task corresponds to opening,
- * committing, closing session for saving data associated
- * with book profile of interest in database
+ * Opens, commits and closes session for book profile.
  * @author Damian
  * @version 1.0
+ * @see pl.bookstore.robot.pojo.Profile
  */
 public class ProfileDao extends Dao {
     private Logger logger = Logger.getLogger(ProfileDao.class);
 
     /**
-     * Method saves to database profile connecting it to bookstore
+     * Saves bookstore's profile to database.
      *
-     * @param profile which will be persisted to databases
-     * @param bookStore object which will be connected to profile
+     * @param profile persisted to databases
+     * @param bookStore connected to profile
      */
     public void persist(Profile profile, BookStore bookStore){
         try {

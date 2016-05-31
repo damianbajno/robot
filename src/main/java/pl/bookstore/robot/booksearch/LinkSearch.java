@@ -8,8 +8,7 @@ import pl.bookstore.robot.utils.UrlUtils;
 import java.util.HashSet;
 
 /**
- * Class was designed to search links in page
- * and sub pages specified in BookStore
+ * Search links in page and sub pages specified in BookStore
  *
  * @author Damian Bajno (pseudo thread, Di)
  */
@@ -21,7 +20,7 @@ public class LinkSearch {
     private BookStore bookStore;
 
     /**
-     * @param bookStore specify where to search books, and on what tags to search
+     * @param bookStore specify where to search books, and paths to searched elements
      */
     public LinkSearch(BookStore bookStore) {
         this.bookStore = bookStore;

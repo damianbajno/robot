@@ -18,7 +18,7 @@ import java.util.List;
 public class ProfileDaoTest {
 
 
-    @Test(groups = "NewTest")
+    @Test(enabled = false)
     public void ifIPutProfileToTableItWillBeInTable() throws NoCategorySelectedException {
         //given
         ProfileDao profileDao = new ProfileDao();

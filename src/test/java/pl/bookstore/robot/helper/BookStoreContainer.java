@@ -2,9 +2,7 @@ package pl.bookstore.robot.helper;
 
 import pl.bookstore.robot.pojo.BookStore;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 /**

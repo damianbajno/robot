@@ -12,7 +12,7 @@ import java.util.List;
  */
 
 @Entity
-public class BookStore {
+public class BookStore{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -27,6 +27,9 @@ public class BookStore {
 
     public BookStore(String name) {
         this.name = name;
+        this.url = "";
+        this.searchForTitle = "";
+        this.searchForCategory = "";
         this.bookList = new ArrayList<Book>();
         this.profileList=new ArrayList<Profile>();
     }

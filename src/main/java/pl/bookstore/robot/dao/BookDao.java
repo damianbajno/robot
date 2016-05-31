@@ -7,8 +7,7 @@ import pl.bookstore.robot.pojo.Book;
 import java.util.List;
 
 /**
- * BookDao class created for saving data associated with books
- * of interest to database using Hibernate.
+ * Saving books to databases.
  *
  * @author Stycz
  * @version 1.0
