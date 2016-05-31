@@ -13,7 +13,7 @@ import java.util.List;
  * Created by damian on 5/30/16.
  */
 public class BookStoreDao extends Dao {
-    private Logger logger = Logger.getLogger(BookDao.class);
+    private Logger logger = Logger.getLogger(BookStoreDao.class);
 
     /**
      * persist method to save particular bookstore in database
@@ -42,7 +42,7 @@ public class BookStoreDao extends Dao {
     public void update(BookStore bookStore) {
         try {
             beginTransaction();
-            getSession().persist(bookStore);
+            getSession().update(bookStore);
             commitTransaction();
         } catch (HibernateException e) {
             logger.warn("BookStoreDao couldn't update " + bookStore.toString());

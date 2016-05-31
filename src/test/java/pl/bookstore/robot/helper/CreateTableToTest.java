@@ -1,7 +1,7 @@
 package pl.bookstore.robot.helper;
 
-import pl.bookstore.robot.dao.BookDao;
 import pl.bookstore.robot.dao.BookStoreDao;
+import pl.bookstore.robot.dao.Dao;
 import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
 
@@ -13,7 +13,6 @@ import java.util.List;
  */
 public class CreateTableToTest {
     private static BookStoreDao bookStoreDAO = new BookStoreDao();
-    private static BookDao bookDao = new BookDao();
 
     public static void main(String[] args) {
 
@@ -26,20 +25,18 @@ public class CreateTableToTest {
         Book[] books = {new Book("a1", "b1"), new Book("a2", "b2"), new Book("a3", "b3"),
                 new Book("a4", "b4"), new Book("a5", "b5")};
 
-        books[0].setBookStore(bookStores[0]);
-        books[1].setBookStore(bookStores[1]);
-        books[2].setBookStore(bookStores[2]);
-        books[3].setBookStore(bookStores[2]);
-        books[4].setBookStore(bookStores[2]);
+        bookStores[0].addBook(books[0]);
+        bookStores[1].addBook(books[1]);
+        bookStores[2].addBook(books[2]);
+        bookStores[2].addBook(books[3]);
+        bookStores[2].addBook(books[4]);
 
 
         bookStoreDAO.persist(bookStores[0]);
         bookStoreDAO.persist(bookStores[1]);
         bookStoreDAO.persist(bookStores[2]);
 
-        bookDao.persist(books[0]);
-        bookDao.persist(books[1]);
-        bookDao.persist(books[2]);
+        Dao.closeSessionFactory();
     }
 
     public static void printDatabasesBookStoresHibernate() {
@@ -49,6 +46,8 @@ public class CreateTableToTest {
         while (iterator.hasNext()) {
             System.out.println(iterator.next());
         }
+
+        Dao.closeSessionFactory();
     }
 
 }

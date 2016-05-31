@@ -20,9 +20,9 @@ public class BookStore{
     private String url;
     private String searchForTitle;
     private String searchForCategory;
-    @OneToMany(fetch = FetchType.EAGER ,cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REMOVE})
+    @OneToMany(fetch = FetchType.EAGER ,cascade = {CascadeType.ALL})
     private List<Book> bookList;
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REMOVE})
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     private List<Profile> profileList;
 
     public BookStore(String name) {
@@ -35,6 +35,7 @@ public class BookStore{
     }
 
     public BookStore() {
+        this.id=0;
         this.name = "brak";
         this.url = "";
         this.searchForTitle = "";
@@ -68,7 +69,7 @@ public class BookStore{
     @Override
     public String toString() {
         return "BookStore{" +
-                "name='" + name + '\'' +
+                ", name='" + name + '\'' +
                 ", url='" + url + '\'' +
                 ", searchForTitle='" + searchForTitle + '\'' +
                 ", searchForCategory='" + searchForCategory + '\'' +

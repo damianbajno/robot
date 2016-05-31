@@ -96,11 +96,10 @@ public class BookTest {
         book.setTitle("Hobbit");
         book.setCategory("Fantasy");
         book.setId(id);
-        book.setBookStore(new BookStore());
+
         softAssertions.assertThat(book.getTitle()).isNotNull();
         softAssertions.assertThat(book.getCategory()).isNotNull();
         softAssertions.assertThat(book.getId()).isNotNull();
-        softAssertions.assertThat(book.getBookStore()).isNotNull();
         softAssertions.assertAll();
     }
 

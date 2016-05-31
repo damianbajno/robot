@@ -26,7 +26,6 @@ public class BookStoreDaoTest {
 
         //cleaning database
         bookStoreDao.delete(bookStoreExpected);
-        bookStoreDao.closeSessionFactory();
     }
 
 

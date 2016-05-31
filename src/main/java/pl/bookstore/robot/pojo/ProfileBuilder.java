@@ -29,7 +29,7 @@ public class ProfileBuilder {
         return profile;
     }
 
-    protected static Profile build(String... categories) throws NoCategorySelectedException {
+    public static Profile build(String... categories) throws NoCategorySelectedException {
         if (categories.length == 0) throw new NoCategorySelectedException("No category was selected");
 
         ObservableList<String> categoriesList = FXCollections.observableList(Arrays.asList(categories));

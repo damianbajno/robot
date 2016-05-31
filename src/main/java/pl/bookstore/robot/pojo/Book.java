@@ -10,29 +10,23 @@ public class Book{
     private int id;
     private String title;
     private String category;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    private BookStore bookStore;
     private Date data=new Date();
 
     public Book(String title) {
         this.title = title;
-        this.bookStore=new BookStore();
     }
 
     public Book(String title, String category) {
         this.title = title;
         this.category = category;
-        this.bookStore=new BookStore();
     }
 
     public Book(String title, String category, BookStore bookStore) {
         this.title = title;
         this.category = category;
-        this.bookStore = bookStore;
     }
 
     public Book() {
-        this.bookStore=new BookStore();
     }
 
     public int getId() {
@@ -59,16 +53,6 @@ public class Book{
         this.category = category;
     }
 
-
-    public BookStore getBookStore() {
-        return bookStore;
-    }
-
-    public void setBookStore(BookStore bookStore) {
-        bookStore.addBook(this);
-        this.bookStore = bookStore;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -92,7 +76,6 @@ public class Book{
         return "Book{" +
                 "title='" + title + '\'' +
                 ", category='" + category + '\'' +
-                ", bookStoreName='" + bookStore.getName() + '\'' +
                 '}';
     }
 }

@@ -6,6 +6,7 @@ import org.assertj.core.api.Assertions;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Observable;
 
@@ -15,25 +16,19 @@ import java.util.Observable;
 public class ProfileBuilderTest {
 
     @Test
-    public void ifIBuildProfileItWillHaveAllCategories() {
+    public void ifIBuildProfileItWillHaveAllCategories() throws NoCategorySelectedException {
         //given
-        ObservableList<String> givenCategories = FXCollections.observableArrayList();
-        givenCategories.add("Romance");
-        givenCategories.add("Education");
-
-        Profile expectedProfile = new Profile();
-        expectedProfile.addCategories(givenCategories);
 
         //when
         Profile profile = null;
         try {
-            profile = ProfileBuilder.build(givenCategories);
+            profile = ProfileBuilder.build("Romance", "Education");
         } catch (NoCategorySelectedException e) {
             e.printStackTrace();
         }
 
         //then
-        Assertions.assertThat(profile).isEqualTo(expectedProfile);
+        Assertions.assertThat(profile.getCategories()).isEqualTo(Arrays.asList("Romance", "Education"));
     }
 
     @Test

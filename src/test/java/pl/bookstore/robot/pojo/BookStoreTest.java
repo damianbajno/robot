@@ -79,19 +79,6 @@ public class BookStoreTest {
     }
 
     @Test
-    public void testIfToStringReturnsStringRepresentation() {
-        BookStore bookStore = new BookStore("nexto.pl", "www.nexto.pl", "Hobbit", "Fantasy");
-        String expected = "BookStore{" +
-                "name='" + "nexto.pl" + '\'' +
-                ", url='" + "www.nexto.pl" + '\'' +
-                ", searchForTitle='" + "Hobbit" + '\'' +
-                ", searchForCategory='" + "Fantasy" + '\'' +
-                '}';
-
-        Assertions.assertThat(expected).isEqualTo(bookStore.toString());
-    }
-
-    @Test
     public void testIfEmptyBookIsHasParametersAfterSet() {
         SoftAssertions softAssertions = new SoftAssertions();
         int id = 1;

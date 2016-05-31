@@ -20,8 +20,6 @@ public class Profile {
     private int id;
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> categories;
-    @ManyToOne
-    private BookStore bookStore;
 
     public Profile() {
         categories=new ArrayList<String>();
@@ -43,11 +41,6 @@ public class Profile {
         this.categories.addAll(categories);
     }
 
-    public void setBookStore(BookStore bookStore) {
-        bookStore.addProfile(this);
-        this.bookStore = bookStore;
-    }
-
     public List<String> getCategories() {
         return categories;
     }
@@ -59,16 +52,13 @@ public class Profile {
 
         Profile profile = (Profile) o;
 
-        if (categories != null ? !categories.equals(profile.categories) : profile.categories != null) return false;
-        return bookStore != null ? bookStore.equals(profile.bookStore) : profile.bookStore == null;
+        return categories != null ? categories.equals(profile.categories) : profile.categories == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = categories != null ? categories.hashCode() : 0;
-        result = 31 * result + (bookStore != null ? bookStore.hashCode() : 0);
-        return result;
+        return categories != null ? categories.hashCode() : 0;
     }
 
     @Override

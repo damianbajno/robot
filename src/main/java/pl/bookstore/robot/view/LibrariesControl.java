@@ -16,7 +16,6 @@ import javafx.util.Callback;
 import org.apache.log4j.Logger;
 import org.controlsfx.control.CheckComboBox;
 import pl.bookstore.robot.dao.BookStoreDao;
-import pl.bookstore.robot.dao.ProfileDao;
 import pl.bookstore.robot.pojo.*;
 
 import java.net.URL;
@@ -33,7 +32,6 @@ public class LibrariesControl implements Initializable {
     private ObservableList<Profile> profileListObservable = FXCollections.observableArrayList();
     private ObservableList<String> categoryListObservable = FXCollections.observableArrayList();
     private BookStoreDao bookStoreDao = new BookStoreDao();
-    private ProfileDao profileDao = new ProfileDao();
     private List<Book> bookList = new ArrayList<Book>();
 
     @FXML
@@ -172,7 +170,8 @@ public class LibrariesControl implements Initializable {
 
         try {
             Profile profile = ProfileBuilder.build(selectedCategoryList);
-            profileDao.persist(profile, selectedBookStore);
+            selectedBookStore.addProfile(profile);
+            bookStoreDao.update(selectedBookStore);
 
             profileListObservable.add(profile);
         } catch (NoCategorySelectedException e) {

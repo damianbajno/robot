@@ -17,14 +17,10 @@ public class BookSearcher {
     private static Logger logger = Logger.getLogger(BookSearcher.class);
 
     private BookStore bookStore;
-    private List<Book> booksList;
+    private List<Book> booksList = new ArrayList<Book>();
 
-    /**
-     * @param bookStore specify where to search books
-     */
     public BookSearcher(BookStore bookStore) {
         this.bookStore = bookStore;
-        this.booksList = new ArrayList<Book>();
     }
 
     /**
@@ -34,7 +30,7 @@ public class BookSearcher {
      * @return list of books found in BookStore
      */
     public List<Book> searchBooks() {
-        logger.info("Started searching books on site in " + bookStore.getName());
+        logger.info("Started searching books on site in " + bookStore.getName()+" by thread "+Thread.currentThread().getName());
 
         HashSet<String> hyperLinks = searchLinksOnSite();
         Iterator<String> linksIterator = hyperLinks.iterator();
@@ -43,14 +39,11 @@ public class BookSearcher {
             this.booksList.addAll(searchBooks(linksIterator.next()));
         }
 
-        logger.info("Started searching books on site in " + bookStore.getName());
+        logger.info("End searching books on site in " + bookStore.getName());
         return this.booksList;
     }
 
-    /**
-     * @return set of urls to pages in BookStore
-     */
-    HashSet<String> searchLinksOnSite() {
+    private HashSet<String> searchLinksOnSite() {
         LinkSearch linkSearch = new LinkSearch(bookStore);
         return linkSearch.searchHyperlinksOnPageAndSubPages();
     }
