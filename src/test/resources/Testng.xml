@@ -7,10 +7,8 @@
             <package name="pl.bookstore.robot.booksearch"/>
             <package name="pl.bookstore.robot.dao"/>
             <package name="pl.bookstore.robot.pojo"/>
+            <package name="pl.bookstore.robot.utils"/>
         </packages>
-        <classes>
-            <class name="pl.bookstore.robot.utils.UrlUtilsTest"/>
-        </classes>
     </test>
 
 

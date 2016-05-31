@@ -8,8 +8,7 @@ import java.util.List;
 
 /**
  * Created by damian on 21.04.16.
- * Class contains all necessary fields and methods
- * associated with book profile creation
+ *
  * @author Fred
  * @version 1.0
  */

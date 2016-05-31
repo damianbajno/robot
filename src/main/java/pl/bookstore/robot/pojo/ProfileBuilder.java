@@ -7,7 +7,8 @@ import java.util.Arrays;
 
 /**
  * Created by damian on 22.04.16.
- * Class for creating new book profiles
+ *
+ * Creating new profile.
  *
  * @author Stycz
  * @version 1.0

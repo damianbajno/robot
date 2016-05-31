@@ -14,7 +14,7 @@ import java.net.URL;
 
 /**
  *
- * Class with main method which run program gui.
+ * Start robot application.
  *
  * @author Damian Bajno
  */

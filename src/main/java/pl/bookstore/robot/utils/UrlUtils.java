@@ -1,18 +1,9 @@
 package pl.bookstore.robot.utils;
 
-import com.jaunt.HttpResponse;
-import com.jaunt.UserAgent;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
- * Class which have methods to manage URL.
+ * Retrieve url to main page from given url.
  * <p>
  * Created by damian on 21.03.16.
- * UrlUtils performs operations
- * associated with url handling.
- * i.e extracting website name, checking whether input string is url etc.
  *
  * @author Stycz
  * @version 1.0
@@ -21,7 +12,7 @@ import java.util.regex.Pattern;
 public class UrlUtils {
 
     /**
-     * Retrieve url to main page from given string.
+     * Retrieve url to main page from given string url.
      *
      * @param url given url to sub page
      * @return retrieving url to main page

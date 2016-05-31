@@ -8,7 +8,7 @@ import pl.bookstore.robot.utils.UrlUtils;
 import java.util.HashSet;
 
 /**
- * Search links in page and sub pages specified in BookStore
+ * Search links in page and sub pages specified BookStore
  *
  * @author Damian Bajno (pseudo thread, Di)
  */
@@ -29,6 +29,8 @@ public class LinkSearch {
     }
 
     /**
+     * Search links in page and subpage specified BookStore.
+     *
      * @return set of links to page and sub pages found in BookStore
      */
 

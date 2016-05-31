@@ -29,7 +29,7 @@ public class BookSearcher {
 
     /**
      * Search books in BookStore by searching
-     * the sub pages in specified link
+     * pages and subpages.
      *
      * @return list of books found in BookStore
      */

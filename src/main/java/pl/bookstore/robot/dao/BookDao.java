@@ -7,7 +7,7 @@ import pl.bookstore.robot.pojo.Book;
 import java.util.List;
 
 /**
- * Saving books to databases.
+ * Saving books in databases.
  *
  * @author Stycz
  * @version 1.0
