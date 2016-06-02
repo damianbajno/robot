@@ -80,6 +80,12 @@ public class BookStore{
         bookList.add(book);
     }
 
+    public void addBookList(List<Book> bookList){
+        this.bookList.addAll(bookList);
+    }
+
+
+
     public List<Profile> getProfileList() {
         return profileList;
     }

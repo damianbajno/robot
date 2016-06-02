@@ -1,10 +1,11 @@
-package pl.bookstore.robot.booksearch.wrapper;
+package pl.bookstore.robot.booksearch;
 
 import com.jaunt.Document;
 import com.jaunt.ResponseException;
 import org.assertj.core.api.Assertions;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import pl.bookstore.robot.booksearch.DocumentWrapper;
 import pl.bookstore.robot.helper.BookStoreContainer;
 import pl.bookstore.robot.pojo.BookStore;
 

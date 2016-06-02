@@ -1,9 +1,8 @@
-package pl.bookstore.robot.booksearch.wrapper;
+package pl.bookstore.robot.booksearch;
 
 
 import org.apache.commons.lang3.math.NumberUtils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,7 +18,7 @@ class BookParserUtils {
     /**
      * Check provided path to searched text.
      *
-     * @param givenPathToSearch search path
+     * @param givenPathToSearch searchRecursivelyIn path
      * @return Corrected path to element
      */
     static List<String> getPathToElement(String givenPathToSearch) {

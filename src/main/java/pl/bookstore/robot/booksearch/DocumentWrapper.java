@@ -1,4 +1,4 @@
-package pl.bookstore.robot.booksearch.wrapper;
+package pl.bookstore.robot.booksearch;
 
 import com.jaunt.Document;
 import com.jaunt.ResponseException;
@@ -6,6 +6,7 @@ import com.jaunt.UserAgent;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 /**
  * Created by damian on 6/2/16.
@@ -18,7 +19,8 @@ public class DocumentWrapper {
     }
 
     static Document getDocumentFromResources(String bookStoreName) throws ResponseException, IOException {
-        File bookStoreHtmlFile = new File(Class.class.getResource("BookStorePages/" + bookStoreName + ".html").getFile());
+        URL urlToFile = ClassLoader.getSystemResource("BookStorePages/" + bookStoreName + ".html");
+        File bookStoreHtmlFile = new File(urlToFile.getFile());
         return new UserAgent().open(bookStoreHtmlFile);
     }
 

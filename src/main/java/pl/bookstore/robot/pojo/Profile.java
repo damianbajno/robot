@@ -63,7 +63,7 @@ public class Profile {
 
     @Override
     public String toString() {
-        return  "search by " + categories;
+        return  "searchRecursivelyIn by " + categories;
     }
 
 }

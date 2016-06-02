@@ -10,7 +10,7 @@ in file /robot/src/main/resources/hibernate.cfg.xml which is configuration file 
 Next to search books run the main method in pl.bookstore.robot.view.GuiMainClass file.
 After it you see Gui interface where you have to specify BookStores to search books and path to title and category
 in page. If you want to search for books after specifying library you have to run main method in class
-pl.bookstore.robot.booksearch.BookSearchEngine.
+pl.bookstore.robot.booksearch.BookSearcherAndSaverMain.
 
 
 

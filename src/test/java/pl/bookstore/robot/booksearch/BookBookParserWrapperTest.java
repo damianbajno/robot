@@ -1,4 +1,4 @@
-package pl.bookstore.robot.booksearch.wrapper;
+package pl.bookstore.robot.booksearch;
 
 import com.jaunt.Document;
 import com.jaunt.NotFound;
@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by damian on 6/1/16.
  */
-public class BookParserWrapperTest {
+public class BookBookParserWrapperTest {
 
     @DataProvider()
     public Object[][] dataProviderForSearchBookInDocument() {
@@ -24,7 +24,7 @@ public class BookParserWrapperTest {
 
         Object[][] data = {
                 {bookStores[0], new Book("New Life", "Romance")},
-                {bookStores[1], new Book("Going Viral : The 9 Secrets of Irresistible Marketing", "brak")},
+                {bookStores[1], new Book("Write in Me 6: Personal Journal 160 Pages Ruled Mandala", "brak")},
                 {bookStores[2], new Book("Inwestycje", "INWESTYCJE")}
         };
         return data;
@@ -34,10 +34,10 @@ public class BookParserWrapperTest {
     public void ifIPutDocumentWithBookItRetrieveBook(BookStore bookStore, Book bookExpected) throws NotFound, ResponseException, IOException{
         //given
         Document documentFromResources = DocumentWrapper.getDocumentFromResources(bookStore.getName());
-        BookParserWrapper bookParserWrapper = new BookParserWrapper(bookStore);
+        BookParserWrapperImpl bookParserWrapperImpl = new BookParserWrapperImpl(bookStore);
 
         //when
-        List<Book> books = bookParserWrapper.search(documentFromResources);
+        List<Book> books = bookParserWrapperImpl.searchIn(documentFromResources);
 
         //then
         Assertions.assertThat(books.size()).isEqualTo(1);
