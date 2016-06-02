@@ -1,4 +1,4 @@
-package pl.bookstore.robot.booksearch;
+package pl.bookstore.robot.booksearch.wrapper;
 
 
 import org.apache.commons.lang3.math.NumberUtils;

@@ -39,15 +39,15 @@ public class BookSearchEngine{
 
         @Override
         public void run() {
-            LinkParserCollector linkParserCollector =new LinkParserCollector(bookStore);
-            HashSet<String> linkSet = linkParserCollector.search();
-
-            BookParserCollector bookParserCollector = new BookParserCollector(bookStore);
-            List<Book> bookList = bookParserCollector.searchBooksIn(linkSet);
-            bookList.forEach(book -> bookStore.addBook(book));
-
-            logger.trace("Started saving bookList from " + bookStore.toString());
-            bookStoreDao.update(bookStore);
+//            LinkParserCollector linkParserCollector =new LinkParserCollector(bookStore);
+//            HashSet<String> linkSet = linkParserCollector.search();
+//
+//            BookParserCollector bookParserCollector = new BookParserCollector(bookStore);
+//            List<Book> bookList = bookParserCollector.searchBooksIn(linkSet);
+//            bookList.forEach(book -> bookStore.addBook(book));
+//
+//            logger.trace("Started saving bookList from " + bookStore.toString());
+//            bookStoreDao.update(bookStore);
         }
     }
 }

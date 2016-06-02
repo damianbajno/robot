@@ -1,11 +1,17 @@
 package pl.bookstore.robot.booksearch;
 
-import com.jaunt.*;
+import com.jaunt.Document;
+import com.jaunt.ResponseException;
 import org.apache.log4j.Logger;
+import pl.bookstore.robot.booksearch.wrapper.BookParserWrapper;
+import pl.bookstore.robot.booksearch.wrapper.DocumentWrapper;
 import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Search books in Bookstore.
@@ -19,6 +25,7 @@ public class BookParserCollector {
     private BookStore bookStore;
     private BookParserWrapper bookParserWrapper;
     private List<Book> booksList = new ArrayList<Book>();
+    private DocumentWrapper documentWrapper = new DocumentWrapper();
 
     public BookParserCollector(BookStore bookStore) {
         this.bookStore = bookStore;
@@ -41,12 +48,12 @@ public class BookParserCollector {
 
             String searchedLink = linksIterator.next();
             try {
-                Document document = bookParserWrapper.getDocument(searchedLink);
+                Document document = documentWrapper.getDocumentFrom(searchedLink);
                 List<Book> bookList = bookParserWrapper.search(document);
                 this.booksList.addAll(bookList);
             } catch (ResponseException e) {
                 e.printStackTrace();
-                logger.error("Couldn't get document from searchedLink = "+searchedLink);
+                logger.error("Couldn't get document from searchedLink = " + searchedLink);
             }
         }
 

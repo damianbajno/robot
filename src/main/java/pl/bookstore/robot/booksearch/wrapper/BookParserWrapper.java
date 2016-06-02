@@ -1,4 +1,4 @@
-package pl.bookstore.robot.booksearch;
+package pl.bookstore.robot.booksearch.wrapper;
 
 import com.jaunt.*;
 import org.apache.log4j.Logger;
@@ -25,7 +25,7 @@ public class BookParserWrapper extends ParserWrapper {
      * @param document
      * @return list of books found in document
      */
-    List<Book> search(Document document) {
+    public List<Book> search(Document document) {
         ArrayList<Book> books = new ArrayList<>();
 
         List<String> pathToTitleElement = BookParserUtils.getPathToElement(bookStore.getSearchForTitle());

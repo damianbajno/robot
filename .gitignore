@@ -6,6 +6,8 @@
 robot.iml
 *.log.*
 commitMS.txt
+commitText.txt
+
 
 ### Eclipse ###
 

@@ -2,8 +2,8 @@ package pl.bookstore.robot.booksearch;
 
 import com.jaunt.*;
 import org.apache.log4j.Logger;
+import pl.bookstore.robot.booksearch.wrapper.LinkParserWrapper;
 import pl.bookstore.robot.pojo.BookStore;
-import pl.bookstore.robot.utils.UrlUtils;
 
 import java.util.HashSet;
 
@@ -29,29 +29,28 @@ public class LinkParserCollector {
     /**
      * @return set of links found in link
      */
-    HashSet<String> search() {
-        HashSet<String> linksSet = new HashSet<>();
+//    HashSet<String> search() {
+//        HashSet<String> linksSet = new HashSet<>();
 
-        try {
-            Document document = linkParserWrapper.getDocument(bookStore.getUrl());
-            HashSet<String> linkSet = linkParserWrapper.search(document);
-            allLinks.addAll(linkSet);
-            searchRecursively(linkSet);
-        } catch (NotFound | ResponseException e) {
-            e.printStackTrace();
-            logger.error(e.getMessage());
-        }
-        return linksSet;
-    }
-
-    private void searchRecursively(HashSet<String> linkSet) throws NotFound, ResponseException {
-        for (String link : linkSet) {
-            Document document = linkParserWrapper.getDocument(link);
-            HashSet<String> linkSetL = linkParserWrapper.search(document);
-            allLinks.addAll(linkSetL);
-            if (allLinks.size() < 5) searchRecursively(linkSetL);
-        }
-    }
-
+//        try {
+//            Document document = linkParserWrapper.getDocumentFrom(bookStore.getUrl());
+//            HashSet<String> linkSet = linkParserWrapper.search(document);
+//            allLinks.addAll(linkSet);
+//            searchRecursively(linkSet);
+//        } catch (NotFound | ResponseException e) {
+//            e.printStackTrace();
+//            logger.error(e.getMessage());
+//        }
+//        return linksSet;
+//    }
+//
+//    private void searchRecursively(HashSet<String> linkSet) throws NotFound, ResponseException {
+//        for (String link : linkSet) {
+//            Document document = linkParserWrapper.getDocumentFrom(link);
+//            HashSet<String> linkSetL = linkParserWrapper.search(document);
+//            allLinks.addAll(linkSetL);
+//            if (allLinks.size() < 5) searchRecursively(linkSetL);
+//        }
+//    }
 
 }

@@ -1,4 +1,4 @@
-package pl.bookstore.robot.booksearch;
+package pl.bookstore.robot.booksearch.wrapper;
 
 import com.jaunt.Document;
 import com.jaunt.Element;
