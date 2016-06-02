@@ -14,14 +14,12 @@ import java.util.List;
  */
 public class BookSearcher {
     private HashSet<String> linkSet = new HashSet<>();
-    private BookStore bookStore;
 
     private LinkParserWrapper linkParserWrapper;
     private BookParserWrapper bookParserWrapper;
 
 
     public BookSearcher(BookStore bookStore) {
-        this.bookStore=bookStore;
         this.linkParserWrapper = new LinkParserWrapper(bookStore);
         this.bookParserWrapper = new BookParserWrapperImpl(bookStore);
     }
@@ -38,8 +36,6 @@ public class BookSearcher {
                             Document document = DocumentWrapper.getDocumentFrom(link);
                             bookList.addAll(bookParserWrapper.searchIn(document));
                             List<String> linkPageList = linkParserWrapper.searchIn(document);
-
-                            System.out.println("Number == "+linkPageList.size()+" of links in page == "+link);
 
                             if (linkSet.size() < 5 && linkPageList.size() < 20) searchRecursivelyIn(linkPageList);
 

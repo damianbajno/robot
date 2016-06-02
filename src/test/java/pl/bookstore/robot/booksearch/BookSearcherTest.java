@@ -14,8 +14,7 @@ import java.util.List;
  */
 public class BookSearcherTest {
 
-
-    @Test(groups = "IntegrationTestReallyLong")
+    @Test(groups = "IntegrationTestRealyLong")
     public void ifIPutValidLinkIReceiveListOfBooksFrom5Pages(){
         //given
         BookStore bookStore = BookStoreContainer.getBookStore(0);
@@ -28,4 +27,32 @@ public class BookSearcherTest {
         Assertions.assertThat(bookList.size()).isGreaterThan(0);
     }
 
+    @Test
+    public void ifIPutNotValidLinkIReceiveListOfBooksSize0(){
+        //given
+        BookStore bookStore = BookStoreContainer.getBookStore(0);
+        BookSearcher bookSearcher = new BookSearcher(bookStore);
+        List<String> givenLinks = Arrays.asList("dsdsa");
+
+        //when
+        List<Book> bookList = bookSearcher.searchRecursivelyIn(givenLinks);
+
+        //then
+        Assertions.assertThat(bookList.size()).isEqualTo(0);
+    }
+
+    @Test
+    public void ifIPutTwoSameLinksIReceiveListOfBooksSizeGreaterThen0(){
+        //given
+        BookStore bookStore = BookStoreContainer.getBookStore(0);
+        BookSearcher bookSearcher = new BookSearcher(bookStore);
+        List<String> givenLinks = Arrays.asList("dsdsa");
+        List<String> givenLinkList = Arrays.asList(bookStore.getUrl(), bookStore.getUrl());
+
+        //when
+        List<Book> bookList = bookSearcher.searchRecursivelyIn(givenLinkList);
+
+        //then
+        Assertions.assertThat(bookList.size()).isEqualTo(0);
+    }
 }
