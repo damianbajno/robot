@@ -4,6 +4,7 @@ package pl.bookstore.robot.booksearch;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
  *
  * Created by damian on 4/28/16.
  */
-class BookSearcherUtils {
+class BookParserUtils {
 
     /**
      * Check provided path to searched text.
@@ -24,9 +25,7 @@ class BookSearcherUtils {
     static List<String> getPathToElement(String givenPathToSearch) {
         String[] tableWithPath = givenPathToSearch.split("[<>]");
 
-        List<String> listWithPath = new ArrayList<String>();
-
-        switchFromTableToArray(tableWithPath, listWithPath);
+        List<String> listWithPath=Arrays.asList(tableWithPath);
 
         for (int i = 0; i < listWithPath.size(); i++) {
             String element = listWithPath.get(i);
@@ -38,15 +37,10 @@ class BookSearcherUtils {
 
             if (!NumberUtils.isNumber(element))
                 listWithPath.set(i, "<" + element + ">");
-
         }
 
         return listWithPath;
     }
 
-    private static void switchFromTableToArray(String[] array, List<String> list) {
-        for (int i = 0; i < array.length; i++) {
-            list.add(array[i]);
-        }
-    }
+
 }

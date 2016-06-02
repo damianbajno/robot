@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Created by damian on 06.04.16.
  */
-public class LinkSearchTest {
+public class LinkParserCollectorTest {
 
     @Test
     public void ifIPutDocumentWithLinksItFindLinks() throws ResponseException, NotFound{
@@ -25,10 +25,10 @@ public class LinkSearchTest {
         String expectedUrl="http://www.bookrix.com/_ebook-h-n-s-new-life/";
         BookStore bookStoreBookrix = new BookStore("bookrix", "http://www.bookrix.com/books.html", "<a class=word-break>", "<ul class=item-details>" + "<li>");
         Document document= new UserAgent().openContent(this.getHtmlPage());
-        LinkSearch linkSearch=new LinkSearch(bookStoreBookrix);
+        LinkParserCollector linkParserCollector =new LinkParserCollector(bookStoreBookrix);
 
         //when
-        HashSet<String> hyperLinks = linkSearch.searchHyperLinksOnPage(document);
+        HashSet<String> hyperLinks = linkParserCollector.search(document);
 
         //then
         assertThat(hyperLinks.contains(expectedUrl)).isTrue();
@@ -42,9 +42,9 @@ public class LinkSearchTest {
         List<BookStore> bookStores = bookStoreDao.getBookStoreList();
 
         for (BookStore bookStore : bookStores) {
-            LinkSearch linkSearch = new LinkSearch(bookStore);
+            LinkParserCollector linkParserCollector = new LinkParserCollector(bookStore);
 
-            Assertions.assertThat(linkSearch.visitPageAndGetDocument(bookStore.getUrl())).isNotNull();
+            Assertions.assertThat(linkParserCollector.visitPageAndGetDocument(bookStore.getUrl())).isNotNull();
 
         }
     }

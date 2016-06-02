@@ -28,7 +28,7 @@ public class BookStoreDao extends Dao {
 
             logger.trace("BookStore saved to database = "+bookStore.toString());
         } catch (HibernateException e) {
-            logger.warn("BookDao couldn't persist " + bookStore.toString());
+            logger.error("BookDao couldn't persist " + bookStore.toString());
             rollback();
         }
     }
@@ -45,7 +45,7 @@ public class BookStoreDao extends Dao {
             getSession().update(bookStore);
             commitTransaction();
         } catch (HibernateException e) {
-            logger.warn("BookStoreDao couldn't update " + bookStore.toString());
+            logger.error("BookStoreDao couldn't update " + bookStore.toString());
             e.printStackTrace();
             rollback();
         }
@@ -65,7 +65,7 @@ public class BookStoreDao extends Dao {
             bookStoreList = query.list();
             commitTransaction();
         } catch (HibernateException e) {
-            logger.warn("BookStoreDao couldn't get BookStoresList");
+            logger.error("BookStoreDao couldn't get BookStoresList");
             e.printStackTrace();
             rollback();
         }
@@ -84,7 +84,7 @@ public class BookStoreDao extends Dao {
             commitTransaction();
         } catch (HibernateException e) {
             e.printStackTrace();
-            logger.warn("BookStoreDao couldn't delete "+ bookStore.toString());
+            logger.error("BookStoreDao couldn't delete "+ bookStore.toString());
         }
     }
 }

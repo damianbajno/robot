@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by damian on 4/28/16.
  */
-public class BookSearcherUtilTest {
+public class BookParserCollectorUtilTest {
 
     @DataProvider(name = "Paths")
     public Object[][] givenAndExpectedPaths() {
@@ -27,7 +27,7 @@ public class BookSearcherUtilTest {
     public void convertFromStringToTablePathToSearchElement(String givenPath, List expectedPath) {
 
         //when
-        List resultPath = BookSearcherUtils.getPathToElement(givenPath);
+        List resultPath = BookParserUtils.getPathToElement(givenPath);
 
         //then
         Assertions.assertThat(resultPath).isEqualTo(expectedPath);

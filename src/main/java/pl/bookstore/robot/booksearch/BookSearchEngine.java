@@ -5,6 +5,7 @@ import pl.bookstore.robot.dao.BookStoreDao;
 import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
 
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -38,11 +39,14 @@ public class BookSearchEngine{
 
         @Override
         public void run() {
-            BookSearcher bookSearcher = new BookSearcher(bookStore);
-            List<Book> bookList = bookSearcher.searchBooks();
+            LinkParserCollector linkParserCollector =new LinkParserCollector(bookStore);
+            HashSet<String> linkSet = linkParserCollector.search();
+
+            BookParserCollector bookParserCollector = new BookParserCollector(bookStore);
+            List<Book> bookList = bookParserCollector.searchBooksIn(linkSet);
             bookList.forEach(book -> bookStore.addBook(book));
 
-            logger.info("Started saving bookList from " + bookStore.toString());
+            logger.trace("Started saving bookList from " + bookStore.toString());
             bookStoreDao.update(bookStore);
         }
     }

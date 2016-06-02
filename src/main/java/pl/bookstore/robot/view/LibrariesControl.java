@@ -137,7 +137,7 @@ public class LibrariesControl implements Initializable {
 
             bookStoreListObservable.add(bookStore);
             bookStoreDao.persist(bookStore);
-            logger.info("Added to database " + bookStore.toString());
+            logger.trace("Added to database " + bookStore.toString());
 
         } else {
             BookStore selectedBookStore = bookStoresListView.getSelectionModel().getSelectedItem();

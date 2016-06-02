@@ -1,6 +1,9 @@
 package pl.bookstore.robot.booksearch;
 
-import com.jaunt.*;
+import com.jaunt.Document;
+import com.jaunt.NotFound;
+import com.jaunt.ResponseException;
+import com.jaunt.UserAgent;
 import org.assertj.core.api.Assertions;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -8,62 +11,75 @@ import pl.bookstore.robot.helper.BookStoreContainer;
 import pl.bookstore.robot.pojo.Book;
 import pl.bookstore.robot.pojo.BookStore;
 
+import java.io.BufferedReader;
+import java.net.URL;
+import java.nio.file.Files;
 import java.util.List;
 
-
 /**
- * Created by damian on 14.04.16.
+ * Created by damian on 6/1/16.
  */
-public class BookSearcherTest {
+public class BookParserWrapperTest {
 
     @DataProvider(name = "findBookOnDocument")
     public Object[][] dataProviderForSearchABookInDocument() {
+        BookStore[] bookStores = BookStoreContainer.getBookStores();
+
         Object[][] data = {
-                {0, this.getHtmlPageBookBookrix(), new Book("New Life", "Romance")},
-                {1, this.getHtmlPageGoodreads(), new Book("Going Viral : The 9 Secrets of Irresistible Marketing", "brak")},
-                {2, this.getHtmlPagePwn(), new Book("Inwestycje", "INWESTYCJE")}
+                {bookStores[0], this.getHtmlPageBookBookrix(), new Book("New Life", "Romance")},
+                {bookStores[1], this.getHtmlPageGoodreads(), new Book("Going Viral : The 9 Secrets of Irresistible Marketing", "brak")},
+                {bookStores[2], this.getHtmlPagePwn(), new Book("Inwestycje", "INWESTYCJE")}
         };
         return data;
     }
 
     @Test(dataProvider = "findBookOnDocument")
-    public void ifIPutDocumentWithBookItRetrieveBook(int bookStoreNumber, String documentString, Book bookExpected) throws NotFound, ResponseException {
+    public void ifIPutDocumentWithBookItRetrieveBook(BookStore bookStore, String documentString, Book bookExpected) throws NotFound, ResponseException {
         //given
-        BookStore bookStore = BookStoreContainer.getBookStore(bookStoreNumber);
         Document document = new UserAgent().openContent(documentString);
-        BookSearcher bookSearcher = new BookSearcher(bookStore);
+        BookParserWrapper bookParserWrapper = new BookParserWrapper(bookStore);
 
         //when
-        List<Book> books = bookSearcher.searchBooks(document);
+        List<Book> books = bookParserWrapper.search(document);
 
         //then
         Assertions.assertThat(books.size()).isEqualTo(1);
         Assertions.assertThat(books).contains(bookExpected);
     }
 
-    @DataProvider(name = "findBookOnPage")
-    public Object[][] dataProviderForSearchABookInPage() {
-        Object[][] bookStoreNumber = {
-                {0},
-                {1},
-                {2},
-        };
-        return bookStoreNumber;
-    }
 
-    @Test(groups = "IntegrationTest", dataProvider = "findBookOnPage")
-    public void ifISearchPageWithBooksItRetrieveBooks(int bookStoreNumber) throws NotFound, ResponseException {
+    @Test
+    public void getDocumentFromLinkIfLinkIsValid() throws ResponseException {
         //given
-        BookStore bookStore = BookStoreContainer.getBookStore(bookStoreNumber);
-        BookSearcher bookSearcher = new BookSearcher(bookStore);
+        BookStore searchedBookStore = BookStoreContainer.getBookStore(0);
+        BookParserWrapper bookParserWrapper = new BookParserWrapper(searchedBookStore);
+
 
         //when
-        List<Book> books = bookSearcher.searchBooks(bookStore.getUrl());
+        Document receivedDocument = bookParserWrapper.getDocument(searchedBookStore.getUrl());
 
         //then
-        Assertions.assertThat(books.size()).isGreaterThan(0);
+        Assertions.assertThat(receivedDocument.getRoot()).isNotNull();
     }
 
+    @Test
+    public void throwExceptionWhenTryToConnectToNotValidUrl() {
+        //given
+        BookStore searchedBookStore = BookStoreContainer.getBookStore(0);
+        BookParserWrapper bookParserWrapper = new BookParserWrapper(searchedBookStore);
+
+        //then
+        Assertions.assertThatExceptionOfType(ResponseException.class).isThrownBy(() -> bookParserWrapper.getDocument("fdasasdfdsa"));
+    }
+
+    public static class DocumentReceiver{
+
+        public static Document obtain(BookStore bookStore){
+            URL url = ClassLoader.getSystemResource("BookStorePages/" + bookStore + ",html");
+            BufferedReader bufferedReader = Files.newBufferedReader();
+            return ;
+        }
+    }
 
     public String getHtmlPageBookBookrix() {
         String bookElement = new String("<body><div class=\"item-content\">\n" +
@@ -84,7 +100,7 @@ public class BookSearcherTest {
                 "            Mia just wants to live easy, go to school, hag out with friends... that was until Ian Marsh turned her life upside down.\n" +
                 "        </p><p>\n" +
                 "            Ian Marsh is rich and popular and can get wha...&nbsp;<a href=\"/_ebook-h-n-s-new-life/\">Read&nbsp;more...</a></p>                                                    </div>\n" +
-                "        <p class=\"item-keywords word-break\"><strong>Keywords:</strong> <a href=\"/searchBooks;keywords:love,searchoption:books.html\">Love</a>, <a href=\"/searchBooks;keywords:romance,searchoption:books.html\">Romance</a>, <a href=\"/searchBooks;keywords:relationship,searchoption:books.html\">Relationship</a>, <a href=\"/searchBooks;keywords:rich,searchoption:books.html\">Rich</a>, <a href=\"/searchBooks;keywords:poor,searchoption:books.html\">Poor</a>, <a href=\"/searchBooks;keywords:school,searchoption:books.html\">School</a>, <a href=\"/searchBooks;keywords:job,searchoption:books.html\">Job</a>, <a href=\"/searchBooks;keywords:money,searchoption:books.html\">Money</a>, <a href=\"/searchBooks;keywords:sex,searchoption:books.html\">Sex</a></p>\n" +
+                "        <p class=\"item-keywords word-break\"><strong>Keywords:</strong> <a href=\"/search;keywords:love,searchoption:books.html\">Love</a>, <a href=\"/search;keywords:romance,searchoption:books.html\">Romance</a>, <a href=\"/search;keywords:relationship,searchoption:books.html\">Relationship</a>, <a href=\"/search;keywords:rich,searchoption:books.html\">Rich</a>, <a href=\"/search;keywords:poor,searchoption:books.html\">Poor</a>, <a href=\"/search;keywords:school,searchoption:books.html\">School</a>, <a href=\"/search;keywords:job,searchoption:books.html\">Job</a>, <a href=\"/search;keywords:money,searchoption:books.html\">Money</a>, <a href=\"/search;keywords:sex,searchoption:books.html\">Sex</a></p>\n" +
                 "        <p class=\"item-price\">\n" +
                 "            <strong>\n" +
                 "                For Free                                                            </strong>\n" +
@@ -230,4 +246,5 @@ public class BookSearcherTest {
                 "</div>\n" +
                 "        ";
     }
+
 }

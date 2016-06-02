@@ -41,7 +41,7 @@ public class GuiMainClass extends Application {
 				@Override
 				public void handle(WindowEvent event) {
 					Dao.closeSessionFactory();
-					logger.info("SessionFactory was closed");
+					logger.trace("SessionFactory was closed");
 				}
 			});
 
